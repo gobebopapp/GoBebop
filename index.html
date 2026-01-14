@@ -1,38 +1,59 @@
-<link href="https://fonts.googleapis.com/css2?family=Fredoka One:wght@400;500;600;700&family=Quicksand:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
-
-<div id="map"></div>
-  
-<div id="filters">
-  <button id="toggle-filters">X</button>
-  
-  <h4 style="margin: 0 0 15px; font-size: 18px; font-weight: 600; color: #333;">Filters</h4>
-  
-  <details>
-    <summary>Category</summary>
-    <label><input type="checkbox" data-filter="primary_category" value="Active Play"> Active Play</label>
-    <label><input type="checkbox" data-filter="primary_category" value="Animals & Nature"> Animals & Nature</label>
-    <label><input type="checkbox" data-filter="primary_category" value="Theme Parks & Attractions"> Attractions</label>
-    <label><input type="checkbox" data-filter="primary_category" value="Classes & Workshops"> Classes & Workshops</label>
-    <label><input type="checkbox" data-filter="primary_category" value="Culture & Learning"> Culture & Learning</label>
-  </details>
-  
-  <details>
-    <summary>Weather</summary>
-    <label><input type="checkbox" data-filter="indoor_outdoor" value="Indoor"> ☔ Rainy Day</label>
-    <label><input type="checkbox" data-filter="indoor_outdoor" value="Outdoor"> ☀️ Sunny Day</label>
-  </details>
-  
-  <details>
-    <summary>Ages</summary>
-    <label><input type="checkbox" data-filter="age_small" value="TRUE"> 👶 Babies (0-2)</label>
-    <label><input type="checkbox" data-filter="age_medium" value="TRUE"> 👦 Toddlers (3-6)</label>
-    <label><input type="checkbox" data-filter="age_large" value="TRUE"> 👧 Big Kids (7-12)</label>
-  </details>
-  
-  <details>
-    <summary>Accessibility</summary>
-    <label><input type="checkbox" data-filter="changing_table" value="TRUE"> 🧷 Changing table</label>
-  </details>
-
-  <button onclick="window.resetFilters()" id="reset-btn">Reset All Filters</button>
-</div>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Amsterdam Family Play Map&lt;/title&gt;</p>
+<p class="p2"><span class="Apple-converted-space">  </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Mapbox GL JS --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src='https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.js'&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;link href='https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.css' rel='stylesheet' /&gt;</p>
+<p class="p2"><span class="Apple-converted-space">  </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Google Fonts (Quicksand/Nunito for playful look) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&amp;family=Nunito:wght@400;600;700&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">  </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>body {<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin: 0;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 0;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-family: 'Quicksand', 'Nunito', system-ui, sans-serif;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 500;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>#map {<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>position: absolute;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>top: 0;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>bottom: 0;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>width: 100%;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="map"&gt;&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">  </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Your filters panel from previous work --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="filters"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Paste your complete filters HTML here from CodePen --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Paste your complete Mapbox + filters JavaScript here from CodePen</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// mapboxgl.accessToken = 'YOUR_MAPBOX_TOKEN';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
