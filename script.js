@@ -229,7 +229,3 @@ wrapper.style.cssText = 'position: fixed; bottom: 20px; right: 20px; z-index: 10
 wrapper.appendChild(tooltip);
 wrapper.appendChild(typeformBtn);
 document.body.appendChild(wrapper);
-
-
-
-
