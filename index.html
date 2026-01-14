@@ -13,45 +13,481 @@
 </head>
 <body>
 <p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;html&gt;</p>
 <p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Amsterdam Family Play Map&lt;/title&gt;</p>
-<p class="p2"><span class="Apple-converted-space">  </span></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Mapbox GL JS --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src='https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.js'&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;link href='https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.css' rel='stylesheet' /&gt;</p>
-<p class="p2"><span class="Apple-converted-space">  </span></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Google Fonts (Quicksand/Nunito for playful look) --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&amp;family=Nunito:wght@400;600;700&amp;display=swap" rel="stylesheet"&gt;</p>
-<p class="p2"><span class="Apple-converted-space">  </span></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>body {<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin: 0;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 0;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-family: 'Quicksand', 'Nunito', system-ui, sans-serif;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 500;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>#map {<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">      </span>position: absolute;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">      </span>top: 0;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">      </span>bottom: 0;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">      </span>width: 100%;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;GoBebop&lt;/title&gt;</p>
+<p class="p1">&lt;link href="https://fonts.googleapis.com/css2?family=Fredoka One:wght@400;500;600;700&amp;family=Quicksand:wght@400;600;700&amp;family=Fredoka+One&amp;display=swap" rel="stylesheet"&gt;</p>
 <p class="p1">&lt;/head&gt;</p>
 <p class="p1">&lt;body&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="map"&gt;&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">  </span></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Your filters panel from previous work --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="filters"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Paste your complete filters HTML here from CodePen --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space"> </span></p>
 <p class="p2"><br></p>
+<p class="p1">&lt;div id="map"&gt;&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">  </span></p>
+<p class="p1">&lt;div id="filters"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;button id="toggle-filters"&gt;X&lt;/button&gt;</p>
+<p class="p2"><span class="Apple-converted-space">  </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;h4 style="margin: 0 0 15px; font-size: 18px; font-weight: 600; color: #333;"&gt;Filters&lt;/h4&gt;</p>
+<p class="p2"><span class="Apple-converted-space">  </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;details&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;summary&gt;Category&lt;/summary&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;label&gt;&lt;input type="checkbox" data-filter="primary_category" value="Active Play"&gt; Active Play&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;label&gt;&lt;input type="checkbox" data-filter="primary_category" value="Animals &amp; Nature"&gt; Animals &amp; Nature&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;label&gt;&lt;input type="checkbox" data-filter="primary_category" value="Theme Parks &amp; Attractions"&gt; Attractions&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;label&gt;&lt;input type="checkbox" data-filter="primary_category" value="Classes &amp; Workshops"&gt; Classes &amp; Workshops&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;label&gt;&lt;input type="checkbox" data-filter="primary_category" value="Culture &amp; Learning"&gt; Culture &amp; Learning&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/details&gt;</p>
+<p class="p2"><span class="Apple-converted-space">  </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;details&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;summary&gt;Weather&lt;/summary&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;label&gt;&lt;input type="checkbox" data-filter="indoor_outdoor" value="Indoor"&gt; ☔ Rainy Day&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;label&gt;&lt;input type="checkbox" data-filter="indoor_outdoor" value="Outdoor"&gt; ☀️ Sunny Day&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/details&gt;</p>
+<p class="p2"><span class="Apple-converted-space">  </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;details&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;summary&gt;Ages&lt;/summary&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;label&gt;&lt;input type="checkbox" data-filter="age_small" value="TRUE"&gt; 👶 Babies (0-2)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;label&gt;&lt;input type="checkbox" data-filter="age_medium" value="TRUE"&gt; 👦 Toddlers (3-6)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;label&gt;&lt;input type="checkbox" data-filter="age_large" value="TRUE"&gt; 👧 Big Kids (7-12)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/details&gt;</p>
+<p class="p2"><span class="Apple-converted-space">  </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;details&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;summary&gt;Accessibility&lt;/summary&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;label&gt;&lt;input type="checkbox" data-filter="changing_table" value="TRUE"&gt; 🧷 Changing table&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/details&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;button onclick="window.resetFilters()" id="reset-btn"&gt;Reset All Filters&lt;/button&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><span class="Apple-converted-space">  </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
+<p class="p1">body {<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>margin: 0;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding: 0;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-family: 'Quicksand', -apple-system, sans-serif;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">#map {<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>position: absolute;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>top: 0;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>bottom: 0;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>width: 100%;<span class="Apple-converted-space"> </span></p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">#filters {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>position: absolute;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>top: 10px;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>left: 10px;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: white;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border: 1px solid #e0e0e0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding: 20px;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-radius: 12px;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>box-shadow: 0 4px 20px rgba(0,0,0,0.1);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>z-index: 1000;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>transition: all 0.3s ease;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>max-height: 90vh;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>overflow-y: auto;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>min-width: 280px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>max-width: 320px;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">#filters.collapsed {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>width: 48px !important;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>height: 48px !important;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding: 0 !important;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>margin: 0 !important;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-radius: 50% !important;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>left: 10px !important;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>top: 10px !important;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: transparent !important;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border: none !important;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>box-shadow: none !important;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>overflow: visible !important;<span class="Apple-converted-space">  </span>/* CHANGED: was hidden */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>display: block !important;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* 3. Button becomes the ONLY visible element */</p>
+<p class="p1">#filters.collapsed #toggle-filters {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>position: absolute !important;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>width: 48px !important;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>height: 48px !important;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>top: -2px !important; <span class="Apple-converted-space">  </span>/* Centers perfectly */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>left: -2px !important;<span class="Apple-converted-space">  </span>/* Centers perfectly */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>right: auto !important;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>margin: 0 !important;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding: 0 !important;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: #98d8c8 !important;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-radius: 50% !important;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>box-shadow: 0 4px 16px rgba(152, 216, 200, 0.4);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>z-index: 1001 !important;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">/* Hide ALL other children individually */</p>
+<p class="p1">#filters.collapsed h4,</p>
+<p class="p1">#filters.collapsed details,</p>
+<p class="p1">#filters.collapsed #reset-btn {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>display: none !important;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1">#toggle-filters {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>top: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>right: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: #98d8c8;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>color: white;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-radius: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>width: 36px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>height: 36px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-size: 18px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>line-height: 1;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>z-index: 2;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>transition: all 0.2s ease;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">#toggle-filters:hover {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: #f1d274;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>transform: scale(1.05);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>box-shadow: 0 6px 20px rgba(241, 210, 116, 0.4);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1">#filters h4 {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>margin: 0 0 20px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>color: #333;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">#filters details {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>margin: 12px 0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: #f8f9fa;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-left: 4px solid #98d8c8;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">#filters details[open] {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: #fff;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>box-shadow: 0 2px 8px rgba(0,0,0,0.05);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">#filters details summary {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>color: #444;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-size: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding: 4px 0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>list-style: none;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">#filters details summary::-webkit-details-marker {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>display: none;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">#filters label {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>display: block;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding: 8px 12px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>margin: 4px 0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-radius: 6px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>transition: background 0.2s ease;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-size: 15px;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">#filters label.selected {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: #f4c430;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>color: white;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">#filters input[type="checkbox"] {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>display: none; /* Hides checkbox but keeps it functional */</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">#filters label.selected::after {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>content: '✓';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>right: 16px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>top: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>transform: translateY(-50%);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-weight: bold;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-size: 16px;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1">#reset-btn {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>width: 100%;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding: 12px;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: #98d8c8;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>color: white;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>border: none;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-radius: 8px;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>cursor: pointer;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>margin-top: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-size: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>transition: all 0.2s ease;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">#reset-btn:hover {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: #f1d274;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>transform: translateY(-1px);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>box-shadow: 0 4px 12px rgba(241, 210, 116, 0.4);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">@media (max-width: 768px) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>#filters {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>min-width: 280px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>max-width: 320px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
+<p class="p2"><span class="Apple-converted-space">  </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.js"&gt;&lt;/script&gt;</p>
 <p class="p1"><span class="Apple-converted-space">  </span>&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>// Paste your complete Mapbox + filters JavaScript here from CodePen</p>
-<p class="p1"><span class="Apple-converted-space">    </span>// mapboxgl.accessToken = 'YOUR_MAPBOX_TOKEN';</p>
+<p class="p1">mapboxgl.accessToken = 'pk.eyJ1IjoiYW1hY2JldGgxIiwiYSI6ImNtZzB0MGd0ZjBqMDEybHIzbnU0dzFuam4ifQ.aGD0Ws8Zut0q4f1iTYUBeA';</p>
+<p class="p1">let map = new mapboxgl.Map({</p>
+<p class="p1"><span class="Apple-converted-space">    </span>container: 'map',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>style: 'mapbox://styles/amacbeth1/cmk44u6xk00ka01s90foffz39',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>center: [4.9041, 52.3676],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>zoom: 12</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">// Unified function to build popup HTML for both Dots and Icons</p>
+<p class="p1">function buildPopupHTML(f) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const name = f.properties.name_en || f.properties.Name || 'No Name';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const category = f.properties.secondary_category || f.properties.primary_category || f.properties.category || 'N/A';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const desc = f.properties.description ? `&lt;p&gt;${f.properties.description}&lt;/p&gt;` : '';</p>
+<p class="p2"><span class="Apple-converted-space">     </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Age suitability</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let ageHTML = '&lt;p&gt;&lt;strong&gt;Suitable for:&lt;/strong&gt;&lt;br&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (f.properties.age_small === 'TRUE') ageHTML += '👶 Babies (0-2)&lt;br&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (f.properties.age_medium === 'TRUE') ageHTML += '👦 Toddlers (3-6)&lt;br&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (f.properties.age_large === 'TRUE') ageHTML += '👧 Big Kids (7-12)';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>ageHTML += '&lt;/p&gt;';</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Weather suitability</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const weatherMap = {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>'Indoor': '☔ Rainy Days',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>'Outdoor': '☀️ Sunny Days',<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>'Mixed': '☀️☔ Any Weather'</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const weather = f.properties.indoor_outdoor ? weatherMap[f.properties.indoor_outdoor] || weatherMap.Mixed : '';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const weatherHTML = weather ? `&lt;p&gt;&lt;strong&gt;Good for:&lt;/strong&gt;&lt;br&gt;${weather}&lt;/p&gt;` : '';</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Links section (NEW IMPLEMENTATION)</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let linksHTML = '';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const website = f.properties.website?.trim();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const googleMaps = f.properties.google_maps?.trim();</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (website || googleMaps) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>linksHTML = '&lt;p&gt;&lt;strong&gt;More info:&lt;/strong&gt;&lt;br&gt;';</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (website) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const displayText = website.replace(/^https?:\/\//i, '').replace(/\/+$/, '');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const href = website.match(/^https?:\/\//i) ? website : `https://${website}`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>linksHTML += `&lt;a href="${href}" target="_blank" rel="noopener noreferrer"&gt;${displayText}&lt;/a&gt;&lt;br&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (googleMaps) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>linksHTML += `&lt;a href="${googleMaps}" target="_blank" rel="noopener noreferrer"&gt;Google Maps&lt;/a&gt;&lt;/p&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>return `</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="popup-content"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3&gt;${name}&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>${desc}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;&lt;strong&gt;Category:&lt;/strong&gt; ${category}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>${ageHTML}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>${weatherHTML}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>${linksHTML}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>`;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// Multi-select filters (OR within sections, AND between sections)</p>
+<p class="p1">window.updateFilters = function() {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const filtersByGroup = {};</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.querySelectorAll('#filters input[type="checkbox"]:checked').forEach(checkbox =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const filterType = checkbox.dataset.filter;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (!filtersByGroup[filterType]) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>filtersByGroup[filterType] = [];</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>filtersByGroup[filterType].push(checkbox.value);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Handle special case for weather: Sunny/Rainy auto-include Mixed</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (filtersByGroup.indoor_outdoor) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const weatherValues = filtersByGroup.indoor_outdoor;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (weatherValues.includes('Outdoor')) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!weatherValues.includes('Mixed')) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>weatherValues.push('Mixed');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (weatherValues.includes('Indoor')) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!weatherValues.includes('Mixed')) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>weatherValues.push('Mixed');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const groupFilters = [];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Object.keys(filtersByGroup).forEach(filterType =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (filtersByGroup[filterType].length &gt; 1) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>groupFilters.push(['any', ...filtersByGroup[filterType].map(value =&gt;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>['==', ['get', filterType], value]</p>
+<p class="p1"><span class="Apple-converted-space">            </span>)]);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>groupFilters.push(['==', ['get', filterType], filtersByGroup[filterType][0]]);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const filter = groupFilters.length ? ['all', ...groupFilters] : ['all'];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>map.setFilter('Dots', filter);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>map.setFilter('Icons', filter);</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">window.resetFilters = function() {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.querySelectorAll('#filters input[type="checkbox"]').forEach(cb =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>cb.checked = false;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><span class="Apple-converted-space">  </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('#filters label').forEach(label =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>label.classList.remove('selected');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>map.setFilter('Dots', ['all']);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>map.setFilter('Icons', ['all']);</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">map.on('load', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>map.addControl(new mapboxgl.NavigationControl(), 'top-right');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Toggle filter panel</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('toggle-filters').addEventListener('click', function() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const filters = document.getElementById('filters');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>filters.classList.toggle('collapsed');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>this.textContent = filters.classList.contains('collapsed') ? '☰' : '✕';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Icons popups + hover (uses unified function)</p>
+<p class="p1"><span class="Apple-converted-space">    </span>map.on('click', 'Icons', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (!e.features?.length) return;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const f = e.features[0];</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const coords = f.geometry.coordinates.slice();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>new mapboxgl.Popup({ offset: 15 }).setLngLat(coords).setHTML(buildPopupHTML(f)).addTo(map);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>map.on('mouseenter', 'Icons', () =&gt; map.getCanvas().style.cursor = 'pointer');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>map.on('mouseleave', 'Icons', () =&gt; map.getCanvas().style.cursor = '');</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Dots popups + hover (uses unified function) <span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>map.on('click', 'Dots', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (!e.features?.length) return;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const f = e.features[0];</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const coords = f.geometry.coordinates.slice();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>new mapboxgl.Popup({ offset: 15 }).setLngLat(coords).setHTML(buildPopupHTML(f)).addTo(map);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>map.on('mouseenter', 'Dots', () =&gt; map.getCanvas().style.cursor = 'pointer');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>map.on('mouseleave', 'Dots', () =&gt; map.getCanvas().style.cursor = '');</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// *** ADD THIS NEW BLOCK - REPLACES your existing checkbox listeners ***</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.querySelectorAll('#filters input[type="checkbox"]').forEach(checkbox =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>checkbox.addEventListener('change', function() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>window.updateFilters(); // Your existing filter logic</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// NEW: Visual feedback - label turns red with checkmark</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (this.checked) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.parentElement.classList.add('selected');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>this.parentElement.classList.remove('selected');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// *** END NEW BLOCK ***</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">// Typeform feedback button (icon only + custom tooltip)</p>
+<p class="p1">const typeformBtn = document.createElement('button');</p>
+<p class="p1">typeformBtn.innerHTML = '💡';</p>
+<p class="p1">typeformBtn.setAttribute('aria-label', 'Submit feedback');</p>
+<p class="p2"><br></p>
+<p class="p1">// Create custom tooltip</p>
+<p class="p1">const tooltip = document.createElement('div');</p>
+<p class="p1">tooltip.innerHTML = 'Submit feedback';</p>
+<p class="p1">tooltip.style.cssText = `</p>
+<p class="p1"><span class="Apple-converted-space">  </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>bottom: 55px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>right: 0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: #333;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>color: white;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding: 6px 12px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-radius: 4px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-size: 13px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-family: system-ui;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>white-space: nowrap;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>opacity: 0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>pointer-events: none;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>transition: opacity 0.2s ease;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>z-index: 1001;</p>
+<p class="p1">`;</p>
+<p class="p2"><br></p>
+<p class="p1">// Button styles</p>
+<p class="p1">typeformBtn.style.cssText = `</p>
+<p class="p1"><span class="Apple-converted-space">  </span>position: fixed;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>bottom: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>right: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>z-index: 1000;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>width: 48px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>height: 48px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-radius: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background: #ffffff;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>color: #ffffff;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>font-size: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>line-height: 1;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>box-shadow: 0 2px 10px rgba(0,0,0,0.2);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>padding: 0;</p>
+<p class="p1">`;</p>
+<p class="p2"><br></p>
+<p class="p1">// Hover effects</p>
+<p class="p1">typeformBtn.onmouseover = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>typeformBtn.style.boxShadow = '0 3px 12px rgba(0,0,0,0.25)';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>tooltip.style.opacity = '1';</p>
+<p class="p1">};</p>
+<p class="p1">typeformBtn.onmouseout = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>typeformBtn.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>tooltip.style.opacity = '0';</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">// Click opens your Typeform</p>
+<p class="p1">typeformBtn.onclick = () =&gt; window.open('https://form.typeform.com/to/F3p185qi', '_blank', 'noopener,noreferrer');</p>
+<p class="p2"><br></p>
+<p class="p1">// Add tooltip to button wrapper and attach to body</p>
+<p class="p1">const wrapper = document.createElement('div');</p>
+<p class="p1">wrapper.style.cssText = 'position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column-reverse; gap: 4px;';</p>
+<p class="p1">wrapper.appendChild(tooltip);</p>
+<p class="p1">wrapper.appendChild(typeformBtn);</p>
+<p class="p1">document.body.appendChild(wrapper);</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
 <p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
 <p class="p1">&lt;/body&gt;</p>
 <p class="p1">&lt;/html&gt;</p>
