@@ -118,12 +118,13 @@ body {
   transition: transform 0.2s ease;
 }
 
-#toggle-filters:hover {
-  background: #4daabb;
-  transform: scale(1.1);
-  box-shadow: 0 6px 20px rgba(241, 210, 116, 0.4);
+@media (hover: hover) and (pointer: fine) {
+  #toggle-filters:hover {
+    background: #4daabb;
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(241, 210, 116, 0.4);
+  }
 }
-
 
 #filters h4 {
   margin: 0;
@@ -203,10 +204,12 @@ body {
   transition: all 0.2s ease;
 }
 
-#reset-btn:hover {
-  background: #f1d274;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(241, 210, 116, 0.4);
+@media (hover: hover) and (pointer: fine) {
+  #reset-btn:hover {
+    background: #f1d274;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(241, 210, 116, 0.4);
+  }
 }
 
 /* Fix Mapbox navigation controls position */
