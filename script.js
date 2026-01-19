@@ -225,7 +225,7 @@ typeformBtn.onclick = () => window.open('https://form.typeform.com/to/F3p185qi',
 
 // Add tooltip to button wrapper and attach to body
 const wrapper = document.createElement('div');
-wrapper.style.cssText = 'position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column-reverse; gap: 4px;';
+wrapper.style.cssText = 'position: fixed; bottom: 20px; right: 20px; z-index: 999; display: flex; flex-direction: column-reverse; gap: 4px;';
 wrapper.appendChild(tooltip);
 wrapper.appendChild(typeformBtn);
 document.body.appendChild(wrapper);
