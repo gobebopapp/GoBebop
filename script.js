@@ -116,6 +116,15 @@ window.resetFilters = function() {
 };
 
 map.on('load', () => {
+    // --- SCALABLE TRACKING START ---
+    // Pushes event to GTM when the map is actually ready for interaction
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+        'event': 'map_initialized',
+        'map_center': [4.9041, 52.3676] 
+    });
+    // --- SCALABLE TRACKING END ---
+
     map.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
     // Toggle filter panel
