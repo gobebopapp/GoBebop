@@ -142,8 +142,14 @@ map.on('load', () => {
         new mapboxgl.Popup({ offset: 15 }).setLngLat(coords).setHTML(buildPopupHTML(f)).addTo(map);
     });
     
-    map.on('mouseenter', 'Icons', () => map.getCanvas().style.cursor = 'pointer');
-    map.on('mouseleave', 'Icons', () => map.getCanvas().style.cursor = '');
+    if (!('ontouchstart' in window)) {
+        map.on('mouseenter', 'Icons', () => map.getCanvas().style.cursor = 'pointer');
+        map.on('mouseleave', 'Icons', () => map.getCanvas().style.cursor = '');
+        
+        map.on('mouseenter', 'Dots', () => map.getCanvas().style.cursor = 'pointer');
+        map.on('mouseleave', 'Dots', () => map.getCanvas().style.cursor = '');
+    }
+    
     
     // Dots popups + hover (uses unified function)  
     map.on('click', 'Dots', (e) => {
@@ -153,8 +159,7 @@ map.on('load', () => {
         new mapboxgl.Popup({ offset: 15 }).setLngLat(coords).setHTML(buildPopupHTML(f)).addTo(map);
     });
     
-    map.on('mouseenter', 'Dots', () => map.getCanvas().style.cursor = 'pointer');
-    map.on('mouseleave', 'Dots', () => map.getCanvas().style.cursor = '');
+    
     
     // *** ADD THIS NEW BLOCK - REPLACES your existing checkbox listeners ***
     document.querySelectorAll('#filters input[type="checkbox"]').forEach(checkbox => {
