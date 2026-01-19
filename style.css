@@ -209,6 +209,11 @@ body {
   box-shadow: 0 4px 12px rgba(241, 210, 116, 0.4);
 }
 
+/* Fix Mapbox navigation controls position */
+.mapboxgl-ctrl-top-right {
+  top: 5px; /* Desktop: header (70px) + padding (10px) */
+}
+
 /* Mobile Devices */
 @media (max-width: 600px) {
   #header {
@@ -221,6 +226,10 @@ body {
 
   #map {
     top: 50px; /* Ensure this matches the mobile header height */
+  }
+
+  .mapboxgl-ctrl-top-right {
+    top: 20px; /* Mobile: header (50px) + padding (10px) */
   }
 
   #filters {
