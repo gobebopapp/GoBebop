@@ -131,7 +131,7 @@ map.on('load', () => {
     document.getElementById('toggle-filters').addEventListener('click', function() {
         const filters = document.getElementById('filters');
         filters.classList.toggle('collapsed');
-        this.textContent = filters.classList.contains('collapsed') ? '☰' : '✕';
+        this.textContent = filters.classList.contains('collapsed') ? '☰' : 'X';
     });
     
     // Icons popups + hover (uses unified function)
