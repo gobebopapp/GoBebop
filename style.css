@@ -10,7 +10,7 @@ body {
 
 #map { 
   position: absolute; 
-  top: 70px;    /* Changed: matches #header height */
+  top: 70px;
   bottom: 0; 
   width: 100%; 
 }
@@ -43,13 +43,14 @@ body {
   border-radius: 12px; 
   box-shadow: 0 4px 20px rgba(0,0,0,0.1);
   z-index: 1500;
-  transition: all 0.3s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   max-height: 85vh;
   min-width: 280px;
   max-width: 320px;
-  display: flex;           /* Added: Create a flex container */
-  flex-direction: column;  /* Added: Stack header and scroll area */
-  overflow: hidden;        /* Fixed: The container itself shouldn't scroll */
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .filter-scroll-area {
@@ -58,56 +59,50 @@ body {
   padding: 0 20px 20px 20px;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
+  opacity: 1;
+  transition: opacity 0.01s ease;
 }
 
+#filters h4 {
+  margin: 0;
+  padding: 20px 20px 10px 20px;
+  font-size: 18px;
+  background: white;
+  flex-shrink: 0;
+  opacity: 1;
+  transition: opacity 0.01s ease;
+}
+
+/* Collapsed state - smooth transition */
 #filters.collapsed {
-  width: 48px !important;
-  height: 48px !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  border-radius: 50% !important;
-  left: 10px !important;
-  top: 10px !important;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  overflow: visible !important;  /* CHANGED: was hidden */
-  display: block !important;
+  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
+  border-radius: 30px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  overflow: visible;
 }
 
-/* 3. Button becomes the ONLY visible element */
-#filters.collapsed #toggle-filters {
-  position: absolute !important;
-  width: 48px !important;
-  height: 48px !important;
-  top: 80px !important;   /* Centers perfectly */
-  left: -2px !important;  /* Centers perfectly */
-  right: auto !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  background: #4daabb!important;
-  border-radius: 50% !important;
-  box-shadow: 0 4px 16px rgba(152, 216, 200, 0.4);
-  z-index: 2001 !important;
-}
-
-/* Hide ALL other children individually */
+/* Fade out content when collapsing */
 #filters.collapsed h4,
 #filters.collapsed .filter-scroll-area {
-  display: none !important;
+  opacity: 0;
+  pointer-events: none;
 }
 
-
+/* Toggle button - always visible, repositions smoothly */
 #toggle-filters {
-  position: absolute;    /* Fixed: Anchor to the #filters box */
+  position: absolute;
   top: 12px;
   right: 12px;
   background: #4daabb; 
   color: white;
   border: none;
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   font-size: 18px;
   cursor: pointer;
   display: flex;
@@ -115,7 +110,16 @@ body {
   justify-content: center;
   z-index: 10;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* When collapsed, center the button in the smaller container */
+#filters.collapsed #toggle-filters {
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  box-shadow: 0 4px 16px rgba(77, 170, 187, 0.4);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -124,14 +128,6 @@ body {
     transform: scale(1.1);
     box-shadow: 0 6px 20px rgba(241, 210, 116, 0.4);
   }
-}
-
-#filters h4 {
-  margin: 0;
-  padding: 20px 20px 10px 20px;
-  font-size: 18px;
-  background: white;
-  flex-shrink: 0; /* Header won't shrink */
 }
 
 #filters details {
@@ -168,6 +164,7 @@ body {
   cursor: pointer;
   transition: background 0.2s ease;
   font-size: 15px;
+  position: relative;
 }
 
 #filters label.selected {
@@ -176,7 +173,7 @@ body {
 }
 
 #filters input[type="checkbox"] {
-  display: none; /* Hides checkbox but keeps it functional */
+  display: none;
 }
 
 #filters label.selected::after {
@@ -188,7 +185,6 @@ body {
   font-weight: bold;
   font-size: 16px;
 }
-
 
 #reset-btn {
   width: 100%; 
@@ -214,7 +210,7 @@ body {
 
 /* Fix Mapbox navigation controls position */
 .mapboxgl-ctrl-top-right {
-  top: 5px; /* Desktop: header (70px) + padding (10px) */
+  top: 5px;
 }
 
 /* Mobile Devices */
@@ -228,42 +224,52 @@ body {
   }
 
   #map {
-    top: 50px; /* Ensure this matches the mobile header height */
+    top: 50px;
   }
 
   .mapboxgl-ctrl-top-right {
-    top: 20px; /* Mobile: header (50px) + padding (10px) */
+    top: 20px;
   }
 
+  /* Mobile: Slide up from bottom */
   #filters {
-    width: 100% !important;
-    left: 0 !important;      /* Essential: Reset the 10px offset */
-    right: 0 !important;     /* Anchor to both sides */
-    bottom: 0 !important;
-    top: auto !important; 
-    margin: 0 !important;    /* Remove any lingering margins */
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+    margin: 0;
     border-radius: 20px 20px 0 0;
-    max-width: 100vw !important; /* Ensure it never exceeds the screen width */
-    max-height: 70vh !important; /* Don't cover the whole screen so they can see the map */
-    display: flex !important;    /* Ensure flex stays active for the scroll area */
+    max-width: 100vw;
+    max-height: 70vh;
+    min-width: 100%;
+    transform: translateY(0);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .filter-scroll-area {
-    padding-bottom: 40px; /* Give extra room for thumb scrolling at the bottom */
+    padding-bottom: 40px;
   }
 
-  /* This moves the parent container to the bottom left */
+  /* Mobile collapsed: small button in bottom-left */
   #filters.collapsed {
-    width: 48px !important;
-    left: 20px !important;   /* Keep the 'floating' look when closed */
-    bottom: 20px !important;
-    top: auto !important;
+    width: 60px;
+    min-width: 60px;
+    max-width: 60px;
+    height: 60px;
+    left: 20px;
+    bottom: 20px;
+    top: auto;
+    right: auto;
+    border-radius: 30px;
+    transform: none;
   }
 
-  /* This ensures the button sits correctly inside that container */
+  /* Mobile: Keep button properly positioned */
   #filters.collapsed #toggle-filters {
-    top: 0 !important;   
-    left: 0 !important;
-    bottom: auto !important;
+    top: 12px;
+    right: 12px;
+    left: auto;
+    bottom: auto;
   }
 }
