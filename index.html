@@ -23,51 +23,74 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     
-  <div id="header" style="position: fixed; top: 0; left: 0; right: 0; height: 70px; background: rgba(255, 255, 255, 1); backdrop-filter: blur(10px); z-index: 2000; display: flex; align-items: center; padding: 0 20px;">
-  <img src="https://github.com/gobebopapp/GoBebop/blob/gh-pages/gobebop-logo.png?raw=true" alt="GoBebop" style="height: 60px; cursor: pointer;" onclick="map.flyTo({center: [4.9041, 52.3676], zoom: 12})">
-</div>
+  <div id="header">
+    <button id="menu-btn" onclick="window.toggleFilterDrawer()" aria-label="Open filters">☰</button>
+    <img src="https://github.com/gobebopapp/GoBebop/blob/gh-pages/gobebop-logo.png?raw=true" alt="GoBebop" onclick="map.flyTo({center: [4.9041, 52.3676], zoom: 12})">
+    <button id="feedback-btn" onclick="window.open('https://form.typeform.com/to/F3p185qi', '_blank', 'noopener,noreferrer')" aria-label="Submit feedback">💡</button>
+  </div>
 
 <link href="https://fonts.googleapis.com/css2?family=Fredoka One:wght@400;500;600;700&family=Quicksand:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
 
 <div id="map"></div>
-  
-<div id="filters">
-  <button id="toggle-filters">X</button>
-  
-  <h4 style="margin: 0 0 15px; font-size: 18px; font-weight: 600; color: #333;">Filters</h4>
-  
-  <div class="filter-scroll-area">
-  <details>
-    <summary>Category</summary>
-    <label><input type="checkbox" data-filter="primary_category" value="Active Play"> Active Play</label>
-    <label><input type="checkbox" data-filter="primary_category" value="Animals & Nature"> Animals + Nature</label>
-    <label><input type="checkbox" data-filter="primary_category" value="Theme Parks & Attractions"> Attractions</label>
-    <label><input type="checkbox" data-filter="primary_category" value="Classes & Workshops"> Classes + Workshops</label>
-    <label><input type="checkbox" data-filter="primary_category" value="Culture & Learning"> Culture + Learning</label>
-    <label><input type="checkbox" data-filter="primary_category" value="Cafes & Restaurants"> Restaurants + Cafes</label>
-  </details>
-  
-  <details>
-    <summary>Weather</summary>
-    <label><input type="checkbox" data-filter="indoor_outdoor" value="Indoor"> ☔ Rainy Day</label>
-    <label><input type="checkbox" data-filter="indoor_outdoor" value="Outdoor"> ☀️ Sunny Day</label>
-  </details>
-  
-  <details>
-    <summary>Ages</summary>
-    <label><input type="checkbox" data-filter="age_small" value="TRUE"> 👶 Babies (0-2)</label>
-    <label><input type="checkbox" data-filter="age_medium" value="TRUE"> 👦 Toddlers (3-6)</label>
-    <label><input type="checkbox" data-filter="age_large" value="TRUE"> 👧 Big Kids (7-12)</label>
-  </details>
-  
-  <details>
-    <summary>Accessibility</summary>
-    <label><input type="checkbox" data-filter="changing_table" value="TRUE"> 🧷 Changing table</label>
-  </details>
 
-  <button onclick="window.resetFilters()" id="reset-btn">Reset All Filters</button>
+<!-- Filter Drawer -->
+<div id="filter-drawer" class="filter-drawer">
+  <div class="drawer-header">
+    <h3>Filters</h3>
+    <button class="drawer-close" onclick="window.toggleFilterDrawer()">×</button>
+  </div>
+  
+  <div class="drawer-content">
+    <details>
+      <summary>Category</summary>
+      <label><input type="checkbox" data-filter="primary_category" value="Active Play"> Active Play</label>
+      <label><input type="checkbox" data-filter="primary_category" value="Animals & Nature"> Animals + Nature</label>
+      <label><input type="checkbox" data-filter="primary_category" value="Theme Parks & Attractions"> Attractions</label>
+      <label><input type="checkbox" data-filter="primary_category" value="Classes & Workshops"> Classes + Workshops</label>
+      <label><input type="checkbox" data-filter="primary_category" value="Culture & Learning"> Culture + Learning</label>
+      <label><input type="checkbox" data-filter="primary_category" value="Cafes & Restaurants"> Restaurants + Cafes</label>
+    </details>
+    
+    <details>
+      <summary>Weather</summary>
+      <label><input type="checkbox" data-filter="indoor_outdoor" value="Indoor"> ☔ Rainy Day</label>
+      <label><input type="checkbox" data-filter="indoor_outdoor" value="Outdoor"> ☀️ Sunny Day</label>
+    </details>
+    
+    <details>
+      <summary>Ages</summary>
+      <label><input type="checkbox" data-filter="age_small" value="TRUE"> 👶 Babies (0-2)</label>
+      <label><input type="checkbox" data-filter="age_medium" value="TRUE"> 👦 Toddlers (3-6)</label>
+      <label><input type="checkbox" data-filter="age_large" value="TRUE"> 👧 Big Kids (7-12)</label>
+    </details>
+    
+    <details>
+      <summary>Accessibility</summary>
+      <label><input type="checkbox" data-filter="changing_table" value="TRUE"> 🧷 Changing table</label>
+    </details>
+
+    <button onclick="window.resetFilters()" id="reset-btn">Reset All Filters</button>
+  </div>
 </div>
+
+<!-- Drawer Backdrop -->
+<div id="drawer-backdrop" class="drawer-backdrop" onclick="window.toggleFilterDrawer()"></div>
+  
+<!-- Desktop Location Sheet -->
+<div id="desktop-sheet" class="desktop-sheet">
+  <button class="sheet-close" onclick="window.closeLocationSheet()">×</button>
+  <div class="sheet-content" id="desktop-sheet-content"></div>
 </div>
+
+<!-- Mobile Bottom Sheet -->
+<div id="mobile-sheet" class="mobile-sheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-content-mobile" id="mobile-sheet-content"></div>
+</div>
+
+<!-- Mobile Backdrop -->
+<div id="sheet-backdrop" class="sheet-backdrop" onclick="window.closeLocationSheet()"></div>
+
     <script src='https://api.mapbox.com/mapbox-gl-js/v3.17.0/mapbox-gl.js'></script><script  src="./script.js"></script>
 
   </body>
