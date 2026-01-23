@@ -7,6 +7,7 @@ let map = new mapboxgl.Map({
 });
 
 let currentFeature = null;
+let geolocateControl = null;
 
 // Toggle filter drawer
 window.toggleFilterDrawer = function() {
@@ -26,7 +27,6 @@ window.toggleFilterDrawer = function() {
 
 // Highlight selected location
 function highlightSelectedLocation(layerId, featureId) {
-    // Create highlight effect by reducing opacity of non-selected icons
     map.setPaintProperty(layerId, 'icon-opacity', [
         'case',
         ['==', ['get', 'id'], featureId],
@@ -45,13 +45,11 @@ function buildSheetContent(f) {
     const category = f.properties.secondary_category || f.properties.primary_category || f.properties.category || 'N/A';
     const desc = f.properties.description || '';
     
-    // Age suitability
     const ages = [];
     if (f.properties.age_small === 'TRUE') ages.push('👶 Babies (0-2)');
     if (f.properties.age_medium === 'TRUE') ages.push('👦 Toddlers (3-6)');
     if (f.properties.age_large === 'TRUE') ages.push('👧 Big Kids (7-12)');
     
-    // Weather suitability
     const weatherMap = {
         'Indoor': '☔ Rainy Days',
         'Outdoor': '☀️ Sunny Days', 
@@ -59,12 +57,9 @@ function buildSheetContent(f) {
     };
     const weather = f.properties.indoor_outdoor ? weatherMap[f.properties.indoor_outdoor] || weatherMap.Mixed : '';
 
-    // Seasonality
     const seasonalMonths = f.properties.seasonal_months?.trim();
     const seasonalInfo = seasonalMonths ? `Open seasonally from ${seasonalMonths}` : '';
-
     
-    // Links
     const website = f.properties.website?.trim();
     const googleMaps = f.properties.google_maps?.trim();
     
@@ -80,48 +75,36 @@ function buildSheetContent(f) {
     };
 }
 
-// Open location sheet (mobile or desktop)
+// Open location sheet
 window.openLocationSheet = function(feature) {
     currentFeature = feature;
     const data = buildSheetContent(feature);
     const coords = feature.geometry.coordinates;
     
-    // Get feature identifier for highlighting
     const featureId = feature.properties.id || feature.properties.name_en || feature.properties.Name;
-    
-    // Determine which layer this feature is from
     const layerId = feature.layer?.id || 'Icons';
     
-    // Highlight the selected location
     highlightSelectedLocation(layerId, featureId);
     
-    // Center map on selected location with proper offset
     const isMobile = window.innerWidth <= 600;
     
     if (isMobile) {
-        // Mobile: Shift map DOWN so icon appears centered in visible area above sheet
-        // Sheet is 50vh, so visible area is 50vh. Center of visible area is 25vh from top.
-        // We need to shift the icon down by (total height - header - sheet)/2
         const totalHeight = window.innerHeight;
         const headerHeight = 50;
         const sheetHeight = totalHeight * 0.5;
-        const visibleHeight = totalHeight - headerHeight - sheetHeight;
-        
-        // Offset in pixels: negative moves map down, positive moves map up
-        // We want the icon to appear in center of visible area, so shift DOWN
         const offsetY = -(sheetHeight / 2);
+        
+        // Center without aggressive zoom - stay at current zoom or gently zoom to 14
+        const targetZoom = Math.min(Math.max(map.getZoom(), 13), 14);
         
         map.easeTo({
             center: coords,
-            zoom: Math.max(map.getZoom(), 15),
+            zoom: targetZoom,
             offset: [0, offsetY],
             duration: 600
         });
     } else {
-        // Desktop: Shift map LEFT so icon appears centered in visible area left of sidebar
-        // Sidebar is 420px + 20px margin = 440px from right
-        // We want to shift the view LEFT (negative X offset)
-        const sidebarWidth = 440; // 420px sheet + 20px margin
+        const sidebarWidth = 440;
         const offsetX = -(sidebarWidth / 2);
         
         map.easeTo({
@@ -133,7 +116,6 @@ window.openLocationSheet = function(feature) {
     }
     
     if (isMobile) {
-        // Mobile bottom sheet
         const sheet = document.getElementById('mobile-sheet');
         const backdrop = document.getElementById('sheet-backdrop');
         const content = document.getElementById('mobile-sheet-content');
@@ -147,7 +129,6 @@ window.openLocationSheet = function(feature) {
             contentHTML += `<div class="description">${data.desc}</div>`;
         }
         
-        // Two-column grid for compact info display
         if (data.ages.length > 0 || data.weather) {
             contentHTML += '<div class="info-grid">';
             
@@ -187,13 +168,10 @@ window.openLocationSheet = function(feature) {
         }
         
         content.innerHTML = contentHTML;
-        
-        // Show sheet
         sheet.classList.add('active');
         backdrop.classList.add('active');
         
     } else {
-        // Desktop floating sheet
         const sheet = document.getElementById('desktop-sheet');
         const content = document.getElementById('desktop-sheet-content');
         
@@ -257,7 +235,6 @@ window.closeLocationSheet = function() {
         sheet.classList.remove('active');
     }
     
-    // Reset icon opacity for all layers
     if (map.getLayer('Icons')) {
         map.setPaintProperty('Icons', 'icon-opacity', 1);
     }
@@ -268,7 +245,7 @@ window.closeLocationSheet = function() {
     currentFeature = null;
 };
 
-// Multi-select filters (OR within sections, AND between sections)
+// Multi-select filters
 window.updateFilters = function() {
     const filtersByGroup = {};
     
@@ -280,7 +257,6 @@ window.updateFilters = function() {
         filtersByGroup[filterType].push(checkbox.value);
     });
     
-    // Handle special case for weather: Sunny/Rainy auto-include Mixed
     if (filtersByGroup.indoor_outdoor) {
         const weatherValues = filtersByGroup.indoor_outdoor;
         if (weatherValues.includes('Outdoor')) {
@@ -334,13 +310,42 @@ map.on('load', () => {
 
     map.addControl(new mapboxgl.NavigationControl(), 'top-right');
     
-    // Click handlers for Icons layer
+    // Add geolocation control
+    geolocateControl = new mapboxgl.GeolocateControl({
+        positionOptions: {
+            enableHighAccuracy: true
+        },
+        trackUserLocation: true,
+        showUserHeading: true,
+        showAccuracyCircle: true
+    });
+    
+    map.addControl(geolocateControl, 'bottom-right');
+    
+    // Track geolocation events for analytics
+    geolocateControl.on('geolocate', (e) => {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            'event': 'user_location_found',
+            'location_accuracy': e.coords.accuracy
+        });
+    });
+    
+    geolocateControl.on('error', (e) => {
+        console.log('Geolocation error:', e.message);
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            'event': 'user_location_error',
+            'error_message': e.message
+        });
+    });
+    
+    // Click handlers
     map.on('click', 'Icons', (e) => {
         if (!e.features?.length) return;
         window.openLocationSheet(e.features[0]);
     });
     
-    // Click handlers for Dots layer
     map.on('click', 'Dots', (e) => {
         if (!e.features?.length) return;
         window.openLocationSheet(e.features[0]);
@@ -355,7 +360,7 @@ map.on('load', () => {
         map.on('mouseleave', 'Dots', () => map.getCanvas().style.cursor = '');
     }
     
-    // Filter checkbox handlers with visual feedback
+    // Filter checkbox handlers
     document.querySelectorAll('.drawer-content input[type="checkbox"]').forEach(checkbox => {
         checkbox.addEventListener('change', function() {
             window.updateFilters();
