@@ -58,6 +58,11 @@ function buildSheetContent(f) {
         'Mixed': '☀️☔ Any Weather'
     };
     const weather = f.properties.indoor_outdoor ? weatherMap[f.properties.indoor_outdoor] || weatherMap.Mixed : '';
+
+    // Seasonality
+    const seasonalMonths = f.properties.seasonal_months?.trim();
+    const seasonalInfo = seasonalMonths ? `Open seasonally from ${seasonalMonths}` : '';
+
     
     // Links
     const website = f.properties.website?.trim();
@@ -69,6 +74,7 @@ function buildSheetContent(f) {
         desc,
         ages,
         weather,
+        seasonalInfo,
         website,
         googleMaps
     };
@@ -154,14 +160,15 @@ window.openLocationSheet = function(feature) {
                 `;
             }
             
-            if (data.weather) {
+            if (data.weather || data.seasonalMonths) {
                 contentHTML += `
                     <div class="info-section">
                         <h3>Good For</h3>
-                        <div class="info-item">${data.weather}</div>
+                        ${data.weather ? `<div class="info-item">${data.weather}</div>` : ''}
+                        ${data.seasonalMonths ? `<div class="info-item">${data.seasonalMonths}</div>` : ''}
                     </div>
-                `;
-            }
+                 `;
+             }
             
             contentHTML += '</div>';
         }
@@ -212,7 +219,8 @@ window.openLocationSheet = function(feature) {
             contentHTML += `
                 <div class="info-section">
                     <h3>Good For</h3>
-                    <div class="info-item">${data.weather}</div>
+                    ${data.weather ? `<div class="info-item">${data.weather}</div>` : ''}
+                    ${data.seasonalMonths ? `<div class="info-item">${data.seasonalMonths}</div>` : ''}                    
                 </div>
             `;
         }
