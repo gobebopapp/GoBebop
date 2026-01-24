@@ -27,7 +27,19 @@
     <!-- End Google Tag Manager (noscript) -->
     
   <div id="header">
-    <button id="menu-btn" onclick="window.toggleFilterDrawer()" aria-label="Open filters">☰</button>
+    <button id="desktop-filter-btn" onclick="window.toggleFilterDrawer()" aria-label="Open filters">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="4" y1="21" x2="4" y2="14"></line>
+        <line x1="4" y1="10" x2="4" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12" y2="3"></line>
+        <line x1="20" y1="21" x2="20" y2="16"></line>
+        <line x1="20" y1="12" x2="20" y2="3"></line>
+        <line x1="1" y1="14" x2="7" y2="14"></line>
+        <line x1="9" y1="8" x2="15" y2="8"></line>
+        <line x1="17" y1="16" x2="23" y2="16"></line>
+      </svg>
+    </button>
     <img src="gobebop-logo.png" alt="GoBebop" onclick="map.flyTo({center: [4.9041, 52.3676], zoom: 12})">
     <button id="feedback-btn" onclick="window.open('https://form.typeform.com/to/F3p185qi', '_blank', 'noopener,noreferrer')" aria-label="Submit feedback">💡</button>
   </div>
@@ -88,15 +100,76 @@
 
 <!-- Mobile Bottom Sheet -->
 <div id="mobile-sheet" class="mobile-sheet">
-  <div class="sheet-handle"></div>
   <div class="mobile-sheet-header">
-    <button class="mobile-sheet-close" onclick="window.closeLocationSheet()">×</button>
+    <h2 id="mobile-sheet-title"></h2>
+    <div class="mobile-sheet-actions">
+      <button id="mobile-website-btn" class="sheet-icon-btn" style="display: none;" aria-label="Visit website">
+        <span class="icon-btn-emoji">🌐</span>
+        <span class="icon-btn-label">Website</span>
+      </button>
+      <button id="mobile-maps-btn" class="sheet-icon-btn" style="display: none;" aria-label="Get directions">
+        <span class="icon-btn-emoji">↪</span>
+        <span class="icon-btn-label">Directions</span>
+      </button>
+      <button class="mobile-sheet-close" onclick="window.closeLocationSheet()">×</button>
+    </div>
   </div>
   <div class="sheet-content-mobile" id="mobile-sheet-content"></div>
 </div>
 
 <!-- Mobile Backdrop -->
 <div id="sheet-backdrop" class="sheet-backdrop" onclick="window.closeLocationSheet()"></div>
+
+<!-- List View (Mobile Only) -->
+<div id="list-view" class="list-view">
+  <div class="list-header">
+    <div>
+      <h3>Nearby Locations</h3>
+      <div class="list-subheader">
+        <span id="list-count" class="list-count"></span>
+        <button id="list-filter-indicator" class="list-filter-indicator" onclick="window.openFiltersFromList()" style="display: none;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="21" x2="4" y2="14"></line>
+            <line x1="4" y1="10" x2="4" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12" y2="3"></line>
+            <line x1="20" y1="21" x2="20" y2="16"></line>
+            <line x1="20" y1="12" x2="20" y2="3"></line>
+            <line x1="1" y1="14" x2="7" y2="14"></line>
+            <line x1="9" y1="8" x2="15" y2="8"></line>
+            <line x1="17" y1="16" x2="23" y2="16"></line>
+          </svg>
+          <span id="active-filter-count">0</span> active
+        </button>
+      </div>
+    </div>
+    <button class="list-close" onclick="window.toggleListView()">×</button>
+  </div>
+  <div id="list-items" class="list-items"></div>
+</div>
+
+<!-- List Backdrop -->
+<div id="list-backdrop" class="list-backdrop" onclick="window.toggleListView()"></div>
+
+<!-- Filter Toggle Button (Mobile Only) -->
+<button id="filter-toggle" onclick="window.toggleFilterDrawer()" aria-label="Toggle filters">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="4" y1="21" x2="4" y2="14"></line>
+    <line x1="4" y1="10" x2="4" y2="3"></line>
+    <line x1="12" y1="21" x2="12" y2="12"></line>
+    <line x1="12" y1="8" x2="12" y2="3"></line>
+    <line x1="20" y1="21" x2="20" y2="16"></line>
+    <line x1="20" y1="12" x2="20" y2="3"></line>
+    <line x1="1" y1="14" x2="7" y2="14"></line>
+    <line x1="9" y1="8" x2="15" y2="8"></line>
+    <line x1="17" y1="16" x2="23" y2="16"></line>
+  </svg>
+</button>
+
+<!-- List Toggle Button (Mobile Only) -->
+<button id="list-toggle" onclick="window.toggleListView()" aria-label="Toggle list view">
+  📋
+</button>
 
     <script src='https://api.mapbox.com/mapbox-gl-js/v3.17.0/mapbox-gl.js'></script><script  src="./script.js"></script>
 
