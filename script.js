@@ -714,6 +714,22 @@ function updateFilterIndicator() {
     }
 }
 
+// Toggle feedback modal
+window.toggleFeedbackModal = function() {
+    const modal = document.getElementById('feedback-modal');
+    const backdrop = document.getElementById('feedback-backdrop');
+    
+    const isActive = modal.classList.contains('active');
+    
+    if (isActive) {
+        modal.classList.remove('active');
+        backdrop.classList.remove('active');
+    } else {
+        modal.classList.add('active');
+        backdrop.classList.add('active');
+    }
+};
+
 // Initialize
 loadLocationsData();
 
