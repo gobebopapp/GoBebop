@@ -916,12 +916,12 @@ body {
 /* Mobile Devices */
 @media (max-width: 600px) {
   #header {
-    height: 50px;
+    height: 60px;
     padding: 0 12px;
   }
 
   #header img {
-    height: 40px;
+    height: 60px;
   }
 
   /* Hide desktop filter button on mobile */
@@ -931,13 +931,13 @@ body {
 
   #feedback-btn {
     right: 12px;
-    width: 40px;
-    height: 40px;
-    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    font-size: 30x;
   }
 
   #map {
-    top: 50px;
+    top: 60px;
   }
 
   .mapboxgl-ctrl-top-right {
@@ -953,6 +953,9 @@ body {
   .mapboxgl-ctrl-geolocate {
     width: 56px;
     height: 56px;
+    border: none; 
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
   }
 
   .mapboxgl-ctrl-geolocate .mapboxgl-ctrl-icon {
