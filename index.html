@@ -11,12 +11,15 @@
       })(window,document,'script','dataLayer','GTM-M9B8VD85');</script>
     <!-- End Google Tag Manager -->
     <title>GoBebop</title>
-    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/v3.17.0/mapbox-gl.css'><link rel="stylesheet" href="./style.css">
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/v3.17.0/mapbox-gl.css'>
+    <link rel="stylesheet" href="./style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- favicon -->
     <link rel="icon" type="image/png" href="/favicon.ico"/>
- 
+    
+    <!-- Tally Embed -->
+    <script async src="https://tally.so/widgets/embed.js"></script>
   </head>
     
   <body>
@@ -41,7 +44,7 @@
       </svg>
     </button>
     <img src="gobebop-logo.png" alt="GoBebop" onclick="map.flyTo({center: [4.9041, 52.3676], zoom: 12})">
-    <button id="feedback-btn" onclick="window.open('https://form.typeform.com/to/F3p185qi', '_blank', 'noopener,noreferrer')" aria-label="Submit feedback">💡</button>
+    <button id="feedback-btn" onclick="window.toggleFeedbackModal()" aria-label="Submit feedback">💡</button>
   </div>
 
 <link href="https://fonts.googleapis.com/css2?family=Fredoka One:wght@400;500;600;700&family=Quicksand:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
@@ -151,6 +154,72 @@
 <!-- List Backdrop -->
 <div id="list-backdrop" class="list-backdrop" onclick="window.toggleListView()"></div>
 
+<!-- Feedback Modal -->
+<div id="feedback-modal" class="feedback-modal">
+  <div class="feedback-modal-content">
+    <div class="feedback-modal-header">
+      <h3 id="feedback-modal-title">We'd Love to Hear From You!</h3>
+      <button class="feedback-modal-close" onclick="window.toggleFeedbackModal()">×</button>
+    </div>
+    
+    <div class="feedback-modal-body">
+      
+      <!-- Feedback Section -->
+      <div class="feedback-section">
+        <p class="feedback-description">
+          Have a suggestion, found a bug, or want to share your thoughts? We're all ears! Your feedback helps us make GoBebop better for everyone.
+        </p>
+        <a href="https://tally.so/r/eqaN7o" target="_blank" rel="noopener noreferrer" class="feedback-submit-btn">
+          💬 Submit Feedback
+        </a>
+      </div>
+      
+      <!-- Divider -->
+      <div class="feedback-divider"></div>
+      
+      <!-- Mailing List Section -->
+      <div class="mailing-list-section">
+        <h4>Stay in the Loop</h4>
+        <p class="mailing-description">
+          Sign up for our mailing list to get updates on new features, locations, and improvements to GoBebop!
+        </p>
+        
+        <!-- Custom Mailchimp Form -->
+        <form action="https://app.us4.list-manage.com/subscribe/post?u=e48a6874281237f9679770b79&amp;id=092eda1397&amp;f_id=002a59e2f0" method="post" id="custom-mc-form" name="mc-embedded-subscribe-form" class="custom-mailchimp-form" target="_blank">
+          
+          <div class="form-group">
+            <label for="custom-email">Email Address <span class="required-asterisk">*</span></label>
+            <input 
+              type="email" 
+              name="EMAIL" 
+              id="custom-email" 
+              class="form-input" 
+              placeholder="your@email.com" 
+              required>
+          </div>
+          
+          <!-- Honeypot field (hidden) -->
+          <div style="position: absolute; left: -5000px;" aria-hidden="true">
+            <input type="text" name="b_e48a6874281237f9679770b79_092eda1397" tabindex="-1" value="">
+          </div>
+          
+          <button type="submit" class="form-submit-btn">
+            Subscribe
+          </button>
+          
+          <div id="form-messages" class="form-messages"></div>
+          
+        </form>
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- Feedback Modal Backdrop -->
+<div id="feedback-backdrop" class="feedback-backdrop" onclick="window.toggleFeedbackModal()"></div>
+
 <!-- Filter Toggle Button (Mobile Only) -->
 <button id="filter-toggle" onclick="window.toggleFilterDrawer()" aria-label="Toggle filters">
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -171,7 +240,8 @@
   📋
 </button>
 
-    <script src='https://api.mapbox.com/mapbox-gl-js/v3.17.0/mapbox-gl.js'></script><script  src="./script.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.17.0/mapbox-gl.js'></script>
+    <script src="./script.js"></script>
 
   </body>
   
