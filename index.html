@@ -1,1433 +1,296 @@
-* {
-  box-sizing: border-box;
-}
-
-body { 
-  margin: 0; 
-  padding: 0; 
-  font-family: 'Quicksand', -apple-system, sans-serif;
-}
-
-#map { 
-  position: absolute; 
-  top: 70px;
-  bottom: 0; 
-  width: 100%; 
-}
-
-/* HEADER */
-#header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 70px;
-  background: rgba(255, 255, 255, 1);
-  backdrop-filter: blur(10px);
-  z-index: 2000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 20px;
-}
-
-#header img {
-  height: 60px;
-  cursor: pointer;
-}
-
-#desktop-filter-btn,
-#feedback-btn {
-  position: absolute;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  z-index: 10;
-  color: #333;
-}
-
-#desktop-filter-btn {
-  left: 20px;
-}
-
-#desktop-filter-btn svg {
-  width: 24px;
-  height: 24px;
-}
-
-#feedback-btn {
-  right: 20px;
-  font-size: 28px;
-}
-
-#feedback-btn svg {
-  width: 24px;
-  height: 24px;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  #desktop-filter-btn:hover,
-  #feedback-btn:hover {
-    transform: scale(1.15);
-    background: rgba(0, 0, 0, 0.05);
-  }
-}
-
-/* FILTER DRAWER */
-.filter-drawer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 320px;
-  background: white;
-  box-shadow: 4px 0 20px rgba(0,0,0,0.15);
-  z-index: 2100;
-  transform: translateX(-100%);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  flex-direction: column;
-}
-
-.filter-drawer.active {
-  transform: translateX(0);
-}
-
-.drawer-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 24px 20px;
-  border-bottom: 1px solid #e0e0e0;
-  flex-shrink: 0;
-}
-
-.drawer-header h3 {
-  margin: 0;
-  font-size: 22px;
-  color: #333;
-}
-
-.drawer-close {
-  background: #f0f0f0;
-  border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 28px;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #666;
-  transition: all 0.2s ease;
-}
-
-.drawer-close:hover {
-  background: #e0e0e0;
-  color: #333;
-}
-
-.drawer-content {
-  flex-grow: 1;
-  overflow-y: auto;
-  padding: 20px;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
-}
-
-.drawer-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 2050;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-.drawer-backdrop.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.drawer-content details {
-  margin: 12px 0;
-  padding: 12px;
-  border-radius: 8px;
-  background: #f8f9fa;
-  border-left: 4px solid #4daabb;
-}
-
-.drawer-content details[open] {
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.drawer-content details summary {
-  font-weight: 600;
-  color: #444;
-  font-size: 15px;
-  cursor: pointer;
-  padding: 4px 0;
-  list-style: none;
-}
-
-.drawer-content details summary::-webkit-details-marker {
-  display: none;
-}
-
-.drawer-content label {
-  display: block;
-  padding: 8px 12px;
-  margin: 4px 0;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-  font-size: 15px;
-  position: relative;
-}
-
-.drawer-content label.selected {
-  background: #f4c430;
-  color: white;
-}
-
-.drawer-content input[type="checkbox"] {
-  display: none;
-}
-
-.drawer-content label.selected::after {
-  content: '✓';
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-weight: bold;
-  font-size: 16px;
-}
-
-#reset-btn {
-  width: 100%; 
-  padding: 12px; 
-  background: #4daabb;
-  color: white; 
-  border: none; 
-  border-radius: 8px; 
-  cursor: pointer; 
-  margin-top: 12px;
-  font-weight: 600;
-  font-size: 15px;
-  transition: all 0.2s ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  #reset-btn:hover {
-    background: #f1d274;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(241, 210, 116, 0.4);
-  }
-}
-
-/* DESKTOP LOCATION SHEET */
-.desktop-sheet {
-  position: fixed;
-  top: 90px;
-  right: 20px;
-  bottom: 20px;
-  width: 420px;
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(16px);
-  border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-  z-index: 1600;
-  transform: translateX(calc(100% + 40px));
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
-  display: none;
-}
-
-.desktop-sheet.active {
-  transform: translateX(0);
-}
-
-.sheet-close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: rgba(240, 240, 240, 0.9);
-  border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 28px;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #666;
-  transition: all 0.2s ease;
-  z-index: 10;
-}
-
-.sheet-close:hover {
-  background: rgba(224, 224, 224, 0.95);
-  color: #333;
-  transform: scale(1.1);
-}
-
-.sheet-content {
-  padding: 24px;
-  padding-top: 60px;
-  height: 100%;
-  overflow-y: auto;
-}
-
-.sheet-content h2 {
-  margin: 0 0 12px 0;
-  font-size: 26px;
-  color: #333;
-  line-height: 1.3;
-}
-
-.sheet-content .category-badge {
-  display: inline-block;
-  background: #4daabb;
-  color: white;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
-.sheet-content .description {
-  font-size: 15px;
-  line-height: 1.6;
-  color: #555;
-  margin-bottom: 20px;
-}
-
-.sheet-content .info-section {
-  margin-bottom: 16px;
-}
-
-.sheet-content .info-section h3 {
-  font-size: 12px;
-  font-weight: 700;
-  color: #888;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  margin: 0 0 8px 0;
-}
-
-.sheet-content .info-item {
-  padding: 4px 0;
-  font-size: 14px;
-  color: #333;
-  line-height: 1.5;
-}
-
-.sheet-content .links {
-  margin-top: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.sheet-content .links a {
-  display: block;
-  width: 100%;
-  padding: 12px 18px;
-  background: #f4c430;
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 14px;
-  text-align: center;
-  transition: all 0.2s ease;
-}
-
-.sheet-content .links a:hover {
-  background: #e5b620;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(244, 196, 48, 0.4);
-}
-
-/* MOBILE BOTTOM SHEET */
-.mobile-sheet {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: white;
-  border-radius: 20px 20px 0 0;
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
-  z-index: 1600;
-  transform: translateY(100%);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  max-height: 42vh;
-  display: none;
-  flex-direction: column;
-}
-
-.mobile-sheet.active {
-  transform: translateY(0);
-}
-
-.mobile-sheet-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 16px 12px 16px;
-  border-bottom: 1px solid #f0f0f0;
-  flex-shrink: 0;
-  gap: 12px;
-}
-
-.mobile-sheet-header h2 {
-  margin: 0;
-  font-size: 18px;
-  color: #333;
-  line-height: 1.3;
-  font-weight: 600;
-  flex-grow: 1;
-  min-width: 0;
-}
-
-.mobile-sheet-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.sheet-icon-btn {
-  width: auto;
-  min-width: 36px;
-  height: auto;
-  border-radius: 8px;
-  border: none;
-  background: #f8f9fa;
-  padding: 6px 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  color: #333;
-}
-
-.icon-btn-emoji {
-  font-size: 18px;
-  line-height: 1;
-}
-
-.icon-btn-label {
-  font-size: 9px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  color: #666;
-  white-space: nowrap;
-}
-
-.sheet-icon-btn svg {
-  width: 20px;
-  height: 20px;
-}
-
-.sheet-icon-btn:active {
-  background: #e9ecef;
-  transform: scale(0.95);
-}
-
-.mobile-sheet-close {
-  background: #f0f0f0;
-  border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 24px;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #666;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-}
-
-.mobile-sheet-close:active {
-  background: #e0e0e0;
-  transform: scale(0.95);
-}
-
-.sheet-content-mobile {
-  padding: 16px;
-  overflow-y: auto;
-  flex-grow: 1;
-  -webkit-overflow-scrolling: touch;
-}
-
-.sheet-content-mobile .category-badge {
-  display: inline-block;
-  background: #4daabb;
-  color: white;
-  padding: 4px 12px;
-  border-radius: 16px;
-  font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 12px;
-}
-
-.sheet-content-mobile .description {
-  font-size: 14px;
-  line-height: 1.5;
-  color: #555;
-  margin-bottom: 16px;
-}
-
-.description-collapsed {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.description-expanded {
-  display: block;
-}
-
-.see-more-btn {
-  background: none;
-  border: none;
-  color: #4daabb;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  padding: 4px 0;
-  margin-top: 4px;
-  display: inline-block;
-}
-
-.see-more-btn:active {
-  opacity: 0.7;
-}
-
-.sheet-content-mobile .info-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.sheet-content-mobile .info-section {
-  background: #f8f9fa;
-  padding: 10px;
-  border-radius: 8px;
-}
-
-.sheet-content-mobile .info-section h3 {
-  font-size: 11px;
-  font-weight: 700;
-  color: #888;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin: 0 0 6px 0;
-}
-
-.sheet-content-mobile .info-item {
-  font-size: 13px;
-  color: #333;
-  line-height: 1.4;
-  margin-bottom: 3px;
-}
-
-.sheet-content-mobile .info-item:last-child {
-  margin-bottom: 0;
-}
-
-.sheet-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1550;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  display: none;
-}
-
-.sheet-backdrop.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* LIST VIEW (MOBILE ONLY) */
-.list-view {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: white;
-  z-index: 2200;
-  transform: translateX(-100%);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: none;
-  flex-direction: column;
-}
-
-.list-view.active {
-  transform: translateX(0);
-}
-
-.list-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px;
-  border-bottom: 1px solid #e0e0e0;
-  flex-shrink: 0;
-  background: white;
-}
-
-.list-header > div {
-  flex-grow: 1;
-}
-
-.list-header h3 {
-  margin: 0 0 6px 0;
-  font-size: 20px;
-  color: #333;
-}
-
-.list-subheader {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.list-count {
-  font-size: 13px;
-  color: #888;
-  font-weight: 500;
-}
-
-.list-filter-indicator {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  background: rgba(77, 170, 187, 0.1);
-  border: 1px solid #4daabb;
-  border-radius: 16px;
-  font-size: 12px;
-  color: #4daabb;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.list-filter-indicator:active {
-  background: rgba(77, 170, 187, 0.2);
-  transform: scale(0.95);
-}
-
-.list-filter-indicator svg {
-  width: 14px;
-  height: 14px;
-  stroke: #4daabb;
-}
-
-.list-close {
-  background: #f0f0f0;
-  border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 28px;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #666;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-}
-
-.list-close:active {
-  background: #e0e0e0;
-  transform: scale(0.95);
-}
-
-.list-items {
-  flex-grow: 1;
-  overflow-y: auto;
-  padding: 16px;
-  -webkit-overflow-scrolling: touch;
-  background: #f8f9fa;
-}
-
-.list-item {
-  display: flex;
-  flex-direction: column;
-  padding: 18px;
-  margin-bottom: 12px;
-  background: white;
-  border: 1px solid #e8e8e8;
-  border-radius: 16px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-
-.list-item:active {
-  background: #f8f9fa;
-  transform: scale(0.98);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-.list-item-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 8px;
-  gap: 12px;
-}
-
-.list-item-header h4 {
-  margin: 0;
-  font-size: 18px;
-  color: #333;
-  font-weight: 600;
-  flex-grow: 1;
-  line-height: 1.3;
-}
-
-.list-distance {
-  font-size: 12px;
-  color: #4daabb;
-  font-weight: 700;
-  white-space: nowrap;
-  background: rgba(77, 170, 187, 0.1);
-  padding: 4px 10px;
-  border-radius: 12px;
-}
-
-.list-item-category {
-  margin-bottom: 10px;
-}
-
-.list-category-badge {
-  display: inline-block;
-  font-size: 12px;
-  color: white;
-  background: #4daabb;
-  padding: 4px 12px;
-  border-radius: 14px;
-  font-weight: 600;
-}
-
-.list-description {
-  font-size: 14px;
-  color: #666;
-  line-height: 1.5;
-  margin: 0 0 12px 0;
-}
-
-.list-item-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 4px;
-}
-
-.list-tag-group {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.list-tag {
-  display: inline-block;
-  font-size: 12px;
-  padding: 4px 10px;
-  background: #f0f0f0;
-  border-radius: 12px;
-  color: #555;
-  font-weight: 500;
-}
-
-.list-tag-weather {
-  background: rgba(244, 196, 48, 0.15);
-  color: #d19f20;
-}
-
-.list-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 2150;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  display: none;
-}
-
-.list-backdrop.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Filter toggle button - bottom left (mobile only) */
-#filter-toggle {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: none;
-  background: white;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  cursor: pointer;
-  z-index: 1000;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  color: #333;
-}
-
-#filter-toggle:active {
-  transform: scale(0.95);
-  box-shadow: 0 1px 5px rgba(0,0,0,0.15);
-}
-
-#filter-toggle svg {
-  width: 24px;
-  height: 24px;
-}
-
-/* List toggle button - bottom left next to filter (mobile only) */
-#list-toggle {
-  position: fixed;
-  bottom: 20px;
-  left: 88px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: none;
-  background: white;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  cursor: pointer;
-  z-index: 1000;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  color: #333;
-}
-
-#list-toggle:active {
-  transform: scale(0.95);
-  box-shadow: 0 1px 5px rgba(0,0,0,0.15);
-}
-
-#list-toggle svg {
-  width: 24px;
-  height: 24px;
-}
-
-/* MAPBOX CONTROLS STYLING */
-.mapboxgl-ctrl-top-right {
-  top: 10px;
-  right: 10px;
-}
-
-.mapboxgl-ctrl-bottom-right {
-  bottom: 10px;
-  right: 10px;
-}
-
-.mapboxgl-ctrl-bottom-left {
-  bottom: 10px;
-  left: 10px;
-}
-
-/* Hide zoom controls on mobile */
-@media (max-width: 600px) {
-  .mapboxgl-ctrl-top-right .mapboxgl-ctrl-group {
-    display: none;
-  }
-}
-
-/* Style the Mapbox geolocation button */
-@keyframes pulse-geolocate {
-  0% {
-    box-shadow: 0 3px 12px rgba(0,0,0,0.2), 0 0 0 0 rgba(77, 170, 187, 0.4);
-  }
-  50% {
-    box-shadow: 0 3px 12px rgba(0,0,0,0.2), 0 0 0 8px rgba(77, 170, 187, 0);
-  }
-  100% {
-    box-shadow: 0 3px 12px rgba(0,0,0,0.2), 0 0 0 0 rgba(77, 170, 187, 0);
-  }
-}
-
-.mapboxgl-ctrl-geolocate {
-  width: 48px;
-  height: 48px;
-  background: white;
-  border-radius: 50%;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.2);
-  border: none;
-  transition: all 0.2s ease;
-  animation: pulse-geolocate 2s infinite;
-}
-
-/* Stop pulsing when active or hovered */
-.mapboxgl-ctrl-geolocate:hover,
-.mapboxgl-ctrl-geolocate.mapboxgl-ctrl-geolocate-active {
-  animation: none;
-}
-
-.mapboxgl-ctrl-geolocate:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-  transform: scale(1.05);
-}
-
-.mapboxgl-ctrl-geolocate .mapboxgl-ctrl-icon {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%234daabb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Ccircle cx='12' cy='12' r='3'%3E%3C/circle%3E%3C/svg%3E");
-  background-size: 28px;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.mapboxgl-ctrl-geolocate:active .mapboxgl-ctrl-icon,
-.mapboxgl-ctrl-geolocate.mapboxgl-ctrl-geolocate-active .mapboxgl-ctrl-icon {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%23f4c430' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Ccircle cx='12' cy='12' r='3' fill='%23f4c430'%3E%3C/circle%3E%3C/svg%3E");
-  background-size: 28px;
-}
-
-.mapboxgl-ctrl-geolocate.mapboxgl-ctrl-geolocate-active {
-  background: rgba(244, 196, 48, 0.1);
-}
-
-.mapboxgl-ctrl-geolocate.mapboxgl-ctrl-geolocate-active-error {
-  background: rgba(255, 77, 77, 0.1);
-}
-
-.mapboxgl-ctrl-geolocate.mapboxgl-ctrl-geolocate-active-error .mapboxgl-ctrl-icon {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ff4d4d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E");
-}
-
-/* Mobile Bottom Navigation */
-.mobile-bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 70px;
-  background: white;
-  border-top: 1px solid #e0e0e0;
-  display: none;
-  justify-content: space-around;
-  align-items: center;
-  z-index: 1500;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-}
-
-.nav-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  background: none;
-  border: none;
-  padding: 8px;
-  cursor: pointer;
-  color: #666;
-  transition: all 0.2s ease;
-  height: 100%;
-}
-
-.nav-item:active {
-  background: rgba(77, 170, 187, 0.1);
-  color: #4daabb;
-}
-
-.nav-item svg {
-  width: 24px;
-  height: 24px;
-}
-
-.nav-label {
-  font-size: 11px;
-  font-weight: 600;
-  font-family: 'Quicksand', sans-serif;
-}
-
-/* Mobile Devices */
-@media (max-width: 600px) {
-  #header {
-    height: 60px;
-    padding: 0 12px;
-    background: transparent;
-    backdrop-filter: none;
-  }
-
-  #header img {
-    height: 60px;
-  }
-
-  /* Hide desktop filter button and feedback button on mobile */
-  #desktop-filter-btn,
-  #feedback-btn {
-    display: none;
-  }
-
-  #map {
-    top: 0;
-    bottom: 70px; /* Make room for bottom nav */
-  }
-
-  .mapboxgl-ctrl-top-right {
-    top: 10px;
-    right: 10px;
-  }
-
-  .mapboxgl-ctrl-bottom-left {
-    bottom: 80px; /* Above bottom nav */
-    left: 10px;
-  }
-
-  .mapboxgl-ctrl-bottom-right {
-    bottom: 80px; /* Above bottom nav - matches left side */
-    right: 10px;
-  }
-
-  .mapboxgl-ctrl-geolocate {
-    width: 48px !important;
-    height: 48px !important;
-    border: none; 
-    background: white;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
-  }
-
-  .mapboxgl-ctrl-geolocate .mapboxgl-ctrl-icon {
-    background-size: 28px !important; /* Scale icon to button */
-  }
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+      <!-- Google Tag Manager -->
+      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-M9B8VD85');</script>
+    <!-- End Google Tag Manager -->
+    <title>GoBebop</title>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/v3.17.0/mapbox-gl.css'>
+    <link rel="stylesheet" href="./style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- favicon -->
+    <link rel="icon" type="image/png" href="/favicon.ico"/>
+    
+    <!-- Tally Embed -->
+    <script async src="https://tally.so/widgets/embed.js"></script>
+  </head>
+    
+  <body>
+    
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M9B8VD85"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
+  <div id="header">
+    <button id="desktop-filter-btn" onclick="window.toggleFilterDrawer()" aria-label="Open filters">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="4" y1="21" x2="4" y2="14"></line>
+        <line x1="4" y1="10" x2="4" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12" y2="3"></line>
+        <line x1="20" y1="21" x2="20" y2="16"></line>
+        <line x1="20" y1="12" x2="20" y2="3"></line>
+        <line x1="1" y1="14" x2="7" y2="14"></line>
+        <line x1="9" y1="8" x2="15" y2="8"></line>
+        <line x1="17" y1="16" x2="23" y2="16"></line>
+      </svg>
+    </button>
+    <img src="gobebop-logo.png" alt="GoBebop" onclick="map.flyTo({center: [4.9041, 52.3676], zoom: 12})">
+    <button id="feedback-btn" onclick="window.toggleFeedbackModal()" aria-label="Submit feedback">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+    </button>
+  </div>
+
+<link href="https://fonts.googleapis.com/css2?family=Fredoka One:wght@400;500;600;700&family=Quicksand:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+
+<div id="map"></div>
+
+<!-- Filter Drawer -->
+<div id="filter-drawer" class="filter-drawer">
+  <div class="drawer-header">
+    <h3>Filters</h3>
+    <button class="drawer-close" onclick="window.toggleFilterDrawer()">×</button>
+  </div>
   
-  /* Increase tap target with pseudo-element */
-  .mapboxgl-ctrl-geolocate::after {
-    content: '';
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    bottom: -8px;
-    left: -8px;
-    border-radius: 50%;
-  }
+  <div class="drawer-content">
+    <details>
+      <summary>Category</summary>
+      <label><input type="checkbox" data-filter="primary_category" value="Active Play"> Active Play</label>
+      <label><input type="checkbox" data-filter="primary_category" value="Animals & Nature"> Animals + Nature</label>
+      <label><input type="checkbox" data-filter="primary_category" value="Theme Parks & Attractions"> Attractions</label>
+      <label><input type="checkbox" data-filter="primary_category" value="Classes & Workshops"> Classes + Workshops</label>
+      <label><input type="checkbox" data-filter="primary_category" value="Culture & Learning"> Culture + Learning</label>
+      <label><input type="checkbox" data-filter="primary_category" value="Cafes & Restaurants"> Restaurants + Cafes</label>
+    </details>
+    
+    <details>
+      <summary>Weather</summary>
+      <label><input type="checkbox" data-filter="indoor_outdoor" value="Indoor"> ☔ Rainy Day</label>
+      <label><input type="checkbox" data-filter="indoor_outdoor" value="Outdoor"> ☀️ Sunny Day</label>
+    </details>
+    
+    <details>
+      <summary>Ages</summary>
+      <label><input type="checkbox" data-filter="age_small" value="TRUE"> 👶 Babies (0-2)</label>
+      <label><input type="checkbox" data-filter="age_medium" value="TRUE"> 👦 Toddlers (3-6)</label>
+      <label><input type="checkbox" data-filter="age_large" value="TRUE"> 👧 Big Kids (7-12)</label>
+    </details>
+    
+    <details>
+      <summary>Facilities</summary>
+      <label><input type="checkbox" data-filter="toilet" value="TRUE"> 🚽 Toilet access</label>
+      <label><input type="checkbox" data-filter="changing_table" value="TRUE"> 🧷 Changing table</label>
+    </details>
 
-  /* Make filter drawer slide from bottom and cover full screen on mobile */
-  .filter-drawer {
-    top: auto;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    max-width: 100%;
-    height: 90vh;
-    max-height: 90vh;
-    transform: translateY(100%);
-    border-radius: 20px 20px 0 0;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
-  }
+    <button onclick="window.resetFilters()" id="reset-btn">Reset All Filters</button>
+  </div>
+</div>
 
-  .filter-drawer.active {
-    transform: translateY(0);
-  }
-
-  /* Make list view consistent - slide from bottom */
-  .list-view {
-    display: flex;
-    top: auto;
-    bottom: 0;
-    height: 90vh;
-    max-height: 90vh;
-    transform: translateY(100%);
-    border-radius: 20px 20px 0 0;
-  }
-
-  .list-view.active {
-    transform: translateY(0);
-  }
-
-  /* Make feedback modal consistent - slide from bottom */
-  .feedback-modal {
-    position: fixed;
-    top: auto;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    max-width: 100%;
-    height: 90vh;
-    max-height: 90vh;
-    transform: translateY(100%);
-    border-radius: 20px 20px 0 0;
-  }
+<!-- Drawer Backdrop -->
+<div id="drawer-backdrop" class="drawer-backdrop" onclick="window.toggleFilterDrawer()"></div>
   
-  .feedback-modal.active {
-    transform: translateY(0);
-  }
+<!-- Desktop Location Sheet -->
+<div id="desktop-sheet" class="desktop-sheet">
+  <button class="sheet-close" onclick="window.closeLocationSheet()">×</button>
+  <div class="sheet-content" id="desktop-sheet-content"></div>
+</div>
 
-  .desktop-sheet {
-    display: none !important;
-  }
+<!-- Mobile Bottom Sheet -->
+<div id="mobile-sheet" class="mobile-sheet">
+  <div class="mobile-sheet-header">
+    <h2 id="mobile-sheet-title"></h2>
+    <div class="mobile-sheet-actions">
+      <button id="mobile-website-btn" class="sheet-icon-btn" style="display: none;" aria-label="Visit website">
+        <span class="icon-btn-emoji">🌐</span>
+        <span class="icon-btn-label">Website</span>
+      </button>
+      <button id="mobile-maps-btn" class="sheet-icon-btn" style="display: none;" aria-label="Get directions">
+        <span class="icon-btn-emoji">↪</span>
+        <span class="icon-btn-label">Directions</span>
+      </button>
+      <button class="mobile-sheet-close" onclick="window.closeLocationSheet()">×</button>
+    </div>
+  </div>
+  <div class="sheet-content-mobile" id="mobile-sheet-content"></div>
+</div>
 
-  .mobile-sheet {
-    display: flex;
-  }
+<!-- Mobile Backdrop -->
+<div id="sheet-backdrop" class="sheet-backdrop" onclick="window.closeLocationSheet()"></div>
 
-  /* Show bottom navigation on mobile */
-  .mobile-bottom-nav {
-    display: flex;
-  }
+<!-- List View (Mobile Only) -->
+<div id="list-view" class="list-view">
+  <div class="list-header">
+    <div>
+      <h3>Nearby Locations</h3>
+      <div class="list-subheader">
+        <span id="list-count" class="list-count"></span>
+        <button id="list-filter-indicator" class="list-filter-indicator" onclick="window.openFiltersFromList()" style="display: none;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="21" x2="4" y2="14"></line>
+            <line x1="4" y1="10" x2="4" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12" y2="3"></line>
+            <line x1="20" y1="21" x2="20" y2="16"></line>
+            <line x1="20" y1="12" x2="20" y2="3"></line>
+            <line x1="1" y1="14" x2="7" y2="14"></line>
+            <line x1="9" y1="8" x2="15" y2="8"></line>
+            <line x1="17" y1="16" x2="23" y2="16"></line>
+          </svg>
+          <span id="active-filter-count">0</span> active
+        </button>
+      </div>
+    </div>
+    <button class="list-close" onclick="window.toggleListView()">×</button>
+  </div>
+  <div id="list-items" class="list-items"></div>
+</div>
 
-  /* Hide old floating buttons */
-  #list-toggle,
-  #filter-toggle {
-    display: none !important;
-  }
+<!-- List Backdrop -->
+<div id="list-backdrop" class="list-backdrop" onclick="window.toggleListView()"></div>
 
-  .list-backdrop {
-    display: block;
-  }
-}
+<!-- Feedback Modal -->
+<div id="feedback-modal" class="feedback-modal">
+  <div class="feedback-modal-content">
+    <div class="feedback-modal-header">
+      <h3 id="feedback-modal-title">We'd Love to Hear From You!</h3>
+      <button class="feedback-modal-close" onclick="window.toggleFeedbackModal()">×</button>
+    </div>
+    
+    <div class="feedback-modal-body">
+      
+      <!-- Feedback Section -->
+      <div class="feedback-section">
+        <p class="feedback-description">
+          Have a suggestion, found a bug, or want to share your thoughts? We're all ears! Your feedback helps us make GoBebop better for everyone.
+        </p>
+        <a href="https://tally.so/r/eqaN7o" target="_blank" rel="noopener noreferrer" class="feedback-submit-btn">
+          💬 Submit Feedback
+        </a>
+      </div>
+      
+      <!-- Divider -->
+      <div class="feedback-divider"></div>
+      
+      <!-- Mailing List Section -->
+      <div class="mailing-list-section">
+        <h4>Stay in the Loop</h4>
+        <p class="mailing-description">
+          Sign up for our mailing list to get updates on new features, locations, and improvements to GoBebop!
+        </p>
+        
+        <!-- Custom Mailchimp Form -->
+        <form action="https://app.us4.list-manage.com/subscribe/post?u=e48a6874281237f9679770b79&amp;id=092eda1397&amp;f_id=002a59e2f0" method="post" id="custom-mc-form" name="mc-embedded-subscribe-form" class="custom-mailchimp-form" target="_blank">
+          
+          <div class="form-group">
+            <label for="custom-email">Email Address <span class="required-asterisk">*</span></label>
+            <input 
+              type="email" 
+              name="EMAIL" 
+              id="custom-email" 
+              class="form-input" 
+              placeholder="your@email.com" 
+              required>
+          </div>
+          
+          <!-- Honeypot field (hidden) -->
+          <div style="position: absolute; left: -5000px;" aria-hidden="true">
+            <input type="text" name="b_e48a6874281237f9679770b79_092eda1397" tabindex="-1" value="">
+          </div>
+          
+          <button type="submit" class="form-submit-btn">
+            Subscribe
+          </button>
+          
+          <div id="form-messages" class="form-messages"></div>
+          
+        </form>
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
 
-/* FEEDBACK MODAL */
-.feedback-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.9);
-  width: 90%;
-  max-width: 600px;
-  height: 85vh; /* Changed from max-height to height */
-  max-height: 85vh;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-  z-index: 2300;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  flex-direction: column;
-}
+<!-- Feedback Modal Backdrop -->
+<div id="feedback-backdrop" class="feedback-backdrop" onclick="window.toggleFeedbackModal()"></div>
 
-.feedback-modal.active {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translate(-50%, -50%) scale(1);
-}
-
-.feedback-modal-content {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-}
-
-.feedback-modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 24px;
-  border-bottom: 1px solid #e0e0e0;
-  flex-shrink: 0;
-}
-
-.feedback-modal-header h3 {
-  margin: 0;
-  font-size: 22px;
-  color: #333;
-}
-
-.feedback-modal-close {
-  background: #f0f0f0;
-  border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 28px;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #666;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-}
-
-.feedback-modal-close:hover {
-  background: #e0e0e0;
-  color: #333;
-}
-
-.feedback-modal-body {
-  flex-grow: 1;
-  overflow-y: auto;
-  padding: 24px;
-  -webkit-overflow-scrolling: touch;
-  min-height: 0;
-}
-
-.feedback-section {
-  margin-bottom: 24px;
-}
-
-.feedback-description,
-.mailing-description {
-  font-size: 15px;
-  line-height: 1.6;
-  color: #555;
-  margin-bottom: 16px;
-}
-
-.feedback-submit-btn {
-  display: block;
-  width: 100%;
-  padding: 14px 20px;
-  background: #4daabb;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: 'Quicksand', sans-serif;
-  text-align: center;
-  text-decoration: none;
-}
-
-.feedback-submit-btn:hover {
-  background: #3d8a99;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(77, 170, 187, 0.3);
-}
-
-.feedback-divider {
-  height: 1px;
-  background: linear-gradient(to right, transparent, #e0e0e0, transparent);
-  margin: 32px 0;
-}
-
-.mailing-list-section h4 {
-  margin: 0 0 12px 0;
-  font-size: 18px;
-  color: #333;
-}
-
-/* Custom Mailchimp Form Styling */
-.custom-mailchimp-form {
-  width: 100%;
-}
-
-.form-group {
-  margin-bottom: 16px;
-}
-
-.form-group label {
-  display: block;
-  font-weight: 600;
-  font-size: 14px;
-  color: #333;
-  margin-bottom: 8px;
-}
-
-.required-asterisk {
-  color: #f4c430;
-  font-weight: bold;
-}
-
-.form-input {
-  width: 100%;
-  padding: 12px 16px;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 15px;
-  font-family: 'Quicksand', sans-serif;
-  transition: border-color 0.2s ease;
-  box-sizing: border-box;
-  background: white;
-}
-
-.form-input:focus {
-  outline: none;
-  border-color: #4daabb;
-}
-
-.form-input::placeholder {
-  color: #999;
-}
-
-.form-submit-btn {
-  width: 100%;
-  padding: 12px 20px;
-  background: #4daabb;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 15px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: 'Quicksand', sans-serif;
-}
-
-.form-submit-btn:hover {
-  background: #3d8a99;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(77, 170, 187, 0.3);
-}
-
-.form-submit-btn:active {
-  transform: translateY(0);
-}
-
-.form-messages {
-  margin-top: 12px;
-  padding: 10px 12px;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  display: none;
-}
-
-.form-messages.success {
-  display: block;
-  background-color: rgba(77, 170, 187, 0.1);
-  color: #4daabb;
-}
-
-.form-messages.error {
-  display: block;
-  background-color: rgba(255, 77, 77, 0.1);
-  color: #ff4d4d;
-}
-
-.feedback-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 2250;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-.feedback-backdrop.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Mobile adjustments for feedback modal */
-@media (max-width: 600px) {
-  .feedback-modal {
-    position: fixed;
-    top: auto;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    transform: translateY(100%);
-    width: 100%;
-    max-width: 100%;
-    max-height: 90vh;
-    border-radius: 20px 20px 0 0;
-  }
+<!-- Mobile Bottom Navigation -->
+<nav id="mobile-bottom-nav" class="mobile-bottom-nav">
+  <button class="nav-item" onclick="window.toggleFilterDrawer()" aria-label="Open filters">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="4" y1="21" x2="4" y2="14"></line>
+      <line x1="4" y1="10" x2="4" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="12"></line>
+      <line x1="12" y1="8" x2="12" y2="3"></line>
+      <line x1="20" y1="21" x2="20" y2="16"></line>
+      <line x1="20" y1="12" x2="20" y2="3"></line>
+      <line x1="1" y1="14" x2="7" y2="14"></line>
+      <line x1="9" y1="8" x2="15" y2="8"></line>
+      <line x1="17" y1="16" x2="23" y2="16"></line>
+    </svg>
+    <span class="nav-label">Filters</span>
+  </button>
   
-  .feedback-modal.active {
-    transform: translateY(0);
-  }
+  <button class="nav-item" onclick="window.toggleListView()" aria-label="Toggle list view">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="8" y1="6" x2="21" y2="6"></line>
+      <line x1="8" y1="12" x2="21" y2="12"></line>
+      <line x1="8" y1="18" x2="21" y2="18"></line>
+      <line x1="3" y1="6" x2="3.01" y2="6"></line>
+      <line x1="3" y1="12" x2="3.01" y2="12"></line>
+      <line x1="3" y1="18" x2="3.01" y2="18"></line>
+    </svg>
+    <span class="nav-label">List View</span>
+  </button>
   
-  .feedback-modal-header {
-    padding: 20px 16px;
-  }
+  <button class="nav-item" onclick="window.toggleFeedbackModal()" aria-label="Contact us">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+    <span class="nav-label">Contact</span>
+  </button>
+</nav>
+
+<!-- Filter Toggle Button (Mobile Only) -->
+<button id="filter-toggle" onclick="window.toggleFilterDrawer()" aria-label="Toggle filters">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="4" y1="21" x2="4" y2="14"></line>
+    <line x1="4" y1="10" x2="4" y2="3"></line>
+    <line x1="12" y1="21" x2="12" y2="12"></line>
+    <line x1="12" y1="8" x2="12" y2="3"></line>
+    <line x1="20" y1="21" x2="20" y2="16"></line>
+    <line x1="20" y1="12" x2="20" y2="3"></line>
+    <line x1="1" y1="14" x2="7" y2="14"></line>
+    <line x1="9" y1="8" x2="15" y2="8"></line>
+    <line x1="17" y1="16" x2="23" y2="16"></line>
+  </svg>
+</button>
+
+<!-- List Toggle Button (Mobile Only) -->
+<button id="list-toggle" onclick="window.toggleListView()" aria-label="Toggle list view">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="8" y1="6" x2="21" y2="6"></line>
+    <line x1="8" y1="12" x2="21" y2="12"></line>
+    <line x1="8" y1="18" x2="21" y2="18"></line>
+    <line x1="3" y1="6" x2="3.01" y2="6"></line>
+    <line x1="3" y1="12" x2="3.01" y2="12"></line>
+    <line x1="3" y1="18" x2="3.01" y2="18"></line>
+  </svg>
+</button>
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.17.0/mapbox-gl.js'></script>
+    <script src="./script.js"></script>
+
+  </body>
   
-  .feedback-modal-header h3 {
-    font-size: 20px;
-  }
-  
-  .feedback-modal-body {
-    padding: 16px;
-  }
-  
-  .feedback-submit-btn {
-    padding: 12px 16px;
-    font-size: 15px;
-  }
-}
-
-/* Desktop Devices */
-@media (min-width: 601px) {
-  .mobile-sheet {
-    display: none !important;
-  }
-
-  .desktop-sheet {
-    display: block;
-  }
-
-  .sheet-backdrop {
-    display: block;
-  }
-
-  /* Hide list view and bottom buttons on desktop */
-  .list-view {
-    display: none !important;
-  }
-
-  #list-toggle,
-  #filter-toggle {
-    display: none !important;
-  }
-
-  .list-backdrop {
-    display: none !important;
-  }
-}
+</html>
