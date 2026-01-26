@@ -898,8 +898,8 @@ body {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 56px;
-  height: 56px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: none;
   background: white;
@@ -937,9 +937,14 @@ body {
   }
 }
 
-/* Apply pulse animation when NOT active and NOT disabled */
-#custom-geolocate-btn:not(.active):not(.disabled) {
+/* Apply pulse animation when NOT active, NOT disabled, and NOT stopped */
+#custom-geolocate-btn:not(.active):not(.disabled):not(.pulse-stopped) {
   animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Stop pulsing class */
+#custom-geolocate-btn.pulse-stopped {
+  animation: none;
 }
 
 /* Hover state */
@@ -989,8 +994,8 @@ body {
 
 /* Error state */
 #custom-geolocate-btn.error {
-  background: rgba(255, 77, 77, 0.1);
-  box-shadow: 0 2px 10px rgba(255, 77, 77, 0.3);
+  background: white;
+  box-shadow: 0 2px 10px rgba(255, 77, 77, 0.5);
   animation: none;
 }
 
