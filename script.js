@@ -799,14 +799,15 @@ map.on('load', () => {
     });
     
     // Track geolocation events
+    // Note: trackuserlocationstart fires before permission is granted
+    // We only set active state on successful geolocate
     geolocateControl.on('trackuserlocationstart', () => {
-        console.log('Tracking started');
-        isTracking = true;
-        customGeoBtn.classList.add('active');
-        customGeoBtn.classList.remove('error');
+        console.log('Tracking started (waiting for permission...)');
+        // Don't set active state yet - wait for permission and location
     });
     
     geolocateControl.on('geolocate', (e) => {
+        console.log('Location found');
         isTracking = true;
         customGeoBtn.classList.add('active');
         customGeoBtn.classList.remove('error');
