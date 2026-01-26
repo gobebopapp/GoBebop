@@ -285,10 +285,37 @@ body {
   z-index: 10;
 }
 
-.sheet-close:hover {
+.sheet-share {
+  position: absolute;
+  top: 16px;
+  right: 60px;
+  background: rgba(240, 240, 240, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.sheet-share svg {
+  stroke: #666;
+}
+
+.sheet-close:hover,
+.sheet-share:hover {
   background: rgba(224, 224, 224, 0.95);
   color: #333;
   transform: scale(1.1);
+}
+
+.sheet-share:hover svg {
+  stroke: #333;
 }
 
 .sheet-content {
@@ -503,7 +530,27 @@ body {
   flex-shrink: 0;
 }
 
-.mobile-sheet-close:active {
+.mobile-sheet-share {
+  background: #f0f0f0;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.mobile-sheet-share svg {
+  stroke: #666;
+}
+
+.mobile-sheet-close:active,
+.mobile-sheet-share:active {
   background: #e0e0e0;
   transform: scale(0.95);
 }
