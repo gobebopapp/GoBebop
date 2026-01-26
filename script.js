@@ -743,7 +743,7 @@ map.on('load', () => {
 
     map.addControl(new mapboxgl.NavigationControl(), 'top-right');
     
-    // FIXED: Add geolocation control - now properly positioned
+    // Create hidden geolocation control (for functionality only)
     geolocateControl = new mapboxgl.GeolocateControl({
         positionOptions: {
             enableHighAccuracy: true
@@ -755,8 +755,46 @@ map.on('load', () => {
     
     map.addControl(geolocateControl, 'bottom-right');
     
+    // Custom geolocation button
+    const customGeoBtn = document.getElementById('custom-geolocate-btn');
+    let isTracking = false;
+    let geolocationAvailable = true;
+    
+    // Check if geolocation is available
+    if (!navigator.geolocation) {
+        customGeoBtn.classList.add('disabled');
+        customGeoBtn.setAttribute('aria-label', 'Geolocation not available');
+        geolocationAvailable = false;
+        console.log('Geolocation is not supported by this browser');
+    }
+    
+    // Button click handler
+    customGeoBtn.addEventListener('click', () => {
+        if (!geolocationAvailable) {
+            console.log('Geolocation not available');
+            return;
+        }
+        
+        if (customGeoBtn.classList.contains('disabled')) {
+            console.log('Geolocation button is disabled');
+            return;
+        }
+        
+        if (!isTracking) {
+            geolocateControl.trigger();
+        } else {
+            // Turn off tracking
+            isTracking = false;
+            customGeoBtn.classList.remove('active');
+        }
+    });
+    
     // Track geolocation events
     geolocateControl.on('geolocate', (e) => {
+        isTracking = true;
+        customGeoBtn.classList.add('active');
+        customGeoBtn.classList.remove('error');
+        
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
             'event': 'user_location_found',
@@ -769,12 +807,40 @@ map.on('load', () => {
         }
     });
     
+    geolocateControl.on('trackuserlocationend', () => {
+        isTracking = false;
+        customGeoBtn.classList.remove('active');
+    });
+    
     geolocateControl.on('error', (e) => {
-        console.log('Geolocation error:', e.message);
+        console.log('Geolocation error:', e.message, e.code);
+        isTracking = false;
+        customGeoBtn.classList.remove('active');
+        
+        // If permission denied (code 1) or unavailable (code 2), disable button
+        if (e.code === 1 || e.code === 2) {
+            customGeoBtn.classList.add('disabled');
+            customGeoBtn.setAttribute('aria-label', 'Geolocation permission denied');
+            geolocationAvailable = false;
+            
+            // Show error state briefly before going to disabled
+            customGeoBtn.classList.add('error');
+            setTimeout(() => {
+                customGeoBtn.classList.remove('error');
+            }, 2000);
+        } else {
+            // Temporary error - show error state
+            customGeoBtn.classList.add('error');
+            setTimeout(() => {
+                customGeoBtn.classList.remove('error');
+            }, 3000);
+        }
+        
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
             'event': 'user_location_error',
-            'error_message': e.message
+            'error_message': e.message,
+            'error_code': e.code
         });
     });
     
