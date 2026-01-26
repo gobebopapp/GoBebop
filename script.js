@@ -17,6 +17,9 @@ async function loadLocationsData() {
         const response = await fetch('locations.geojson');
         locationsData = await response.json();
         console.log('Locations data loaded:', locationsData.features.length, 'locations');
+        
+        // Check if URL has a shared location parameter
+        checkSharedLocation();
     } catch (error) {
         console.error('Failed to load locations data:', error);
     }
@@ -509,7 +512,7 @@ window.openLocationSheet = function(feature) {
             if (data.weather || data.seasonalMonths) {
                 contentHTML += `
                     <div class="info-section">
-                        <h3>Indoor / Outdoor</h3>
+                        <h3>Facilities</h3>
                         ${data.weather ? `<div class="info-item">${data.weather}</div>` : ''}
                         ${data.seasonalMonths ? `<div class="info-item">${data.seasonalMonths}</div>` : ''}
                     </div>
@@ -570,7 +573,7 @@ window.openLocationSheet = function(feature) {
         if (data.weather) {
             contentHTML += `
                 <div class="info-section">
-                    <h3>Good For</h3>
+                    <h3>Facilities</h3>
                     ${data.weather ? `<div class="info-item">${data.weather}</div>` : ''}
                     ${data.seasonalMonths ? `<div class="info-item">${data.seasonalMonths}</div>` : ''}                    
                 </div>
@@ -593,6 +596,76 @@ window.openLocationSheet = function(feature) {
         sheet.classList.add('active');
     }
 };
+
+// Share location function - uses native share API when available
+window.shareLocation = function() {
+    if (!currentFeature) return;
+    
+    const name = currentFeature.properties.name_en || currentFeature.properties.Name || 'Location';
+    const shareUrl = `${window.location.origin}${window.location.pathname}?location=${encodeURIComponent(name)}`;
+    const shareData = {
+        title: `${name} - GoBebop`,
+        text: `Check out ${name} on GoBebop!`,
+        url: shareUrl
+    };
+    
+    // Try native share API first (mobile devices)
+    if (navigator.share) {
+        navigator.share(shareData)
+            .catch((error) => {
+                // User cancelled or error - that's okay, do nothing
+                console.log('Share cancelled or failed:', error);
+            });
+    } else {
+        // Fallback to clipboard for desktop
+        navigator.clipboard.writeText(shareUrl).then(() => {
+            // Show a temporary success message
+            const btn = event.target.closest('button');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+            btn.style.background = 'rgba(77, 170, 187, 0.2)';
+            
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.style.background = '';
+            }, 2000);
+        }).catch((error) => {
+            console.error('Failed to copy to clipboard:', error);
+            alert('Failed to copy link. Please try again.');
+        });
+    }
+};
+
+// Check URL for shared location on load
+function checkSharedLocation() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sharedLocationName = urlParams.get('location');
+    
+    if (sharedLocationName && locationsData) {
+        // Find the feature by name
+        const feature = locationsData.features.find(f => {
+            const featureName = f.properties.name_en || f.properties.Name;
+            return featureName === decodeURIComponent(sharedLocationName);
+        });
+        
+        if (feature) {
+            // Small delay to ensure map is ready
+            setTimeout(() => {
+                const coords = feature.geometry.coordinates;
+                map.flyTo({
+                    center: coords,
+                    zoom: 15,
+                    duration: 1500
+                });
+                
+                // Open the location sheet
+                setTimeout(() => {
+                    window.openLocationSheet(feature);
+                }, 800);
+            }, 500);
+        }
+    }
+}
 
 // Toggle description expansion
 window.toggleDescription = function(platform) {
