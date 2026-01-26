@@ -67,6 +67,7 @@ function createListItem(feature, distance) {
     const name = feature.properties.name_en || feature.properties.Name || 'No Name';
     const category = feature.properties.secondary_category || feature.properties.primary_category || feature.properties.category || 'N/A';
     const desc = feature.properties.description || '';
+    const iconUrl = feature.properties.icon_url || '';
     
     const ages = [];
     if (feature.properties.age_small === 'TRUE') ages.push('👶 Babies');
@@ -76,7 +77,7 @@ function createListItem(feature, distance) {
     const weatherMap = {
         'Indoor': '☔ Indoor',
         'Outdoor': '☀️ Outdoor', 
-        'Mixed': '☀️☔ Any Weather'
+        'Mixed': '☀️☔ Mixed Indoor/Outdoor'
     };
     const weather = feature.properties.indoor_outdoor ? weatherMap[feature.properties.indoor_outdoor] : '';
     
@@ -99,7 +100,10 @@ function createListItem(feature, distance) {
     return `
         <div class="list-item" data-item-id="${itemId}">
             <div class="list-item-header">
-                <h4>${name}</h4>
+                <div class="list-item-title">
+                    ${iconUrl ? `<img src="${iconUrl}" alt="" class="location-icon" loading="lazy">` : ''}
+                    <h4>${name}</h4>
+                </div>
                 <span class="list-distance">${distanceText}</span>
             </div>
             
@@ -326,15 +330,34 @@ function buildSheetContent(f) {
     const category = f.properties.secondary_category || f.properties.primary_category || f.properties.category || 'N/A';
     const desc = f.properties.description || '';
     
+    // Try to get icon_url from feature properties first
+    let iconUrl = f.properties.icon_url || '';
+    
+    // If icon_url is missing, try to find it in our local locationsData
+    if (!iconUrl && locationsData) {
+        const matchingFeature = locationsData.features.find(feature => {
+            const featureName = feature.properties.name_en || feature.properties.Name;
+            return featureName === name;
+        });
+        
+        if (matchingFeature) {
+            iconUrl = matchingFeature.properties.icon_url || '';
+            console.log('Found icon_url from local data:', iconUrl);
+        }
+    }
+    
+    console.log('buildSheetContent - Feature properties:', f.properties);
+    console.log('buildSheetContent - Final iconUrl:', iconUrl);
+    
     const ages = [];
     if (f.properties.age_small === 'TRUE') ages.push('👶 Babies (0-2)');
     if (f.properties.age_medium === 'TRUE') ages.push('👦 Toddlers (3-6)');
     if (f.properties.age_large === 'TRUE') ages.push('👧 Big Kids (7-12)');
     
     const weatherMap = {
-        'Indoor': '☔ Rainy Days',
-        'Outdoor': '☀️ Sunny Days', 
-        'Mixed': '☀️☔ Any Weather'
+        'Indoor': '☔ Indoor',
+        'Outdoor': '☀️ Outdoor', 
+        'Mixed': '☀️☔ Mixed Indoor/Outdoor'
     };
     const weather = f.properties.indoor_outdoor ? weatherMap[f.properties.indoor_outdoor] || weatherMap.Mixed : '';
 
@@ -348,6 +371,7 @@ function buildSheetContent(f) {
         name,
         category,
         desc,
+        iconUrl,
         ages,
         weather,
         seasonalInfo,
@@ -404,9 +428,18 @@ window.openLocationSheet = function(feature) {
         const mapsBtn = document.getElementById('mobile-maps-btn');
         
         console.log('Building mobile sheet content...');
+        console.log('Data object:', data);
+        console.log('Icon URL from data:', data.iconUrl);
         
-        // Set title in header
-        title.textContent = data.name;
+        // Set title in header with icon
+        if (data.iconUrl) {
+            console.log('Setting title WITH icon');
+            title.innerHTML = `<img src="${data.iconUrl}" alt="" class="location-icon-mobile" loading="lazy"> ${data.name}`;
+            console.log('Title innerHTML:', title.innerHTML);
+        } else {
+            console.log('Setting title WITHOUT icon (iconUrl is empty)');
+            title.textContent = data.name;
+        }
         
         // Handle website button
         if (data.website) {
@@ -464,7 +497,7 @@ window.openLocationSheet = function(feature) {
             if (data.weather || data.seasonalMonths) {
                 contentHTML += `
                     <div class="info-section">
-                        <h3>Good For</h3>
+                        <h3>Indoor / Outdoor</h3>
                         ${data.weather ? `<div class="info-item">${data.weather}</div>` : ''}
                         ${data.seasonalMonths ? `<div class="info-item">${data.seasonalMonths}</div>` : ''}
                     </div>
@@ -495,10 +528,19 @@ window.openLocationSheet = function(feature) {
         const sheet = document.getElementById('desktop-sheet');
         const content = document.getElementById('desktop-sheet-content');
         
+        console.log('Building desktop sheet...');
+        console.log('Data object:', data);
+        console.log('Icon URL from data:', data.iconUrl);
+        
         let contentHTML = `
-            <h2>${data.name}</h2>
+            <h2>
+                ${data.iconUrl ? `<img src="${data.iconUrl}" alt="" class="location-icon-desktop" loading="lazy">` : ''}
+                ${data.name}
+            </h2>
             <span class="category-badge">${data.category}</span>
         `;
+        
+        console.log('Desktop sheet HTML includes icon?', data.iconUrl ? 'YES' : 'NO');
         
         if (data.desc) {
             contentHTML += `<div class="description">${data.desc}</div>`;
