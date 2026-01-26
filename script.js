@@ -759,6 +759,12 @@ map.on('load', () => {
     const customGeoBtn = document.getElementById('custom-geolocate-btn');
     let isTracking = false;
     let geolocationAvailable = true;
+    let hasBeenClicked = false;
+    
+    // Stop pulse animation after 10 seconds
+    setTimeout(() => {
+        customGeoBtn.classList.add('pulse-stopped');
+    }, 10000);
     
     // Check if geolocation is available
     if (!navigator.geolocation) {
@@ -778,6 +784,12 @@ map.on('load', () => {
         if (customGeoBtn.classList.contains('disabled')) {
             console.log('Geolocation button is disabled');
             return;
+        }
+        
+        // Stop pulse permanently once clicked
+        if (!hasBeenClicked) {
+            hasBeenClicked = true;
+            customGeoBtn.classList.add('pulse-stopped');
         }
         
         // Always trigger - Mapbox control handles toggling internally
