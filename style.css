@@ -887,64 +887,114 @@ body {
   }
 }
 
-/* Style the Mapbox geolocation button */
-@keyframes pulse-geolocate {
-  0% {
-    box-shadow: 0 3px 12px rgba(0,0,0,0.2), 0 0 0 0 rgba(77, 170, 187, 0.4);
-  }
-  50% {
-    box-shadow: 0 3px 12px rgba(0,0,0,0.2), 0 0 0 8px rgba(77, 170, 187, 0);
-  }
-  100% {
-    box-shadow: 0 3px 12px rgba(0,0,0,0.2), 0 0 0 0 rgba(77, 170, 187, 0);
-  }
-}
-
+/* Hide default Mapbox geolocation button - we'll use custom */
 .mapboxgl-ctrl-geolocate {
-  width: 48px;
-  height: 48px;
-  background: white;
-  border-radius: 50%;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.2);
-  border: none;
-  transition: all 0.2s ease;
-  animation: pulse-geolocate 2s infinite;
+  display: none !important;
 }
 
-/* Stop pulsing when active or hovered */
-.mapboxgl-ctrl-geolocate:hover,
-.mapboxgl-ctrl-geolocate.mapboxgl-ctrl-geolocate-active {
+/* Custom Geolocation Button */
+#custom-geolocate-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+/* Disabled state (when geolocation not available) */
+#custom-geolocate-btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
   animation: none;
 }
 
-.mapboxgl-ctrl-geolocate:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-  transform: scale(1.05);
+#custom-geolocate-btn.disabled:hover {
+  transform: none;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
-.mapboxgl-ctrl-geolocate .mapboxgl-ctrl-icon {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%234daabb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Ccircle cx='12' cy='12' r='3'%3E%3C/circle%3E%3C/svg%3E");
-  background-size: 28px;
-  background-position: center;
-  background-repeat: no-repeat;
+/* Pulsing ring animation */
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2), 0 0 0 0 rgba(77, 170, 187, 0.5);
+  }
+  50% {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2), 0 0 0 15px rgba(77, 170, 187, 0);
+  }
+  100% {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2), 0 0 0 0 rgba(77, 170, 187, 0);
+  }
 }
 
-.mapboxgl-ctrl-geolocate:active .mapboxgl-ctrl-icon,
-.mapboxgl-ctrl-geolocate.mapboxgl-ctrl-geolocate-active .mapboxgl-ctrl-icon {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%23f4c430' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Ccircle cx='12' cy='12' r='3' fill='%23f4c430'%3E%3C/circle%3E%3C/svg%3E");
-  background-size: 28px;
+/* Apply pulse animation when NOT active and NOT disabled */
+#custom-geolocate-btn:not(.active):not(.disabled) {
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-.mapboxgl-ctrl-geolocate.mapboxgl-ctrl-geolocate-active {
-  background: rgba(244, 196, 48, 0.1);
+/* Hover state */
+@media (hover: hover) and (pointer: fine) {
+  #custom-geolocate-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  }
+  
+  #custom-geolocate-btn:hover:not(.active) {
+    animation: none;
+  }
 }
 
-.mapboxgl-ctrl-geolocate.mapboxgl-ctrl-geolocate-active-error {
+/* Active state */
+#custom-geolocate-btn:active {
+  transform: scale(0.95);
+}
+
+/* When location is locked */
+#custom-geolocate-btn.active {
+  background: rgba(244, 196, 48, 0.15);
+  box-shadow: 0 2px 10px rgba(244, 196, 48, 0.4);
+  animation: none;
+}
+
+/* Icon styling - default state */
+#custom-geolocate-btn svg {
+  width: 28px;
+  height: 28px;
+  transition: all 0.2s ease;
+}
+
+#custom-geolocate-btn svg circle,
+#custom-geolocate-btn svg path {
+  transition: all 0.2s ease;
+}
+
+/* Active state icon color */
+#custom-geolocate-btn.active svg {
+  stroke: #f4c430;
+}
+
+#custom-geolocate-btn.active svg circle:last-child {
+  fill: #f4c430;
+}
+
+/* Error state */
+#custom-geolocate-btn.error {
   background: rgba(255, 77, 77, 0.1);
+  box-shadow: 0 2px 10px rgba(255, 77, 77, 0.3);
+  animation: none;
 }
 
-.mapboxgl-ctrl-geolocate.mapboxgl-ctrl-geolocate-active-error .mapboxgl-ctrl-icon {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ff4d4d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E");
+#custom-geolocate-btn.error svg {
+  stroke: #ff4d4d;
 }
 
 /* Mobile Bottom Navigation */
@@ -1032,27 +1082,10 @@ body {
     right: 10px;
   }
 
-  .mapboxgl-ctrl-geolocate {
-    width: 44px !important;
-    height: 44px !important;
-    border: none; 
-    background: white;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
-  }
-
-  .mapboxgl-ctrl-geolocate .mapboxgl-ctrl-icon {
-    background-size: 28px !important; /* Scale icon to button */
-  }
-  
-  /* Increase tap target with pseudo-element */
-  .mapboxgl-ctrl-geolocate::after {
-    content: '';
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    bottom: -8px;
-    left: -8px;
-    border-radius: 50%;
+  /* Custom geolocation button positioning on mobile */
+  #custom-geolocate-btn {
+    bottom: 90px; /* Above bottom nav */
+    right: 16px;
   }
 
   /* Make filter drawer slide from bottom and cover full screen on mobile */
