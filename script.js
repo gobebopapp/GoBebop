@@ -760,6 +760,7 @@ map.on('load', () => {
     let isTracking = false;
     let geolocationAvailable = true;
     let hasBeenClicked = false;
+    let permissionState = 'prompt'; // 'prompt', 'granted', 'denied'
     
     // Stop pulse animation after 10 seconds
     setTimeout(() => {
@@ -771,7 +772,38 @@ map.on('load', () => {
         customGeoBtn.classList.add('disabled');
         customGeoBtn.setAttribute('aria-label', 'Geolocation not available');
         geolocationAvailable = false;
+        permissionState = 'denied';
         console.log('Geolocation is not supported by this browser');
+    } else {
+        // Check permission state on load (if browser supports it)
+        if (navigator.permissions && navigator.permissions.query) {
+            navigator.permissions.query({ name: 'geolocation' }).then((result) => {
+                permissionState = result.state;
+                if (result.state === 'denied') {
+                    customGeoBtn.classList.add('disabled');
+                    customGeoBtn.setAttribute('aria-label', 'Geolocation permission denied');
+                    geolocationAvailable = false;
+                }
+                // Listen for permission changes
+                result.addEventListener('change', () => {
+                    permissionState = result.state;
+                    if (result.state === 'denied') {
+                        customGeoBtn.classList.add('disabled');
+                        customGeoBtn.classList.remove('active');
+                        customGeoBtn.setAttribute('aria-label', 'Geolocation permission denied');
+                        geolocationAvailable = false;
+                        isTracking = false;
+                    } else if (result.state === 'granted') {
+                        customGeoBtn.classList.remove('disabled');
+                        customGeoBtn.setAttribute('aria-label', 'Find my location');
+                        geolocationAvailable = true;
+                    }
+                });
+            }).catch((err) => {
+                // Permissions API not supported (e.g., iOS Safari)
+                console.log('Permissions API not supported:', err);
+            });
+        }
     }
     
     // Button click handler
@@ -835,19 +867,31 @@ map.on('load', () => {
         isTracking = false;
         customGeoBtn.classList.remove('active');
         
-        // If permission denied (code 1) or unavailable (code 2), disable button
-        if (e.code === 1 || e.code === 2) {
+        // Error codes:
+        // 1 = PERMISSION_DENIED
+        // 2 = POSITION_UNAVAILABLE
+        // 3 = TIMEOUT
+        
+        if (e.code === 1) {
+            // Permission explicitly denied - disable permanently
             customGeoBtn.classList.add('disabled');
             customGeoBtn.setAttribute('aria-label', 'Geolocation permission denied');
             geolocationAvailable = false;
+            permissionState = 'denied';
             
             // Show error state briefly before going to disabled
             customGeoBtn.classList.add('error');
             setTimeout(() => {
                 customGeoBtn.classList.remove('error');
             }, 2000);
+        } else if (e.code === 2) {
+            // Position unavailable - might be temporary
+            customGeoBtn.classList.add('error');
+            setTimeout(() => {
+                customGeoBtn.classList.remove('error');
+            }, 3000);
         } else {
-            // Temporary error - show error state
+            // Timeout or other temporary error
             customGeoBtn.classList.add('error');
             setTimeout(() => {
                 customGeoBtn.classList.remove('error');

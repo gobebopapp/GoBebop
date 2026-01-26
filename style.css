@@ -912,19 +912,28 @@ body {
   transition: all 0.3s ease;
 }
 
-/* Disabled state (when geolocation not available) */
+/* Default state - gray icon, white background */
+#custom-geolocate-btn svg {
+  stroke: #999999;
+}
+
+/* Disabled state - red icon, white background */
 #custom-geolocate-btn.disabled {
-  opacity: 0.4;
+  background: white;
   cursor: not-allowed;
   animation: none;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+#custom-geolocate-btn.disabled svg {
+  stroke: #ff4d4d !important;
 }
 
 #custom-geolocate-btn.disabled:hover {
   transform: none;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
-/* Pulsing ring animation */
+/* Pulsing ring animation with halo */
 @keyframes pulse-ring {
   0% {
     box-shadow: 0 2px 10px rgba(0,0,0,0.2), 0 0 0 0 rgba(77, 170, 187, 0.5);
@@ -949,25 +958,25 @@ body {
 
 /* Hover state */
 @media (hover: hover) and (pointer: fine) {
-  #custom-geolocate-btn:hover {
+  #custom-geolocate-btn:hover:not(.disabled) {
     transform: scale(1.08);
     box-shadow: 0 4px 14px rgba(0,0,0,0.25);
   }
   
-  #custom-geolocate-btn:hover:not(.active) {
+  #custom-geolocate-btn:hover:not(.active):not(.disabled) {
     animation: none;
   }
 }
 
-/* Active state */
-#custom-geolocate-btn:active {
+/* Active state (click) */
+#custom-geolocate-btn:active:not(.disabled) {
   transform: scale(0.95);
 }
 
-/* When location is locked */
+/* When location is locked - blue icon, white background */
 #custom-geolocate-btn.active {
   background: white;
-  box-shadow: 0 2px 10px rgba(244, 196, 48, 0.5);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
   animation: none;
 }
 
@@ -983,19 +992,19 @@ body {
   transition: all 0.2s ease;
 }
 
-/* Active state icon color */
+/* Active state icon color - blue */
 #custom-geolocate-btn.active svg {
-  stroke: #f4c430;
+  stroke: #4daabb;
 }
 
 #custom-geolocate-btn.active svg circle:last-child {
-  fill: #f4c430;
+  fill: #4daabb;
 }
 
-/* Error state */
+/* Error state - red icon, white background */
 #custom-geolocate-btn.error {
   background: white;
-  box-shadow: 0 2px 10px rgba(255, 77, 77, 0.5);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
   animation: none;
 }
 
