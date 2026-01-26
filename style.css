@@ -507,6 +507,7 @@ body {
 .description-collapsed {
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -960,8 +961,8 @@ body {
 
 /* When location is locked */
 #custom-geolocate-btn.active {
-  background: rgba(244, 196, 48, 0.15);
-  box-shadow: 0 2px 10px rgba(244, 196, 48, 0.4);
+  background: white;
+  box-shadow: 0 2px 10px rgba(244, 196, 48, 0.5);
   animation: none;
 }
 
