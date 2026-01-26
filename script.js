@@ -1,1602 +1,1121 @@
-* {
-  box-sizing: border-box;
-}
-
-body { 
-  margin: 0; 
-  padding: 0; 
-  font-family: 'Quicksand', -apple-system, sans-serif;
-}
-
-#map { 
-  position: absolute; 
-  top: 70px;
-  bottom: 0; 
-  width: 100%; 
-}
-
-/* HEADER */
-#header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 70px;
-  background: rgba(255, 255, 255, 1);
-  backdrop-filter: blur(10px);
-  z-index: 2000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 20px;
-}
-
-#header img {
-  height: 60px;
-  cursor: pointer;
-}
-
-#desktop-filter-btn,
-#feedback-btn {
-  position: absolute;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  z-index: 10;
-  color: #333;
-}
-
-#desktop-filter-btn {
-  left: 20px;
-}
-
-#desktop-filter-btn svg {
-  width: 24px;
-  height: 24px;
-}
-
-#feedback-btn {
-  right: 20px;
-  font-size: 28px;
-}
-
-#feedback-btn svg {
-  width: 24px;
-  height: 24px;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  #desktop-filter-btn:hover,
-  #feedback-btn:hover {
-    transform: scale(1.15);
-    background: rgba(0, 0, 0, 0.05);
-  }
-}
-
-/* FILTER DRAWER */
-.filter-drawer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  top: auto;
-  width: 320px;
-  height: calc(100% - 70px); /* Leave space for header */
-  max-height: 90vh;
-  max-height: 90dvh; /* Dynamic viewport height for iOS */
-  background: white;
-  box-shadow: 4px 0 20px rgba(0,0,0,0.15);
-  z-index: 2100;
-  transform: translateX(-100%);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  flex-direction: column;
-}
-
-.filter-drawer.active {
-  transform: translateX(0);
-}
-
-.drawer-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 24px 20px;
-  border-bottom: 1px solid #e0e0e0;
-  flex-shrink: 0;
-}
-
-.drawer-header h3 {
-  margin: 0;
-  font-size: 22px;
-  color: #333;
-}
-
-.drawer-close {
-  background: #f0f0f0;
-  border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 28px;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #666;
-  transition: all 0.2s ease;
-}
-
-.drawer-close:hover {
-  background: #e0e0e0;
-  color: #333;
-}
-
-.drawer-content {
-  flex-grow: 1;
-  overflow-y: auto;
-  padding: 20px;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
-}
-
-.drawer-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 2050;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-.drawer-backdrop.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.drawer-content details {
-  margin: 12px 0;
-  padding: 12px;
-  border-radius: 8px;
-  background: #f8f9fa;
-  border-left: 4px solid #4daabb;
-}
-
-.drawer-content details[open] {
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.drawer-content details summary {
-  font-weight: 600;
-  color: #444;
-  font-size: 15px;
-  cursor: pointer;
-  padding: 4px 0;
-  list-style: none;
-}
-
-.drawer-content details summary::-webkit-details-marker {
-  display: none;
-}
-
-.drawer-content label {
-  display: block;
-  padding: 8px 12px;
-  margin: 4px 0;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-  font-size: 15px;
-  position: relative;
-}
-
-.drawer-content label.selected {
-  background: #f4c430;
-  color: white;
-}
-
-.drawer-content input[type="checkbox"] {
-  display: none;
-}
-
-.drawer-content label.selected::after {
-  content: '✓';
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-weight: bold;
-  font-size: 16px;
-}
-
-#reset-btn {
-  width: 100%; 
-  padding: 12px; 
-  background: #4daabb;
-  color: white; 
-  border: none; 
-  border-radius: 8px; 
-  cursor: pointer; 
-  margin-top: 12px;
-  font-weight: 600;
-  font-size: 15px;
-  transition: all 0.2s ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  #reset-btn:hover {
-    background: #f1d274;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(241, 210, 116, 0.4);
-  }
-}
-
-/* DESKTOP LOCATION SHEET */
-.desktop-sheet {
-  position: fixed;
-  top: 90px;
-  right: 20px;
-  bottom: 20px;
-  width: 420px;
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(16px);
-  border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-  z-index: 1600;
-  transform: translateX(calc(100% + 40px));
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
-  display: none;
-}
-
-.desktop-sheet.active {
-  transform: translateX(0);
-}
-
-.sheet-close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: rgba(240, 240, 240, 0.9);
-  border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 28px;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #666;
-  transition: all 0.2s ease;
-  z-index: 10;
-}
-
-.sheet-share {
-  position: absolute;
-  top: 16px;
-  right: 60px;
-  background: rgba(240, 240, 240, 0.9);
-  border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #666;
-  transition: all 0.2s ease;
-  z-index: 10;
-}
-
-.sheet-share svg {
-  stroke: #666;
-}
-
-.sheet-close:hover,
-.sheet-share:hover {
-  background: rgba(224, 224, 224, 0.95);
-  color: #333;
-  transform: scale(1.1);
-}
-
-.sheet-share:hover svg {
-  stroke: #333;
-}
-
-.sheet-content {
-  padding: 24px;
-  padding-top: 60px;
-  height: 100%;
-  overflow-y: auto;
-}
-
-.sheet-content h2 {
-  margin: 0 0 12px 0;
-  font-size: 26px;
-  color: #333;
-  line-height: 1.3;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.sheet-content h2 .location-icon-desktop {
-  width: 28px;
-  height: 28px;
-  flex-shrink: 0;
-  object-fit: contain;
-}
-
-.sheet-content .category-badge {
-  display: inline-block;
-  background: #4daabb;
-  color: white;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
-.sheet-content .description {
-  font-size: 15px;
-  line-height: 1.6;
-  color: #555;
-  margin-bottom: 20px;
-}
-
-.sheet-content .info-section {
-  margin-bottom: 16px;
-}
-
-.sheet-content .info-section h3 {
-  font-size: 12px;
-  font-weight: 700;
-  color: #888;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  margin: 0 0 8px 0;
-}
-
-.sheet-content .info-item {
-  padding: 4px 0;
-  font-size: 14px;
-  color: #333;
-  line-height: 1.5;
-}
-
-.sheet-content .links {
-  margin-top: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.sheet-content .links a {
-  display: block;
-  width: 100%;
-  padding: 12px 18px;
-  background: #f4c430;
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 14px;
-  text-align: center;
-  transition: all 0.2s ease;
-}
-
-.sheet-content .links a:hover {
-  background: #e5b620;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(244, 196, 48, 0.4);
-}
-
-/* MOBILE BOTTOM SHEET */
-.mobile-sheet {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: white;
-  border-radius: 20px 20px 0 0;
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
-  z-index: 1600;
-  transform: translateY(100%);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  max-height: 42vh;
-  display: none;
-  flex-direction: column;
-}
-
-.mobile-sheet.active {
-  transform: translateY(0);
-}
-
-.mobile-sheet-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 16px 12px 16px;
-  border-bottom: 1px solid #f0f0f0;
-  flex-shrink: 0;
-  gap: 12px;
-}
-
-.mobile-sheet-header h2 {
-  margin: 0;
-  font-size: 18px;
-  color: #333;
-  line-height: 1.3;
-  font-weight: 600;
-  flex-grow: 1;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.mobile-sheet-header h2 .location-icon-mobile {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-  object-fit: contain;
-}
-
-.mobile-sheet-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-/* Hide the old icon buttons in header - we've moved them inline */
-#mobile-website-btn,
-#mobile-maps-btn {
-  display: none !important;
-}
-
-.sheet-icon-btn {
-  width: auto;
-  min-width: 36px;
-  height: auto;
-  border-radius: 8px;
-  border: none;
-  background: #f8f9fa;
-  padding: 6px 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  color: #333;
-}
-
-.icon-btn-emoji {
-  font-size: 18px;
-  line-height: 1;
-}
-
-.icon-btn-label {
-  font-size: 9px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  color: #666;
-  white-space: nowrap;
-}
-
-.sheet-icon-btn svg {
-  width: 20px;
-  height: 20px;
-}
-
-.sheet-icon-btn:active {
-  background: #e9ecef;
-  transform: scale(0.95);
-}
-
-.mobile-sheet-close {
-  background: #f0f0f0;
-  border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 24px;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #666;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-}
-
-.mobile-sheet-share {
-  background: #f0f0f0;
-  border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #666;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-}
-
-.mobile-sheet-share svg {
-  stroke: #666;
-}
-
-.mobile-sheet-close:active,
-.mobile-sheet-share:active {
-  background: #e0e0e0;
-  transform: scale(0.95);
-}
-
-.sheet-content-mobile {
-  padding: 16px;
-  overflow-y: auto;
-  flex-grow: 1;
-  -webkit-overflow-scrolling: touch;
-}
-
-.sheet-content-mobile .category-badge {
-  display: inline-block;
-  background: #4daabb;
-  color: white;
-  padding: 4px 12px;
-  border-radius: 16px;
-  font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 12px;
-}
-
-/* Mobile Location Links - Simple icon + text style */
-.sheet-content-mobile .location-links {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-}
-
-.sheet-content-mobile .location-link {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: #333;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  transition: opacity 0.2s ease;
-}
-
-.sheet-content-mobile .location-link svg {
-  flex-shrink: 0;
-  stroke: #333;
-}
-
-.sheet-content-mobile .location-link:active {
-  opacity: 0.6;
-}
-
-.sheet-content-mobile .description {
-  font-size: 14px;
-  line-height: 1.5;
-  color: #555;
-  margin-bottom: 16px;
-}
-
-.description-collapsed {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.description-expanded {
-  display: block;
-}
-
-.see-more-btn {
-  background: none;
-  border: none;
-  color: #4daabb;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  padding: 4px 0;
-  margin-top: 4px;
-  display: inline-block;
-}
-
-.see-more-btn:active {
-  opacity: 0.7;
-}
-
-.sheet-content-mobile .info-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.sheet-content-mobile .info-section {
-  background: #f8f9fa;
-  padding: 10px;
-  border-radius: 8px;
-}
-
-.sheet-content-mobile .info-section h3 {
-  font-size: 11px;
-  font-weight: 700;
-  color: #888;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin: 0 0 6px 0;
-}
-
-.sheet-content-mobile .info-item {
-  font-size: 13px;
-  color: #333;
-  line-height: 1.4;
-  margin-bottom: 3px;
-}
-
-.sheet-content-mobile .info-item:last-child {
-  margin-bottom: 0;
-}
-
-.sheet-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1550;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  display: none;
-}
-
-.sheet-backdrop.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* LIST VIEW (MOBILE ONLY) */
-.list-view {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: auto;
-  height: calc(100% - 70px); /* Leave space for header */
-  max-height: 90vh;
-  max-height: 90dvh; /* Dynamic viewport height for iOS */
-  background: white;
-  z-index: 2200;
-  transform: translateX(-100%);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: none;
-  flex-direction: column;
-}
-
-.list-view.active {
-  transform: translateX(0);
-}
-
-.list-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px;
-  border-bottom: 1px solid #e0e0e0;
-  flex-shrink: 0;
-  background: white;
-}
-
-.list-header > div {
-  flex-grow: 1;
-}
-
-.list-header h3 {
-  margin: 0 0 6px 0;
-  font-size: 20px;
-  color: #333;
-}
-
-.list-subheader {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.list-count {
-  font-size: 13px;
-  color: #888;
-  font-weight: 500;
-}
-
-.list-filter-indicator {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  background: rgba(77, 170, 187, 0.1);
-  border: 1px solid #4daabb;
-  border-radius: 16px;
-  font-size: 12px;
-  color: #4daabb;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.list-filter-indicator:active {
-  background: rgba(77, 170, 187, 0.2);
-  transform: scale(0.95);
-}
-
-.list-filter-indicator svg {
-  width: 14px;
-  height: 14px;
-  stroke: #4daabb;
-}
-
-.list-close {
-  background: #f0f0f0;
-  border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 28px;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #666;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-}
-
-.list-close:active {
-  background: #e0e0e0;
-  transform: scale(0.95);
-}
-
-.list-items {
-  flex-grow: 1;
-  overflow-y: auto;
-  padding: 16px;
-  -webkit-overflow-scrolling: touch;
-  background: #f8f9fa;
-}
-
-.list-item {
-  display: flex;
-  flex-direction: column;
-  padding: 18px;
-  margin-bottom: 12px;
-  background: white;
-  border: 1px solid #e8e8e8;
-  border-radius: 16px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-
-.list-item:active {
-  background: #f8f9fa;
-  transform: scale(0.98);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-.list-item-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 8px;
-  gap: 12px;
-}
-
-.list-item-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-grow: 1;
-  min-width: 0;
-}
-
-.list-item-title .location-icon {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-  object-fit: contain;
-}
-
-.list-item-header h4 {
-  margin: 0;
-  font-size: 18px;
-  color: #333;
-  font-weight: 600;
-  flex-grow: 1;
-  line-height: 1.3;
-  min-width: 0;
-}
-
-.list-distance {
-  font-size: 12px;
-  color: #4daabb;
-  font-weight: 700;
-  white-space: nowrap;
-  background: rgba(77, 170, 187, 0.1);
-  padding: 4px 10px;
-  border-radius: 12px;
-}
-
-.list-item-category {
-  margin-bottom: 10px;
-}
-
-.list-category-badge {
-  display: inline-block;
-  font-size: 12px;
-  color: white;
-  background: #4daabb;
-  padding: 4px 12px;
-  border-radius: 14px;
-  font-weight: 600;
-}
-
-.list-description {
-  font-size: 14px;
-  color: #666;
-  line-height: 1.5;
-  margin: 0 0 12px 0;
-}
-
-.list-item-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 4px;
-}
-
-.list-tag-group {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.list-tag {
-  display: inline-block;
-  font-size: 12px;
-  padding: 4px 10px;
-  background: #f0f0f0;
-  border-radius: 12px;
-  color: #555;
-  font-weight: 500;
-}
-
-.list-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 2150;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  display: none;
-}
-
-.list-backdrop.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Filter toggle button - bottom left (mobile only) */
-#filter-toggle {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: none;
-  background: white;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  cursor: pointer;
-  z-index: 1000;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  color: #333;
-}
-
-#filter-toggle:active {
-  transform: scale(0.95);
-  box-shadow: 0 1px 5px rgba(0,0,0,0.15);
-}
-
-#filter-toggle svg {
-  width: 24px;
-  height: 24px;
-}
-
-/* List toggle button - bottom left next to filter (mobile only) */
-#list-toggle {
-  position: fixed;
-  bottom: 20px;
-  left: 88px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: none;
-  background: white;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  cursor: pointer;
-  z-index: 1000;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  color: #333;
-}
-
-#list-toggle:active {
-  transform: scale(0.95);
-  box-shadow: 0 1px 5px rgba(0,0,0,0.15);
-}
-
-#list-toggle svg {
-  width: 24px;
-  height: 24px;
-}
-
-/* MAPBOX CONTROLS STYLING */
-.mapboxgl-ctrl-top-right {
-  top: 10px;
-  right: 10px;
-}
-
-.mapboxgl-ctrl-bottom-right {
-  bottom: 10px;
-  right: 10px;
-}
-
-.mapboxgl-ctrl-bottom-left {
-  bottom: 10px;
-  left: 10px;
-}
-
-/* Hide zoom controls on mobile */
-@media (max-width: 600px) {
-  .mapboxgl-ctrl-top-right .mapboxgl-ctrl-group {
-    display: none;
-  }
-}
-
-/* Hide default Mapbox geolocation button - we'll use custom */
-.mapboxgl-ctrl-geolocate {
-  display: none !important;
-}
-
-/* Custom Geolocation Button */
-#custom-geolocate-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: none;
-  background: white;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  cursor: pointer;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-/* Default state - gray icon, white background */
-#custom-geolocate-btn svg {
-  stroke: #999999;
-}
-
-/* Disabled state - red icon, white background */
-#custom-geolocate-btn.disabled {
-  background: white;
-  cursor: not-allowed;
-  animation: none;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-
-#custom-geolocate-btn.disabled svg {
-  stroke: #ff4d4d !important;
-}
-
-#custom-geolocate-btn.disabled:hover {
-  transform: none;
-}
-
-/* Pulsing ring animation with halo */
-@keyframes pulse-ring {
-  0% {
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2), 0 0 0 0 rgba(77, 170, 187, 0.5);
-  }
-  50% {
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2), 0 0 0 15px rgba(77, 170, 187, 0);
-  }
-  100% {
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2), 0 0 0 0 rgba(77, 170, 187, 0);
-  }
-}
-
-/* Apply pulse animation when NOT active, NOT disabled, and NOT stopped */
-#custom-geolocate-btn:not(.active):not(.disabled):not(.pulse-stopped) {
-  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-/* Stop pulsing class */
-#custom-geolocate-btn.pulse-stopped {
-  animation: none;
-}
-
-/* Hover state */
-@media (hover: hover) and (pointer: fine) {
-  #custom-geolocate-btn:hover:not(.disabled) {
-    transform: scale(1.08);
-    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
-  }
+mapboxgl.accessToken = 'pk.eyJ1IjoiYW1hY2JldGgxIiwiYSI6ImNtZzB0MGd0ZjBqMDEybHIzbnU0dzFuam4ifQ.aGD0Ws8Zut0q4f1iTYUBeA';
+
+// Check WebGL support
+if (!mapboxgl.supported()) {
+    alert('Your browser does not support Mapbox GL. Please try using Safari or updating Chrome.');
+    console.error('WebGL not supported');
+}
+
+// Add error handling for map initialization
+let map;
+try {
+    map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/amacbeth1/cmk44u6xk00ka01s90foffz39',
+        center: [4.9041, 52.3676],
+        zoom: 12,
+        // iOS compatibility settings
+        preserveDrawingBuffer: true,
+        refreshExpiredTiles: false
+    });
+    
+    // Log successful map creation
+    console.log('Map initialized successfully');
+} catch (error) {
+    console.error('Failed to initialize map:', error);
+    // Show error to user
+    document.body.innerHTML = '<div style="padding: 20px; text-align: center;">Failed to load map. Please refresh the page.</div>';
+}
+
+let currentFeature = null;
+let geolocateControl = null;
+let locationsData = null;
+let currentFilters = {};
+
+// Load GeoJSON data
+async function loadLocationsData() {
+    try {
+        const response = await fetch('locations.geojson');
+        locationsData = await response.json();
+        console.log('Locations data loaded:', locationsData.features.length, 'locations');
+    } catch (error) {
+        console.error('Failed to load locations data:', error);
+    }
+}
+
+// Calculate distance between two coordinates (Haversine formula)
+function getDistance(point1, point2) {
+    const R = 6371; // Earth's radius in km
+    const lat1 = point1[1] * Math.PI / 180;
+    const lat2 = point2[1] * Math.PI / 180;
+    const deltaLat = (point2[1] - point1[1]) * Math.PI / 180;
+    const deltaLon = (point2[0] - point1[0]) * Math.PI / 180;
+    
+    const a = Math.sin(deltaLat/2) * Math.sin(deltaLat/2) +
+              Math.cos(lat1) * Math.cos(lat2) *
+              Math.sin(deltaLon/2) * Math.sin(deltaLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    
+    return R * c;
+}
+
+// Check if feature matches current filters
+function matchesCurrentFilters(feature) {
+    if (Object.keys(currentFilters).length === 0) return true;
+    
+    for (const filterType in currentFilters) {
+        const allowedValues = currentFilters[filterType];
+        const featureValue = feature.properties[filterType];
+        
+        // Special handling for age filters (TRUE/FALSE values)
+        if (filterType.startsWith('age_') || filterType === 'toilet' || filterType === 'changing_table') {
+            if (!allowedValues.includes(featureValue)) {
+                return false;
+            }
+        } else {
+            // For category and weather filters
+            if (!allowedValues.includes(featureValue)) {
+                return false;
+            }
+        }
+    }
+    
+    return true;
+}
+
+// Create HTML for a single list item - MORE EXPANSIVE
+function createListItem(feature, distance) {
+    const name = feature.properties.name_en || feature.properties.Name || 'No Name';
+    const category = feature.properties.secondary_category || feature.properties.primary_category || feature.properties.category || 'N/A';
+    const desc = feature.properties.description || '';
+    const iconUrl = feature.properties.icon_url || '';
+    
+    const ages = [];
+    if (feature.properties.age_small === 'TRUE') ages.push('👶 Babies');
+    if (feature.properties.age_medium === 'TRUE') ages.push('👦 Toddlers');
+    if (feature.properties.age_large === 'TRUE') ages.push('👧 Big Kids');
+    
+    const weatherMap = {
+        'Indoor': '☔ Indoor',
+        'Outdoor': '☀️ Outdoor', 
+        'Mixed': '☀️☔ Mixed Indoor/Outdoor'
+    };
+    const weather = feature.properties.indoor_outdoor ? weatherMap[feature.properties.indoor_outdoor] : '';
+    
+    const distanceText = distance < 1 
+        ? `${Math.round(distance * 1000)}m away` 
+        : `${distance.toFixed(1)}km away`;
+    
+    // Truncate description for list view
+    const shortDesc = desc.length > 100 ? desc.substring(0, 100) + '...' : desc;
+    
+    // Store feature data with a unique ID for click handling
+    const itemId = `list-item-${Math.random().toString(36).substr(2, 9)}`;
+    
+    // Store the feature in a global map for retrieval
+    if (!window.listItemFeatures) {
+        window.listItemFeatures = new Map();
+    }
+    window.listItemFeatures.set(itemId, feature);
+    
+    return `
+        <div class="list-item" data-item-id="${itemId}">
+            <div class="list-item-header">
+                <div class="list-item-title">
+                    ${iconUrl ? `<img src="${iconUrl}" alt="" class="location-icon" loading="lazy">` : ''}
+                    <h4>${name}</h4>
+                </div>
+                <span class="list-distance">${distanceText}</span>
+            </div>
+            
+            <div class="list-item-category">
+                <span class="list-category-badge">${category}</span>
+            </div>
+            
+            ${shortDesc ? `<p class="list-description">${shortDesc}</p>` : ''}
+            
+            <div class="list-item-tags">
+                ${ages.length > 0 ? `<div class="list-tag-group">
+                    ${ages.map(age => `<span class="list-tag">${age}</span>`).join('')}
+                </div>` : ''}
+                
+                ${weather ? `<span class="list-tag list-tag-weather">${weather}</span>` : ''}
+            </div>
+        </div>
+    `;
+}
+
+// Build and render the locations list
+function buildLocationsList() {
+    if (!locationsData) {
+        console.warn('No locations data available');
+        return;
+    }
+    
+    const userLocation = geolocateControl?._lastKnownPosition;
+    const centerPoint = userLocation 
+        ? [userLocation.coords.longitude, userLocation.coords.latitude]
+        : [4.9041, 52.3676]; // Amsterdam center
+    
+    // Filter features based on current filters
+    let features = locationsData.features.filter(feature => matchesCurrentFilters(feature));
+    
+    // Calculate distances and sort
+    const featuresWithDistance = features.map(feature => ({
+        feature,
+        distance: getDistance(centerPoint, feature.geometry.coordinates)
+    }));
+    
+    featuresWithDistance.sort((a, b) => a.distance - b.distance);
+    
+    // Render list
+    const container = document.getElementById('list-items');
+    
+    if (featuresWithDistance.length === 0) {
+        container.innerHTML = `
+            <div style="text-align: center; padding: 40px 20px; color: #666;">
+                <p>No locations match your current filters.</p>
+                <button onclick="window.resetFilters()" style="margin-top: 12px; padding: 10px 20px; background: #4daabb; color: white; border: none; border-radius: 8px; cursor: pointer;">
+                    Reset Filters
+                </button>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = featuresWithDistance
+        .map(item => createListItem(item.feature, item.distance))
+        .join('');
+    
+    // Add click handlers to all list items
+    container.querySelectorAll('.list-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const itemId = this.dataset.itemId;
+            const feature = window.listItemFeatures.get(itemId);
+            if (feature) {
+                window.openFromList(feature);
+            }
+        });
+    });
+    
+    // Update count in header
+    const countElement = document.getElementById('list-count');
+    if (countElement) {
+        countElement.textContent = `${featuresWithDistance.length} location${featuresWithDistance.length !== 1 ? 's' : ''}`;
+    }
+}
+
+// Toggle list view
+window.toggleListView = function() {
+    const listView = document.getElementById('list-view');
+    const backdrop = document.getElementById('list-backdrop');
+    
+    const isActive = listView.classList.contains('active');
+    
+    if (isActive) {
+        listView.classList.remove('active');
+        backdrop.classList.remove('active');
+    } else {
+        // Build/refresh list when opening
+        buildLocationsList();
+        listView.classList.add('active');
+        backdrop.classList.add('active');
+    }
+};
+
+// Open location from list
+window.openFromList = function(feature) {
+    console.log('Opening from list:', feature);
+    
+    // Store that we came from list
+    sessionStorage.setItem('returnToList', 'true');
+    const listItems = document.getElementById('list-items');
+    if (listItems) {
+        sessionStorage.setItem('listScrollPosition', listItems.scrollTop.toString());
+    }
+    
+    // Close list view immediately
+    const listView = document.getElementById('list-view');
+    const listBackdrop = document.getElementById('list-backdrop');
+    listView.classList.remove('active');
+    listBackdrop.classList.remove('active');
+    
+    // Wait for list to close, then open location sheet
+    setTimeout(() => {
+        window.openLocationSheet(feature);
+    }, 150);
+};
+
+// Toggle filter drawer
+window.toggleFilterDrawer = function() {
+    const drawer = document.getElementById('filter-drawer');
+    const backdrop = document.getElementById('drawer-backdrop');
+    
+    const isActive = drawer.classList.contains('active');
+    
+    if (isActive) {
+        drawer.classList.remove('active');
+        backdrop.classList.remove('active');
+        
+        // Check if we should return to list view
+        if (sessionStorage.getItem('returnToListFromFilters') === 'true') {
+            sessionStorage.removeItem('returnToListFromFilters');
+            
+            setTimeout(() => {
+                const listView = document.getElementById('list-view');
+                const listBackdrop = document.getElementById('list-backdrop');
+                listView.classList.add('active');
+                listBackdrop.classList.add('active');
+                
+                // Restore scroll position
+                const scrollPos = sessionStorage.getItem('listScrollPosition');
+                if (scrollPos) {
+                    document.getElementById('list-items').scrollTop = parseInt(scrollPos);
+                    sessionStorage.removeItem('listScrollPosition');
+                }
+            }, 100);
+        }
+    } else {
+        drawer.classList.add('active');
+        backdrop.classList.add('active');
+    }
+};
+
+// Open filters from list view
+window.openFiltersFromList = function() {
+    // Store that we came from list
+    sessionStorage.setItem('returnToListFromFilters', 'true');
+    const listItems = document.getElementById('list-items');
+    if (listItems) {
+        sessionStorage.setItem('listScrollPosition', listItems.scrollTop.toString());
+    }
+    
+    // Close list view
+    const listView = document.getElementById('list-view');
+    const listBackdrop = document.getElementById('list-backdrop');
+    listView.classList.remove('active');
+    listBackdrop.classList.remove('active');
+    
+    // Open filter drawer
+    setTimeout(() => {
+        window.toggleFilterDrawer();
+    }, 100);
+};
+
+// Highlight selected location
+function highlightSelectedLocation(layerId, featureId) {
+    // Check if layers exist before trying to modify them
+    if (!map.getLayer('Icons') && !map.getLayer('Dots')) {
+        console.warn('Map layers not ready yet');
+        return;
+    }
+    
+    try {
+        if (map.getLayer('Icons')) {
+            map.setPaintProperty('Icons', 'icon-opacity', [
+                'case',
+                ['==', ['get', 'id'], featureId],
+                1,
+                ['==', ['get', 'name_en'], featureId],
+                1,
+                ['==', ['get', 'Name'], featureId],
+                1,
+                0.5
+            ]);
+        }
+    } catch (e) {
+        console.warn('Error highlighting Icons layer:', e);
+    }
+    
+    try {
+        if (map.getLayer('Dots')) {
+            map.setPaintProperty('Dots', 'icon-opacity', [
+                'case',
+                ['==', ['get', 'id'], featureId],
+                1,
+                ['==', ['get', 'name_en'], featureId],
+                1,
+                ['==', ['get', 'Name'], featureId],
+                1,
+                0.5
+            ]);
+        }
+    } catch (e) {
+        console.warn('Error highlighting Dots layer:', e);
+    }
+}
+
+// Build location sheet content HTML
+function buildSheetContent(f) {
+    const name = f.properties.name_en || f.properties.Name || 'No Name';
+    const category = f.properties.secondary_category || f.properties.primary_category || f.properties.category || 'N/A';
+    const desc = f.properties.description || '';
+    
+    // Try to get icon_url from feature properties first
+    let iconUrl = f.properties.icon_url || '';
+    
+    // If icon_url is missing, try to find it in our local locationsData
+    if (!iconUrl && locationsData) {
+        const matchingFeature = locationsData.features.find(feature => {
+            const featureName = feature.properties.name_en || feature.properties.Name;
+            return featureName === name;
+        });
+        
+        if (matchingFeature) {
+            iconUrl = matchingFeature.properties.icon_url || '';
+            console.log('Found icon_url from local data:', iconUrl);
+        }
+    }
+    
+    console.log('buildSheetContent - Feature properties:', f.properties);
+    console.log('buildSheetContent - Final iconUrl:', iconUrl);
+    
+    const ages = [];
+    if (f.properties.age_small === 'TRUE') ages.push('👶 Babies (0-2)');
+    if (f.properties.age_medium === 'TRUE') ages.push('👦 Toddlers (3-6)');
+    if (f.properties.age_large === 'TRUE') ages.push('👧 Big Kids (7-12)');
+    
+    const weatherMap = {
+        'Indoor': '☔ Indoor',
+        'Outdoor': '☀️ Outdoor', 
+        'Mixed': '☀️☔ Mixed Indoor/Outdoor'
+    };
+    const weather = f.properties.indoor_outdoor ? weatherMap[f.properties.indoor_outdoor] || weatherMap.Mixed : '';
+
+    const seasonalMonths = f.properties.seasonal_months?.trim();
+    const seasonalInfo = seasonalMonths ? `Open seasonally from ${seasonalMonths}` : '';
+    
+    const website = f.properties.website?.trim();
+    const googleMaps = f.properties.google_maps?.trim();
+    
+    return {
+        name,
+        category,
+        desc,
+        iconUrl,
+        ages,
+        weather,
+        seasonalInfo,
+        website,
+        googleMaps
+    };
+}
+
+// Open location sheet
+window.openLocationSheet = function(feature) {
+    console.log('openLocationSheet called with:', feature);
+    
+    currentFeature = feature;
+    const data = buildSheetContent(feature);
+    const coords = feature.geometry.coordinates;
+    
+    console.log('Coordinates:', coords);
+    console.log('Built sheet content:', data);
+    
+    const featureId = feature.properties.id || feature.properties.name_en || feature.properties.Name;
+    
+    // Don't try to highlight - just skip this for list-opened items
+    // Only highlight if feature has a layer (came from map click)
+    if (feature.layer) {
+        const layerId = feature.layer.id;
+        highlightSelectedLocation(layerId, featureId);
+    }
+    
+    const isMobile = window.innerWidth <= 600;
+    
+    if (isMobile) {
+        const totalHeight = window.innerHeight;
+        const headerHeight = 50;
+        const sheetHeight = totalHeight * 0.42; // Changed from 0.33 to 0.42 (split difference between 0.33 and 0.5)
+        const offsetY = -(sheetHeight / 2);
+        
+        const targetZoom = Math.min(Math.max(map.getZoom(), 13), 14);
+        
+        console.log('Panning map to:', coords);
+        
+        map.easeTo({
+            center: coords,
+            zoom: targetZoom,
+            offset: [0, offsetY],
+            duration: 600
+        });
+        
+        // Mobile sheet with new structure
+        const sheet = document.getElementById('mobile-sheet');
+        const backdrop = document.getElementById('sheet-backdrop');
+        const title = document.getElementById('mobile-sheet-title');
+        const content = document.getElementById('mobile-sheet-content');
+        
+        console.log('Building mobile sheet content...');
+        console.log('Data object:', data);
+        console.log('Icon URL from data:', data.iconUrl);
+        
+        // Set title in header with icon
+        if (data.iconUrl) {
+            console.log('Setting title WITH icon');
+            title.innerHTML = `<img src="${data.iconUrl}" alt="" class="location-icon-mobile" loading="lazy"> ${data.name}`;
+            console.log('Title innerHTML:', title.innerHTML);
+        } else {
+            console.log('Setting title WITHOUT icon (iconUrl is empty)');
+            title.textContent = data.name;
+        }
+        
+        // Build content - category badge first, description, then simple text links
+        let contentHTML = `<span class="category-badge">${data.category}</span>`;
+        
+        if (data.desc) {
+            const wordLimit = 50;
+            const words = data.desc.split(' ');
+            const needsTruncation = words.length > wordLimit;
+            const shortDesc = needsTruncation ? words.slice(0, wordLimit).join(' ') + '...' : data.desc;
+            
+            contentHTML += `
+                <div class="description description-collapsed" id="mobile-description">
+                    ${shortDesc}
+                </div>
+                ${needsTruncation ? `
+                    <button class="see-more-btn" onclick="window.toggleDescription('mobile')">
+                        See more
+                    </button>
+                ` : ''}
+            `;
+            
+            // Store full description for expansion
+            window.mobileFullDescription = data.desc;
+        }
+        
+        // Add simple text links with icons below description
+        if (data.website || data.googleMaps) {
+            contentHTML += '<div class="location-links">';
+            if (data.website) {
+                const href = data.website.match(/^https?:\/\//i) ? data.website : `https://${data.website}`;
+                contentHTML += `
+                    <a href="${href}" target="_blank" rel="noopener noreferrer" class="location-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                        <span>View Website</span>
+                    </a>
+                `;
+            }
+            if (data.googleMaps) {
+                contentHTML += `
+                    <a href="${data.googleMaps}" target="_blank" rel="noopener noreferrer" class="location-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                        <span>Get Directions</span>
+                    </a>
+                `;
+            }
+            contentHTML += '</div>';
+        }
+        
+        if (data.ages.length > 0 || data.weather) {
+            contentHTML += '<div class="info-grid">';
+            
+            if (data.ages.length > 0) {
+                contentHTML += `
+                    <div class="info-section">
+                        <h3>Suitable For</h3>
+                        ${data.ages.map(age => `<div class="info-item">${age}</div>`).join('')}
+                    </div>
+                `;
+            }
+            
+            if (data.weather || data.seasonalMonths) {
+                contentHTML += `
+                    <div class="info-section">
+                        <h3>Indoor / Outdoor</h3>
+                        ${data.weather ? `<div class="info-item">${data.weather}</div>` : ''}
+                        ${data.seasonalMonths ? `<div class="info-item">${data.seasonalMonths}</div>` : ''}
+                    </div>
+                 `;
+             }
+            
+            contentHTML += '</div>';
+        }
+        
+        content.innerHTML = contentHTML;
+        
+        console.log('Activating mobile sheet...');
+        sheet.classList.add('active');
+        backdrop.classList.add('active');
+        console.log('Mobile sheet should now be visible');
+        
+    } else {
+        const sidebarWidth = 440;
+        const offsetX = -(sidebarWidth / 2);
+        
+        map.easeTo({
+            center: coords,
+            zoom: Math.max(map.getZoom(), 15),
+            offset: [offsetX, 0],
+            duration: 600
+        });
+        
+        const sheet = document.getElementById('desktop-sheet');
+        const content = document.getElementById('desktop-sheet-content');
+        
+        console.log('Building desktop sheet...');
+        console.log('Data object:', data);
+        console.log('Icon URL from data:', data.iconUrl);
+        
+        let contentHTML = `
+            <h2>
+                ${data.iconUrl ? `<img src="${data.iconUrl}" alt="" class="location-icon-desktop" loading="lazy">` : ''}
+                ${data.name}
+            </h2>
+            <span class="category-badge">${data.category}</span>
+        `;
+        
+        console.log('Desktop sheet HTML includes icon?', data.iconUrl ? 'YES' : 'NO');
+        
+        if (data.desc) {
+            contentHTML += `<div class="description">${data.desc}</div>`;
+        }
+        
+        if (data.ages.length > 0) {
+            contentHTML += `
+                <div class="info-section">
+                    <h3>Suitable For</h3>
+                    ${data.ages.map(age => `<div class="info-item">${age}</div>`).join('')}
+                </div>
+            `;
+        }
+        
+        if (data.weather) {
+            contentHTML += `
+                <div class="info-section">
+                    <h3>Good For</h3>
+                    ${data.weather ? `<div class="info-item">${data.weather}</div>` : ''}
+                    ${data.seasonalMonths ? `<div class="info-item">${data.seasonalMonths}</div>` : ''}                    
+                </div>
+            `;
+        }
+        
+        if (data.website || data.googleMaps) {
+            contentHTML += '<div class="links">';
+            if (data.website) {
+                const href = data.website.match(/^https?:\/\//i) ? data.website : `https://${data.website}`;
+                contentHTML += `<a href="${href}" target="_blank" rel="noopener noreferrer">View Website</a>`;
+            }
+            if (data.googleMaps) {
+                contentHTML += `<a href="${data.googleMaps}" target="_blank" rel="noopener noreferrer">Get Directions</a>`;
+            }
+            contentHTML += '</div>';
+        }
+        
+        content.innerHTML = contentHTML;
+        sheet.classList.add('active');
+    }
+};
+
+// Share location function - uses native share API when available
+window.shareLocation = function() {
+    if (!currentFeature) return;
+    
+    const name = currentFeature.properties.name_en || currentFeature.properties.Name || 'Location';
+    const shareUrl = `${window.location.origin}${window.location.pathname}?location=${encodeURIComponent(name)}`;
+    const shareData = {
+        title: `${name} - GoBebop`,
+        text: `Check out ${name} on GoBebop!`,
+        url: shareUrl
+    };
+    
+    // Try native share API first (mobile devices)
+    if (navigator.share) {
+        navigator.share(shareData)
+            .catch((error) => {
+                // User cancelled or error - that's okay, do nothing
+                console.log('Share cancelled or failed:', error);
+            });
+    } else {
+        // Fallback to clipboard for desktop
+        navigator.clipboard.writeText(shareUrl).then(() => {
+            // Show a temporary success message
+            const btn = event.target.closest('button');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+            btn.style.background = 'rgba(77, 170, 187, 0.2)';
+            
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.style.background = '';
+            }, 2000);
+        }).catch((error) => {
+            console.error('Failed to copy to clipboard:', error);
+            alert('Failed to copy link. Please try again.');
+        });
+    }
+};
+
+// Check URL for shared location on load
+function checkSharedLocation() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sharedLocationName = urlParams.get('location');
+    
+    if (!sharedLocationName) return;
+    
+    // Wait for data to load if not ready yet
+    if (!locationsData) {
+        console.log('Waiting for location data to load...');
+        setTimeout(checkSharedLocation, 200);
+        return;
+    }
+    
+    // Wait for map to be fully loaded and idle (important for iOS)
+    if (!map.loaded() || !map.isStyleLoaded()) {
+        console.log('Waiting for map to be ready...');
+        setTimeout(checkSharedLocation, 200);
+        return;
+    }
+    
+    console.log('Looking for shared location:', sharedLocationName);
+    
+    // Find the feature by name
+    const feature = locationsData.features.find(f => {
+        const featureName = f.properties.name_en || f.properties.Name;
+        return featureName === decodeURIComponent(sharedLocationName);
+    });
+    
+    if (feature) {
+        console.log('Found shared location, opening:', feature);
+        const coords = feature.geometry.coordinates;
+        
+        // Fly to location
+        map.flyTo({
+            center: coords,
+            zoom: 15,
+            duration: 1500
+        });
+        
+        // Open the location sheet after flying
+        setTimeout(() => {
+            window.openLocationSheet(feature);
+        }, 1000);
+    } else {
+        console.warn('Shared location not found:', sharedLocationName);
+    }
+}
+
+// Toggle description expansion
+window.toggleDescription = function(platform) {
+    if (platform === 'mobile') {
+        const desc = document.getElementById('mobile-description');
+        const btn = event.target;
+        
+        if (desc.classList.contains('description-collapsed')) {
+            desc.textContent = window.mobileFullDescription;
+            desc.classList.remove('description-collapsed');
+            desc.classList.add('description-expanded');
+            btn.textContent = 'See less';
+        } else {
+            const words = window.mobileFullDescription.split(' ');
+            desc.textContent = words.slice(0, 50).join(' ') + '...';
+            desc.classList.remove('description-expanded');
+            desc.classList.add('description-collapsed');
+            btn.textContent = 'See more';
+        }
+    }
+};
+
+// FIXED: Close location sheet - now properly returns to list
+window.closeLocationSheet = function() {
+    const isMobile = window.innerWidth <= 600;
+    
+    if (isMobile) {
+        const sheet = document.getElementById('mobile-sheet');
+        const backdrop = document.getElementById('sheet-backdrop');
+        sheet.classList.remove('active');
+        backdrop.classList.remove('active');
+    } else {
+        const sheet = document.getElementById('desktop-sheet');
+        sheet.classList.remove('active');
+    }
+    
+    // Reset opacity on map icons - with error handling
+    try {
+        if (map.getLayer('Icons')) {
+            map.setPaintProperty('Icons', 'icon-opacity', 1);
+        }
+    } catch (e) {
+        console.warn('Error resetting Icons opacity:', e);
+    }
+    
+    try {
+        if (map.getLayer('Dots')) {
+            map.setPaintProperty('Dots', 'icon-opacity', 1);
+        }
+    } catch (e) {
+        console.warn('Error resetting Dots opacity:', e);
+    }
+    
+    currentFeature = null;
+    
+    // Check if we should return to list - moved AFTER closing sheet
+    if (sessionStorage.getItem('returnToList') === 'true') {
+        sessionStorage.removeItem('returnToList');
+        
+        console.log('Returning to list view...');
+        
+        // Small delay to ensure sheet closes first
+        setTimeout(() => {
+            const listView = document.getElementById('list-view');
+            const backdrop = document.getElementById('list-backdrop');
+            listView.classList.add('active');
+            backdrop.classList.add('active');
+            
+            console.log('List view reopened');
+            
+            // Restore scroll position
+            const scrollPos = sessionStorage.getItem('listScrollPosition');
+            if (scrollPos) {
+                document.getElementById('list-items').scrollTop = parseInt(scrollPos);
+                sessionStorage.removeItem('listScrollPosition');
+                console.log('Scroll position restored:', scrollPos);
+            }
+        }, 100);
+    }
+};
+
+// Multi-select filters
+window.updateFilters = function() {
+    const filtersByGroup = {};
+    
+    document.querySelectorAll('.drawer-content input[type="checkbox"]:checked').forEach(checkbox => {
+        const filterType = checkbox.dataset.filter;
+        if (!filtersByGroup[filterType]) {
+            filtersByGroup[filterType] = [];
+        }
+        filtersByGroup[filterType].push(checkbox.value);
+    });
+    
+    if (filtersByGroup.indoor_outdoor) {
+        const weatherValues = filtersByGroup.indoor_outdoor;
+        if (weatherValues.includes('Outdoor')) {
+            if (!weatherValues.includes('Mixed')) {
+                weatherValues.push('Mixed');
+            }
+        }
+        if (weatherValues.includes('Indoor')) {
+            if (!weatherValues.includes('Mixed')) {
+                weatherValues.push('Mixed');
+            }
+        }
+    }
+    
+    // Store current filters for list view
+    currentFilters = filtersByGroup;
+    
+    const groupFilters = [];
+    Object.keys(filtersByGroup).forEach(filterType => {
+        if (filtersByGroup[filterType].length > 1) {
+            groupFilters.push(['any', ...filtersByGroup[filterType].map(value => 
+                ['==', ['get', filterType], value]
+            )]);
+        } else {
+            groupFilters.push(['==', ['get', filterType], filtersByGroup[filterType][0]]);
+        }
+    });
+    
+    const filter = groupFilters.length ? ['all', ...groupFilters] : ['all'];
+    map.setFilter('Dots', filter);
+    map.setFilter('Icons', filter);
+    
+    // Update filter indicator in list view
+    updateFilterIndicator();
+    
+    // Refresh list view if it's open
+    if (document.getElementById('list-view').classList.contains('active')) {
+        buildLocationsList();
+    }
+};
+
+window.resetFilters = function() {
+    document.querySelectorAll('.drawer-content input[type="checkbox"]').forEach(cb => {
+        cb.checked = false;
+    });
   
-  #custom-geolocate-btn:hover:not(.active):not(.disabled) {
-    animation: none;
-  }
+    document.querySelectorAll('.drawer-content label').forEach(label => {
+        label.classList.remove('selected');
+    });
+    
+    currentFilters = {};
+    
+    map.setFilter('Dots', ['all']);
+    map.setFilter('Icons', ['all']);
+    
+    // Update filter indicator
+    updateFilterIndicator();
+    
+    // Refresh list view if it's open
+    if (document.getElementById('list-view').classList.contains('active')) {
+        buildLocationsList();
+    }
+};
+
+// Update the filter indicator badge in list view
+function updateFilterIndicator() {
+    const indicator = document.getElementById('list-filter-indicator');
+    const countElement = document.getElementById('active-filter-count');
+    
+    if (!indicator || !countElement) return;
+    
+    // Count active filters
+    const activeCount = document.querySelectorAll('.drawer-content input[type="checkbox"]:checked').length;
+    
+    if (activeCount > 0) {
+        indicator.style.display = 'flex';
+        countElement.textContent = activeCount;
+    } else {
+        indicator.style.display = 'none';
+    }
 }
 
-/* Active state (click) */
-#custom-geolocate-btn:active:not(.disabled) {
-  transform: scale(0.95);
-}
-
-/* When location is locked - blue icon, white background */
-#custom-geolocate-btn.active {
-  background: white;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  animation: none;
-}
-
-/* Icon styling - default state */
-#custom-geolocate-btn svg {
-  width: 28px;
-  height: 28px;
-  transition: all 0.2s ease;
-}
-
-#custom-geolocate-btn svg circle,
-#custom-geolocate-btn svg path {
-  transition: all 0.2s ease;
-}
-
-/* Active state icon color - blue */
-#custom-geolocate-btn.active svg {
-  stroke: #4daabb;
-}
-
-#custom-geolocate-btn.active svg circle:last-child {
-  fill: #4daabb;
-}
-
-/* Error state - red icon, white background */
-#custom-geolocate-btn.error {
-  background: white;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  animation: none;
-}
-
-#custom-geolocate-btn.error svg {
-  stroke: #ff4d4d;
-}
-
-/* Mobile Bottom Navigation */
-.mobile-bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 70px;
-  background: white;
-  border-top: 1px solid #e0e0e0;
-  display: none;
-  justify-content: space-around;
-  align-items: center;
-  z-index: 1500;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-}
-
-.nav-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  background: none;
-  border: none;
-  padding: 8px;
-  cursor: pointer;
-  color: #666;
-  transition: all 0.2s ease;
-  height: 100%;
-}
-
-.nav-item:active {
-  background: rgba(77, 170, 187, 0.1);
-  color: #4daabb;
-}
-
-.nav-item svg {
-  width: 24px;
-  height: 24px;
-}
-
-.nav-label {
-  font-size: 11px;
-  font-weight: 600;
-  font-family: 'Quicksand', sans-serif;
-}
-
-/* Mobile Devices */
-@media (max-width: 600px) {
-  #header {
-    height: 60px;
-    padding: 0 12px;
-    background: transparent;
-    backdrop-filter: none;
-  }
-
-  #header img {
-    height: 60px;
-  }
-
-  /* Hide desktop filter button and feedback button on mobile */
-  #desktop-filter-btn,
-  #feedback-btn {
-    display: none;
-  }
-
-  #map {
-    top: 0;
-    bottom: 70px; /* Make room for bottom nav */
-  }
-
-  .mapboxgl-ctrl-top-right {
-    top: 10px;
-    right: 10px;
-  }
-
-  .mapboxgl-ctrl-bottom-left {
-    left: 10px;
-  }
-
-  .mapboxgl-ctrl-bottom-right {
-    right: 10px;
-  }
-
-  /* Custom geolocation button positioning on mobile */
-  #custom-geolocate-btn {
-    bottom: 90px; /* Above bottom nav */
-    right: 16px;
-  }
-
-  /* Make filter drawer slide from bottom and cover full screen on mobile */
-  .filter-drawer {
-    bottom: 0;
-    top: auto;
-    left: 0;
-    right: 0;
-    width: 100%;
-    max-width: 100%;
-    height: calc(100% - 60px); /* Leave space for mobile header (60px) */
-    max-height: 90vh;
-    max-height: 90dvh; /* Dynamic viewport height for iOS */
-    transform: translateY(100%);
-    border-radius: 20px 20px 0 0;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
-  }
-
-  .filter-drawer.active {
-    transform: translateY(0);
-  }
-
-  /* Make list view consistent - slide from bottom */
-  .list-view {
-    display: flex;
-    bottom: 0;
-    top: auto;
-    height: calc(100% - 60px); /* Leave space for mobile header (60px) */
-    max-height: 90vh;
-    max-height: 90dvh; /* Dynamic viewport height for iOS */
-    transform: translateY(100%);
-    border-radius: 20px 20px 0 0;
-  }
-
-  .list-view.active {
-    transform: translateY(0);
-  }
-
-  /* Make feedback modal consistent - slide from bottom */
-  .feedback-modal {
-    position: fixed;
-    bottom: 0;
-    top: auto;
-    left: 0;
-    right: 0;
-    width: 100%;
-    max-width: 100%;
-    height: calc(100% - 60px); /* Leave space for mobile header (60px) */
-    max-height: 90vh;
-    max-height: 90dvh; /* Dynamic viewport height for iOS */
-    transform: translateY(100%);
-    border-radius: 20px 20px 0 0;
-  }
-  
-  .feedback-modal.active {
-    transform: translateY(0);
-  }
-
-  .desktop-sheet {
-    display: none !important;
-  }
-
-  .mobile-sheet {
-    display: flex;
-  }
-
-  /* Show bottom navigation on mobile */
-  .mobile-bottom-nav {
-    display: flex;
-  }
-
-  /* Hide old floating buttons */
-  #list-toggle,
-  #filter-toggle {
-    display: none !important;
-  }
-
-  .list-backdrop {
-    display: block;
-  }
-}
-
-/* FEEDBACK MODAL */
-.feedback-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.9);
-  width: 90%;
-  max-width: 600px;
-  height: 85vh; /* Changed from max-height to height */
-  max-height: 85vh;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-  z-index: 2300;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  flex-direction: column;
-}
-
-.feedback-modal.active {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translate(-50%, -50%) scale(1);
-}
-
-.feedback-modal-content {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-}
-
-.feedback-modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 24px;
-  border-bottom: 1px solid #e0e0e0;
-  flex-shrink: 0;
-}
-
-.feedback-modal-header h3 {
-  margin: 0;
-  font-size: 22px;
-  color: #333;
-}
-
-.feedback-modal-close {
-  background: #f0f0f0;
-  border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 28px;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #666;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-}
-
-.feedback-modal-close:hover {
-  background: #e0e0e0;
-  color: #333;
-}
-
-.feedback-modal-body {
-  flex-grow: 1;
-  overflow-y: auto;
-  padding: 24px;
-  -webkit-overflow-scrolling: touch;
-  min-height: 0;
-}
-
-.feedback-section {
-  margin-bottom: 24px;
-}
-
-.feedback-description,
-.mailing-description {
-  font-size: 15px;
-  line-height: 1.6;
-  color: #555;
-  margin-bottom: 16px;
-}
-
-.feedback-submit-btn {
-  display: block;
-  width: 100%;
-  padding: 14px 20px;
-  background: #4daabb;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: 'Quicksand', sans-serif;
-  text-align: center;
-  text-decoration: none;
-}
-
-.feedback-submit-btn:hover {
-  background: #3d8a99;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(77, 170, 187, 0.3);
-}
-
-.feedback-divider {
-  height: 1px;
-  background: linear-gradient(to right, transparent, #e0e0e0, transparent);
-  margin: 32px 0;
-}
-
-.mailing-list-section h4 {
-  margin: 0 0 12px 0;
-  font-size: 18px;
-  color: #333;
-}
-
-/* Custom Mailchimp Form Styling */
-.custom-mailchimp-form {
-  width: 100%;
-}
-
-.form-group {
-  margin-bottom: 16px;
-}
-
-.form-group label {
-  display: block;
-  font-weight: 600;
-  font-size: 14px;
-  color: #333;
-  margin-bottom: 8px;
-}
-
-.required-asterisk {
-  color: #f4c430;
-  font-weight: bold;
-}
-
-.form-input {
-  width: 100%;
-  padding: 12px 16px;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 15px;
-  font-family: 'Quicksand', sans-serif;
-  transition: border-color 0.2s ease;
-  box-sizing: border-box;
-  background: white;
-}
-
-.form-input:focus {
-  outline: none;
-  border-color: #4daabb;
-}
-
-.form-input::placeholder {
-  color: #999;
-}
-
-.form-submit-btn {
-  width: 100%;
-  padding: 12px 20px;
-  background: #4daabb;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 15px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: 'Quicksand', sans-serif;
-}
-
-.form-submit-btn:hover {
-  background: #3d8a99;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(77, 170, 187, 0.3);
-}
-
-.form-submit-btn:active {
-  transform: translateY(0);
-}
-
-.form-messages {
-  margin-top: 12px;
-  padding: 10px 12px;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  display: none;
-}
-
-.form-messages.success {
-  display: block;
-  background-color: rgba(77, 170, 187, 0.1);
-  color: #4daabb;
-}
-
-.form-messages.error {
-  display: block;
-  background-color: rgba(255, 77, 77, 0.1);
-  color: #ff4d4d;
-}
-
-.feedback-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 2250;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-.feedback-backdrop.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Mobile adjustments for feedback modal */
-@media (max-width: 600px) {
-  .feedback-modal {
-    position: fixed;
-    bottom: 0;
-    top: auto;
-    left: 0;
-    right: 0;
-    transform: translateY(100%);
-    width: 100%;
-    max-width: 100%;
-    height: calc(100% - 60px); /* Leave space for mobile header (60px) */
-    max-height: 90vh;
-    max-height: 90dvh; /* Dynamic viewport height for iOS */
-    border-radius: 20px 20px 0 0;
-  }
-  
-  .feedback-modal.active {
-    transform: translateY(0);
-  }
-  
-  .feedback-modal-header {
-    padding: 20px 16px;
-  }
-  
-  .feedback-modal-header h3 {
-    font-size: 20px;
-  }
-  
-  .feedback-modal-body {
-    padding: 16px;
-  }
-  
-  .feedback-submit-btn {
-    padding: 12px 16px;
-    font-size: 15px;
-  }
-}
-
-/* Desktop Devices */
-@media (min-width: 601px) {
-  .mobile-sheet {
-    display: none !important;
-  }
-
-  .desktop-sheet {
-    display: block;
-  }
-
-  .sheet-backdrop {
-    display: block;
-  }
-
-  /* Hide list view and bottom buttons on desktop */
-  .list-view {
-    display: none !important;
-  }
-
-  #list-toggle,
-  #filter-toggle {
-    display: none !important;
-  }
-
-  .list-backdrop {
-    display: none !important;
-  }
+// Toggle feedback modal
+window.toggleFeedbackModal = function() {
+    const modal = document.getElementById('feedback-modal');
+    const backdrop = document.getElementById('feedback-backdrop');
+    
+    const isActive = modal.classList.contains('active');
+    
+    if (isActive) {
+        modal.classList.remove('active');
+        backdrop.classList.remove('active');
+    } else {
+        modal.classList.add('active');
+        backdrop.classList.add('active');
+    }
+};
+
+// Initialize
+loadLocationsData();
+
+// Add error handler for map
+if (map) {
+    map.on('error', (e) => {
+        console.error('Map error:', e);
+    });
+
+    map.on('load', () => {
+        console.log('Map load event triggered');
+        
+        // GTM tracking
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            'event': 'map_initialized',
+            'map_center': [4.9041, 52.3676] 
+        });
+
+        map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+    
+    // Create hidden geolocation control (for functionality only)
+    geolocateControl = new mapboxgl.GeolocateControl({
+        positionOptions: {
+            enableHighAccuracy: true
+        },
+        trackUserLocation: true,
+        showUserHeading: true,
+        showAccuracyCircle: true
+    });
+    
+    map.addControl(geolocateControl, 'bottom-right');
+    
+    // Custom geolocation button
+    const customGeoBtn = document.getElementById('custom-geolocate-btn');
+    let isTracking = false;
+    let geolocationAvailable = true;
+    let hasBeenClicked = false;
+    let permissionState = 'prompt'; // 'prompt', 'granted', 'denied'
+    
+    // Stop pulse animation after 10 seconds
+    setTimeout(() => {
+        customGeoBtn.classList.add('pulse-stopped');
+    }, 10000);
+    
+    // Check if geolocation is available
+    if (!navigator.geolocation) {
+        customGeoBtn.classList.add('disabled');
+        customGeoBtn.setAttribute('aria-label', 'Geolocation not available');
+        geolocationAvailable = false;
+        permissionState = 'denied';
+        console.log('Geolocation is not supported by this browser');
+    } else {
+        // Check permission state on load (if browser supports it)
+        if (navigator.permissions && navigator.permissions.query) {
+            navigator.permissions.query({ name: 'geolocation' }).then((result) => {
+                permissionState = result.state;
+                if (result.state === 'denied') {
+                    customGeoBtn.classList.add('disabled');
+                    customGeoBtn.setAttribute('aria-label', 'Geolocation permission denied');
+                    geolocationAvailable = false;
+                }
+                // Listen for permission changes
+                result.addEventListener('change', () => {
+                    permissionState = result.state;
+                    if (result.state === 'denied') {
+                        customGeoBtn.classList.add('disabled');
+                        customGeoBtn.classList.remove('active');
+                        customGeoBtn.setAttribute('aria-label', 'Geolocation permission denied');
+                        geolocationAvailable = false;
+                        isTracking = false;
+                    } else if (result.state === 'granted') {
+                        customGeoBtn.classList.remove('disabled');
+                        customGeoBtn.setAttribute('aria-label', 'Find my location');
+                        geolocationAvailable = true;
+                    }
+                });
+            }).catch((err) => {
+                // Permissions API not supported (e.g., iOS Safari)
+                console.log('Permissions API not supported:', err);
+            });
+        }
+    }
+    
+    // Button click handler
+    customGeoBtn.addEventListener('click', () => {
+        if (!geolocationAvailable) {
+            console.log('Geolocation not available');
+            return;
+        }
+        
+        if (customGeoBtn.classList.contains('disabled')) {
+            console.log('Geolocation button is disabled');
+            return;
+        }
+        
+        // Stop pulse permanently once clicked
+        if (!hasBeenClicked) {
+            hasBeenClicked = true;
+            customGeoBtn.classList.add('pulse-stopped');
+        }
+        
+        // Always trigger - Mapbox control handles toggling internally
+        // First click: starts tracking
+        // Second click: stops tracking
+        geolocateControl.trigger();
+    });
+    
+    // Track geolocation events
+    // Note: trackuserlocationstart fires before permission is granted
+    // We only set active state on successful geolocate
+    geolocateControl.on('trackuserlocationstart', () => {
+        console.log('Tracking started (waiting for permission...)');
+        // Don't set active state yet - wait for permission and location
+    });
+    
+    geolocateControl.on('geolocate', (e) => {
+        console.log('Location found');
+        isTracking = true;
+        customGeoBtn.classList.add('active');
+        customGeoBtn.classList.remove('error');
+        
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            'event': 'user_location_found',
+            'location_accuracy': e.coords.accuracy
+        });
+        
+        // Refresh list if open to re-sort by distance
+        if (document.getElementById('list-view').classList.contains('active')) {
+            buildLocationsList();
+        }
+    });
+    
+    geolocateControl.on('trackuserlocationend', () => {
+        console.log('Tracking ended');
+        isTracking = false;
+        customGeoBtn.classList.remove('active');
+    });
+    
+    geolocateControl.on('error', (e) => {
+        console.log('Geolocation error:', e.message, e.code);
+        isTracking = false;
+        customGeoBtn.classList.remove('active');
+        
+        // Error codes:
+        // 1 = PERMISSION_DENIED
+        // 2 = POSITION_UNAVAILABLE
+        // 3 = TIMEOUT
+        
+        if (e.code === 1) {
+            // Permission explicitly denied - disable permanently
+            customGeoBtn.classList.add('disabled');
+            customGeoBtn.setAttribute('aria-label', 'Geolocation permission denied');
+            geolocationAvailable = false;
+            permissionState = 'denied';
+            
+            // Show error state briefly before going to disabled
+            customGeoBtn.classList.add('error');
+            setTimeout(() => {
+                customGeoBtn.classList.remove('error');
+            }, 2000);
+        } else if (e.code === 2) {
+            // Position unavailable - might be temporary
+            customGeoBtn.classList.add('error');
+            setTimeout(() => {
+                customGeoBtn.classList.remove('error');
+            }, 3000);
+        } else {
+            // Timeout or other temporary error
+            customGeoBtn.classList.add('error');
+            setTimeout(() => {
+                customGeoBtn.classList.remove('error');
+            }, 3000);
+        }
+        
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            'event': 'user_location_error',
+            'error_message': e.message,
+            'error_code': e.code
+        });
+    });
+    
+    // Click handlers
+    map.on('click', 'Icons', (e) => {
+        if (!e.features?.length) return;
+        window.openLocationSheet(e.features[0]);
+    });
+    
+    map.on('click', 'Dots', (e) => {
+        if (!e.features?.length) return;
+        window.openLocationSheet(e.features[0]);
+    });
+    
+    // Hover cursors (desktop only)
+    if (!('ontouchstart' in window)) {
+        map.on('mouseenter', 'Icons', () => map.getCanvas().style.cursor = 'pointer');
+        map.on('mouseleave', 'Icons', () => map.getCanvas().style.cursor = '');
+        
+        map.on('mouseenter', 'Dots', () => map.getCanvas().style.cursor = 'pointer');
+        map.on('mouseleave', 'Dots', () => map.getCanvas().style.cursor = '');
+    }
+    
+    // Filter checkbox handlers
+    document.querySelectorAll('.drawer-content input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            window.updateFilters();
+            
+            if (this.checked) {
+                this.parentElement.classList.add('selected');
+            } else {
+                this.parentElement.classList.remove('selected');
+            }
+        });
+    });
+    
+    // Check for shared location after map is loaded
+    // Longer delay for iOS compatibility
+    setTimeout(() => {
+        checkSharedLocation();
+    }, 1000);
+    });
+} else {
+    console.error('Map object not created, skipping event handlers');
 }
