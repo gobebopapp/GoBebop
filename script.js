@@ -780,16 +780,20 @@ map.on('load', () => {
             return;
         }
         
-        if (!isTracking) {
-            geolocateControl.trigger();
-        } else {
-            // Turn off tracking
-            isTracking = false;
-            customGeoBtn.classList.remove('active');
-        }
+        // Always trigger - Mapbox control handles toggling internally
+        // First click: starts tracking
+        // Second click: stops tracking
+        geolocateControl.trigger();
     });
     
     // Track geolocation events
+    geolocateControl.on('trackuserlocationstart', () => {
+        console.log('Tracking started');
+        isTracking = true;
+        customGeoBtn.classList.add('active');
+        customGeoBtn.classList.remove('error');
+    });
+    
     geolocateControl.on('geolocate', (e) => {
         isTracking = true;
         customGeoBtn.classList.add('active');
@@ -808,6 +812,7 @@ map.on('load', () => {
     });
     
     geolocateControl.on('trackuserlocationend', () => {
+        console.log('Tracking ended');
         isTracking = false;
         customGeoBtn.classList.remove('active');
     });
