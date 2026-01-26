@@ -424,8 +424,6 @@ window.openLocationSheet = function(feature) {
         const backdrop = document.getElementById('sheet-backdrop');
         const title = document.getElementById('mobile-sheet-title');
         const content = document.getElementById('mobile-sheet-content');
-        const websiteBtn = document.getElementById('mobile-website-btn');
-        const mapsBtn = document.getElementById('mobile-maps-btn');
         
         console.log('Building mobile sheet content...');
         console.log('Data object:', data);
@@ -441,24 +439,7 @@ window.openLocationSheet = function(feature) {
             title.textContent = data.name;
         }
         
-        // Handle website button
-        if (data.website) {
-            const href = data.website.match(/^https?:\/\//i) ? data.website : `https://${data.website}`;
-            websiteBtn.style.display = 'flex';
-            websiteBtn.onclick = () => window.open(href, '_blank', 'noopener,noreferrer');
-        } else {
-            websiteBtn.style.display = 'none';
-        }
-        
-        // Handle maps button
-        if (data.googleMaps) {
-            mapsBtn.style.display = 'flex';
-            mapsBtn.onclick = () => window.open(data.googleMaps, '_blank', 'noopener,noreferrer');
-        } else {
-            mapsBtn.style.display = 'none';
-        }
-        
-        // Build content (without title and links)
+        // Build content - category badge first, description, then simple text links
         let contentHTML = `<span class="category-badge">${data.category}</span>`;
         
         if (data.desc) {
@@ -480,6 +461,37 @@ window.openLocationSheet = function(feature) {
             
             // Store full description for expansion
             window.mobileFullDescription = data.desc;
+        }
+        
+        // Add simple text links with icons below description
+        if (data.website || data.googleMaps) {
+            contentHTML += '<div class="location-links">';
+            if (data.website) {
+                const href = data.website.match(/^https?:\/\//i) ? data.website : `https://${data.website}`;
+                contentHTML += `
+                    <a href="${href}" target="_blank" rel="noopener noreferrer" class="location-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                        <span>View Website</span>
+                    </a>
+                `;
+            }
+            if (data.googleMaps) {
+                contentHTML += `
+                    <a href="${data.googleMaps}" target="_blank" rel="noopener noreferrer" class="location-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                        <span>Get Directions</span>
+                    </a>
+                `;
+            }
+            contentHTML += '</div>';
         }
         
         if (data.ages.length > 0 || data.weather) {
