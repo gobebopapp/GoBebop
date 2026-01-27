@@ -388,6 +388,10 @@ function buildSheetContent(f) {
     };
     const weather = f.properties.indoor_outdoor ? weatherMap[f.properties.indoor_outdoor] || weatherMap.Mixed : '';
 
+    const entryFee = f.properties.entry_fee === 'TRUE' ? '🎟️ Paid Entry' : (f.properties.entry_fee === 'FALSE' ? '🎟️ Free Entry' : '');
+    const changingTable = f.properties.changing_table === 'TRUE' ? '🧷 Changing table' : '';
+    const toilet = f.properties.toilet === 'TRUE' ? '🚽 Toilet' : '';
+
     const seasonalMonths = f.properties.seasonal_months?.trim();
     const seasonalInfo = seasonalMonths ? `Open seasonally from ${seasonalMonths}` : '';
     
@@ -401,6 +405,9 @@ function buildSheetContent(f) {
         iconUrl,
         ages,
         weather,
+        entryFee,
+        changingTable,
+        toilet,
         seasonalInfo,
         website,
         googleMaps
@@ -521,7 +528,7 @@ window.openLocationSheet = function(feature) {
             contentHTML += '</div>';
         }
         
-        if (data.ages.length > 0 || data.weather) {
+        if (data.ages.length > 0 || data.weather || data.entryFee || data.changingTable || data.toilet) {
             contentHTML += '<div class="info-grid">';
             
             if (data.ages.length > 0) {
@@ -533,11 +540,14 @@ window.openLocationSheet = function(feature) {
                 `;
             }
             
-            if (data.weather || data.seasonalMonths) {
+            if (data.weather || data.entryFee || data.changingTable || data.toilet || data.seasonalMonths) {
                 contentHTML += `
                     <div class="info-section">
                         <h3>Location Info</h3>
                         ${data.weather ? `<div class="info-item">${data.weather}</div>` : ''}
+                        ${data.entryFee ? `<div class="info-item">${data.entryFee}</div>` : ''}
+                        ${data.changingTable ? `<div class="info-item">${data.changingTable}</div>` : ''}
+                        ${data.toilet ? `<div class="info-item">${data.toilet}</div>` : ''}
                         ${data.seasonalMonths ? `<div class="info-item">${data.seasonalMonths}</div>` : ''}
                     </div>
                  `;
@@ -594,11 +604,14 @@ window.openLocationSheet = function(feature) {
             `;
         }
         
-        if (data.weather) {
+        if (data.weather || data.entryFee || data.changingTable || data.toilet) {
             contentHTML += `
                 <div class="info-section">
                     <h3>Good For</h3>
                     ${data.weather ? `<div class="info-item">${data.weather}</div>` : ''}
+                    ${data.entryFee ? `<div class="info-item">${data.entryFee}</div>` : ''}
+                    ${data.changingTable ? `<div class="info-item">${data.changingTable}</div>` : ''}
+                    ${data.toilet ? `<div class="info-item">${data.toilet}</div>` : ''}
                     ${data.seasonalMonths ? `<div class="info-item">${data.seasonalMonths}</div>` : ''}                    
                 </div>
             `;
