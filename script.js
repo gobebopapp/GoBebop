@@ -91,14 +91,14 @@ function createListItem(feature, distance) {
     const iconUrl = feature.properties.icon_url || '';
     
     const ages = [];
-    if (feature.properties.age_small === 'TRUE') ages.push('👶 Babies');
-    if (feature.properties.age_medium === 'TRUE') ages.push('👦 Toddlers');
+    if (feature.properties.age_small === 'TRUE') ages.push('👶 Babies/Toddlers');
+    if (feature.properties.age_medium === 'TRUE') ages.push('👦 Preschoolers');
     if (feature.properties.age_large === 'TRUE') ages.push('👧 Big Kids');
     
     const weatherMap = {
         'Indoor': '☔ Indoor',
         'Outdoor': '☀️ Outdoor', 
-        'Mixed': '☀️☔ Mixed Indoor/Outdoor'
+        'Mixed': '☀️☔ Indoor/Outdoor'
     };
     const weather = feature.properties.indoor_outdoor ? weatherMap[feature.properties.indoor_outdoor] : '';
     
@@ -377,14 +377,14 @@ function buildSheetContent(f) {
     console.log('buildSheetContent - Final iconUrl:', iconUrl);
     
     const ages = [];
-    if (f.properties.age_small === 'TRUE') ages.push('👶 Babies (0-2)');
-    if (f.properties.age_medium === 'TRUE') ages.push('👦 Toddlers (3-6)');
+    if (f.properties.age_small === 'TRUE') ages.push('👶 Babies/Toddlers (0-3)');
+    if (f.properties.age_medium === 'TRUE') ages.push('👦 Preschoolers (4-6)');
     if (f.properties.age_large === 'TRUE') ages.push('👧 Big Kids (7-12)');
     
     const weatherMap = {
         'Indoor': '☔ Indoor',
         'Outdoor': '☀️ Outdoor', 
-        'Mixed': '☀️☔ Mixed Indoor/Outdoor'
+        'Mixed': '☀️☔ Indoor/Outdoor'
     };
     const weather = f.properties.indoor_outdoor ? weatherMap[f.properties.indoor_outdoor] || weatherMap.Mixed : '';
 
