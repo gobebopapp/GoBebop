@@ -465,6 +465,7 @@ function buildSheetContent(f) {
     const weather = f.properties.indoor_outdoor ? weatherMap[f.properties.indoor_outdoor] || weatherMap.Mixed : '';
 
     const entryFee = f.properties.entry_fee === 'TRUE' ? '🎟️ Paid Entry' : (f.properties.entry_fee === 'FALSE' ? '🙌 Free Entry' : '');
+    const foodDrink = f.properties.food_drink === 'TRUE' ? '🍽️ Food/Drink for Purchase' : '';
     const changingTable = f.properties.changing_table === 'TRUE' ? '🧷 Changing table' : '';
     const toilet = f.properties.toilet === 'TRUE' ? '🚽 Toilet' : '';
 
@@ -482,6 +483,7 @@ function buildSheetContent(f) {
         ages,
         weather,
         entryFee,
+        foodDrink,
         changingTable,
         toilet,
         seasonalInfo,
@@ -604,7 +606,7 @@ window.openLocationSheet = function(feature) {
             contentHTML += '</div>';
         }
         
-        if (data.ages.length > 0 || data.weather || data.entryFee || data.changingTable || data.toilet) {
+        if (data.ages.length > 0 || data.weather || data.entryFee || data.foodDrink || data.changingTable || data.toilet) {
             contentHTML += '<div class="info-grid">';
             
             if (data.ages.length > 0) {
@@ -616,14 +618,15 @@ window.openLocationSheet = function(feature) {
                 `;
             }
             
-            if (data.weather || data.entryFee || data.changingTable || data.toilet || data.seasonalMonths) {
+            if (data.weather || data.entryFee || data.foodDrink || data.changingTable || data.toilet || data.seasonalMonths) {
                 contentHTML += `
                     <div class="info-section">
                         <h3>Location Info</h3>
-                        ${data.weather ? `<div class="info-item">${data.weather}</div>` : ''}
-                        ${data.entryFee ? `<div class="info-item">${data.entryFee}</div>` : ''}
-                        ${data.changingTable ? `<div class="info-item">${data.changingTable}</div>` : ''}
-                        ${data.toilet ? `<div class="info-item">${data.toilet}</div>` : ''}
+                        ${data.weather && data.weather !== 'NA' ? `<div class="info-item">${data.weather}</div>` : ''}
+                        ${data.entryFee && data.entryFee !== 'NA' ? `<div class="info-item">${data.entryFee}</div>` : ''}
+                        ${data.foodDrink && data.foodDrink !== 'NA' ? `<div class="info-item">${data.foodDrink}</div>` : ''}
+                        ${data.changingTable && data.changingTable !== 'NA' ? `<div class="info-item">${data.changingTable}</div>` : ''}
+                        ${data.toilet && data.toilet !== 'NA' ? `<div class="info-item">${data.toilet}</div>` : ''}
                         ${data.seasonalMonths ? `<div class="info-item">${data.seasonalMonths}</div>` : ''}
                     </div>
                  `;
@@ -680,14 +683,15 @@ window.openLocationSheet = function(feature) {
             `;
         }
         
-        if (data.weather || data.entryFee || data.changingTable || data.toilet) {
+        if (data.weather || data.entryFee || data.foodDrink || data.changingTable || data.toilet) {
             contentHTML += `
                 <div class="info-section">
                     <h3>Good For</h3>
-                    ${data.weather ? `<div class="info-item">${data.weather}</div>` : ''}
-                    ${data.entryFee ? `<div class="info-item">${data.entryFee}</div>` : ''}
-                    ${data.changingTable ? `<div class="info-item">${data.changingTable}</div>` : ''}
-                    ${data.toilet ? `<div class="info-item">${data.toilet}</div>` : ''}
+                    ${data.weather && data.weather !== 'NA' ? `<div class="info-item">${data.weather}</div>` : ''}
+                    ${data.entryFee && data.entryFee !== 'NA' ? `<div class="info-item">${data.entryFee}</div>` : ''}
+                    ${data.foodDrink && data.foodDrink !== 'NA' ? `<div class="info-item">${data.foodDrink}</div>` : ''}
+                    ${data.changingTable && data.changingTable !== 'NA' ? `<div class="info-item">${data.changingTable}</div>` : ''}
+                    ${data.toilet && data.toilet !== 'NA' ? `<div class="info-item">${data.toilet}</div>` : ''}
                     ${data.seasonalMonths ? `<div class="info-item">${data.seasonalMonths}</div>` : ''}                    
                 </div>
             `;
@@ -1018,8 +1022,14 @@ function checkAndShowWelcome() {
     const hasSeenWelcome = localStorage.getItem('gobebop_welcome_seen');
     
     if (!hasSeenWelcome) {
-        // Show welcome modal on first interaction
-        const showOnce = () => {
+        // Show welcome modal on first interaction (excluding cookie banner clicks)
+        const showOnce = (event) => {
+            // Ignore clicks on cookie consent banner
+            if (event.target.closest('#cookie-consent-banner') || 
+                event.target.closest('.cookie-consent-banner')) {
+                return; // Don't trigger welcome modal for cookie banner interactions
+            }
+            
             window.showWelcomeModal();
             // Remove all listeners after showing once
             document.removeEventListener('click', showOnce);
@@ -1027,8 +1037,8 @@ function checkAndShowWelcome() {
             document.removeEventListener('keydown', showOnce);
         };
         
-        document.addEventListener('click', showOnce, { once: true });
-        document.addEventListener('touchstart', showOnce, { once: true });
+        document.addEventListener('click', showOnce);
+        document.addEventListener('touchstart', showOnce);
         document.addEventListener('keydown', showOnce, { once: true });
     }
 }
