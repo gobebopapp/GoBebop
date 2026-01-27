@@ -439,7 +439,7 @@ window.openLocationSheet = function(feature) {
     if (isMobile) {
         const totalHeight = window.innerHeight;
         const headerHeight = 50;
-        const sheetHeight = totalHeight * 0.42; // Changed from 0.33 to 0.42 (split difference between 0.33 and 0.5)
+        const sheetHeight = totalHeight * 0.52; // Increased to match 52vh mobile sheet height
         const offsetY = -(sheetHeight / 2);
         
         const targetZoom = Math.min(Math.max(map.getZoom(), 13), 14);
