@@ -536,7 +536,7 @@ window.openLocationSheet = function(feature) {
             if (data.weather || data.seasonalMonths) {
                 contentHTML += `
                     <div class="info-section">
-                        <h3>Facilities</h3>
+                        <h3>Location Info</h3>
                         ${data.weather ? `<div class="info-item">${data.weather}</div>` : ''}
                         ${data.seasonalMonths ? `<div class="info-item">${data.seasonalMonths}</div>` : ''}
                     </div>
