@@ -3,12 +3,17 @@
 
   <head>
     <meta charset="UTF-8">
-      <!-- Google Tag Manager -->
-      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-M9B8VD85');</script>
+      <!-- Google Tag Manager - Only loads after consent -->
+      <script>
+      // Check if user has already consented
+      if (localStorage.getItem('cookieConsent') === 'accepted') {
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-M9B8VD85');
+      }
+      </script>
     <!-- End Google Tag Manager -->
     <title>GoBebop</title>
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/v3.17.0/mapbox-gl.css'>
@@ -24,9 +29,12 @@
     
   <body>
     
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M9B8VD85"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- Google Tag Manager (noscript) - Only loads if consent was given -->
+    <script>
+    if (localStorage.getItem('cookieConsent') === 'accepted') {
+      document.write('<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M9B8VD85" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>');
+    }
+    </script>
     <!-- End Google Tag Manager (noscript) -->
     
   <div id="header">
@@ -103,9 +111,9 @@
     </details>
     
     <details>
-      <summary>Facilities</summary>
-      <label><input type="checkbox" data-filter="toilet" value="TRUE"> 🚽 Toilet access</label>
-      <label><input type="checkbox" data-filter="changing_table" value="TRUE"> 🧷 Changing table</label>
+      <summary>Entry Fees</summary>
+      <label><input type="checkbox" data-filter="entry_fee" value="FALSE"> Free Entry</label>
+      <label><input type="checkbox" data-filter="entry_fee" value="TRUE"> 🎟️ Paid Entry</label>
     </details>
 
     <button onclick="window.resetFilters()" id="reset-btn">Reset All Filters</button>
@@ -206,7 +214,6 @@
 <div id="welcome-modal" class="welcome-modal">
   <div class="welcome-modal-content">
     <div class="welcome-modal-header">
-      <img src="bebop-bee.png" alt="Bebop Bee" style="width: 44px; height: auto; margin-right: 4px; border-radius: 2px;">
       <h3>Welcome to GoBebop!</h3>
       <button class="welcome-modal-close" onclick="window.closeWelcomeModal()">×</button>
     </div>
@@ -379,6 +386,22 @@
     <line x1="3" y1="18" x2="3.01" y2="18"></line>
   </svg>
 </button>
+
+<!-- GDPR Cookie Consent Banner -->
+<div id="cookie-consent-banner" class="cookie-consent-banner">
+  <div class="cookie-consent-content">
+    <div class="cookie-consent-text-wrapper">
+      <h4 class="cookie-consent-title">🍪 We use cookies</h4>
+      <p class="cookie-consent-text">
+        We use cookies to improve your experience and analyze site traffic. By clicking "Accept", you consent to our use of cookies.
+      </p>
+    </div>
+    <div class="cookie-consent-buttons">
+      <button onclick="window.acceptCookies()" class="cookie-btn cookie-accept">Accept All</button>
+      <button onclick="window.declineCookies()" class="cookie-btn cookie-decline">Decline</button>
+    </div>
+  </div>
+</div>
 
     <script src='https://api.mapbox.com/mapbox-gl-js/v3.17.0/mapbox-gl.js'></script>
     <script src="./script.js"></script>

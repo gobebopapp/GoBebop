@@ -1,5 +1,81 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoiYW1hY2JldGgxIiwiYSI6ImNtZzB0MGd0ZjBqMDEybHIzbnU0dzFuam4ifQ.aGD0Ws8Zut0q4f1iTYUBeA';
 
+// GDPR Cookie Consent Functions
+window.acceptCookies = function() {
+    localStorage.setItem('cookieConsent', 'accepted');
+    localStorage.setItem('cookieConsentTimestamp', new Date().toISOString());
+    document.getElementById('cookie-consent-banner').classList.remove('active');
+    
+    // Load Google Tag Manager
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-M9B8VD85');
+    
+    // Track acceptance event in GA
+    setTimeout(function() {
+        if (window.dataLayer) {
+            window.dataLayer.push({
+                'event': 'cookie_consent',
+                'consent_action': 'accepted'
+            });
+        }
+    }, 500);
+    
+    // Optional: Send to your own analytics endpoint (no cookies, GDPR-friendly)
+    sendConsentMetric('accepted');
+};
+
+window.declineCookies = function() {
+    localStorage.setItem('cookieConsent', 'declined');
+    localStorage.setItem('cookieConsentTimestamp', new Date().toISOString());
+    document.getElementById('cookie-consent-banner').classList.remove('active');
+    
+    // Block all tracking
+    window['ga-disable-GTM-M9B8VD85'] = true;
+    
+    if (window.dataLayer) {
+        window.dataLayer = [];
+    }
+    
+    // Optional: Send to your own analytics endpoint (no cookies, GDPR-friendly)
+    sendConsentMetric('declined');
+};
+
+// Optional function to send consent metrics to your own server
+// This is GDPR-compliant as it doesn't use cookies or personal data
+function sendConsentMetric(action) {
+    // You can implement this later to send to your own endpoint
+    // Example:
+    /*
+    fetch('/api/consent-metrics', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            action: action,
+            timestamp: new Date().toISOString(),
+            // No personal data, just aggregate metrics
+        })
+    }).catch(function() {
+        // Silent fail - don't show errors to users
+    });
+    */
+    
+    // For now, just log it so you can see it in your server logs if needed
+    console.log('Cookie consent:', action, new Date().toISOString());
+}
+
+// Show cookie banner if user hasn't made a choice
+window.addEventListener('DOMContentLoaded', function() {
+    const consent = localStorage.getItem('cookieConsent');
+    if (!consent) {
+        setTimeout(function() {
+            document.getElementById('cookie-consent-banner').classList.add('active');
+        }, 1000); // Show after 1 second
+    }
+});
+
 // Check WebGL support
 if (!mapboxgl.supported()) {
     alert('Your browser does not support Mapbox GL. Please try using Safari or updating Chrome.');
@@ -67,8 +143,8 @@ function matchesCurrentFilters(feature) {
         const allowedValues = currentFilters[filterType];
         const featureValue = feature.properties[filterType];
         
-        // Special handling for age filters (TRUE/FALSE values)
-        if (filterType.startsWith('age_') || filterType === 'toilet' || filterType === 'changing_table') {
+        // Special handling for TRUE/FALSE value filters
+        if (filterType.startsWith('age_') || filterType === 'toilet' || filterType === 'changing_table' || filterType === 'entry_fee') {
             if (!allowedValues.includes(featureValue)) {
                 return false;
             }
@@ -388,7 +464,7 @@ function buildSheetContent(f) {
     };
     const weather = f.properties.indoor_outdoor ? weatherMap[f.properties.indoor_outdoor] || weatherMap.Mixed : '';
 
-    const entryFee = f.properties.entry_fee === 'TRUE' ? '🎟️ Paid Entry' : (f.properties.entry_fee === 'FALSE' ? '🎟️ Free Entry' : '');
+    const entryFee = f.properties.entry_fee === 'TRUE' ? 'Paid Entry' : (f.properties.entry_fee === 'FALSE' ? 'Free Entry' : '');
     const changingTable = f.properties.changing_table === 'TRUE' ? '🧷 Changing table' : '';
     const toilet = f.properties.toilet === 'TRUE' ? '🚽 Toilet' : '';
 
