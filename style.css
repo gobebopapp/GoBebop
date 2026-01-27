@@ -27,7 +27,7 @@ body {
   z-index: 2000;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   padding: 0 20px;
 }
 
@@ -36,46 +36,53 @@ body {
   cursor: pointer;
 }
 
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 #desktop-filter-btn,
+#desktop-list-btn,
 #feedback-btn {
-  position: absolute;
-  width: 48px;
+  width: auto;
+  min-width: 48px;
   height: 48px;
-  border-radius: 50%;
+  border-radius: 24px;
   border: none;
   background: transparent;
   cursor: pointer;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 2px;
+  padding: 6px 12px;
   transition: all 0.2s ease;
-  z-index: 10;
   color: #333;
 }
 
-#desktop-filter-btn {
-  left: 20px;
-}
-
-#desktop-filter-btn svg {
-  width: 24px;
-  height: 24px;
-}
-
-#feedback-btn {
-  right: 20px;
-  font-size: 28px;
-}
-
+#desktop-filter-btn svg,
+#desktop-list-btn svg,
 #feedback-btn svg {
   width: 24px;
   height: 24px;
+  flex-shrink: 0;
+}
+
+#desktop-filter-btn .nav-label,
+#desktop-list-btn .nav-label,
+#feedback-btn .nav-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #666;
+  white-space: nowrap;
 }
 
 @media (hover: hover) and (pointer: fine) {
   #desktop-filter-btn:hover,
+  #desktop-list-btn:hover,
   #feedback-btn:hover {
-    transform: scale(1.15);
     background: rgba(0, 0, 0, 0.05);
   }
 }
@@ -1004,6 +1011,18 @@ body {
   .mapboxgl-ctrl-top-right .mapboxgl-ctrl-group {
     display: none;
   }
+  
+  /* Hide desktop-only buttons and elements on mobile */
+  #desktop-filter-btn,
+  #desktop-list-btn,
+  .header-right {
+    display: none !important;
+  }
+  
+  /* Center logo on mobile */
+  #header {
+    justify-content: center;
+  }
 }
 
 /* Hide default Mapbox geolocation button - we'll use custom */
@@ -1612,7 +1631,7 @@ body {
 .beta-text {
   font-weight: 600;
   color: #333;
-  margin-bottom: 24px !important;
+  margin-bottom: 12px !important;
 }
 
 .welcome-close-btn {
@@ -1727,17 +1746,53 @@ body {
     display: block;
   }
 
-  /* Hide list view and bottom buttons on desktop */
-  .list-view {
-    display: none !important;
+  /* Filter drawer slides from right on desktop */
+  .filter-drawer {
+    top: 70px;
+    bottom: 0;
+    left: auto;
+    right: 0;
+    width: 360px;
+    height: auto;
+    max-height: none;
+    transform: translateX(100%);
+    box-shadow: -4px 0 20px rgba(0,0,0,0.15);
+  }
+  
+  .filter-drawer.active {
+    transform: translateX(0);
   }
 
+  /* Enable list view on desktop with right-side panel styling */
+  .list-view {
+    display: flex !important;
+    top: 70px;
+    bottom: 0;
+    left: auto;
+    right: 0;
+    width: 440px;
+    max-width: 440px;
+    height: auto;
+    max-height: none;
+    transform: translateX(100%);
+    box-shadow: -4px 0 20px rgba(0,0,0,0.15);
+  }
+  
+  .list-view.active {
+    transform: translateX(0);
+  }
+
+  /* Hide mobile bottom buttons on desktop */
   #list-toggle,
   #filter-toggle {
     display: none !important;
   }
 
   .list-backdrop {
-    display: none !important;
+    display: block;
+  }
+  
+  .drawer-backdrop {
+    display: block;
   }
 }

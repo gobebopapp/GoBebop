@@ -98,9 +98,12 @@ function createListItem(feature, distance) {
     const weatherMap = {
         'Indoor': '☔ Indoor',
         'Outdoor': '☀️ Outdoor', 
-        'Mixed': '☀️☔ Indoor + Outdoor'
+        'Mixed': '☀️☔ Mixed Indoor/Outdoor'
     };
     const weather = feature.properties.indoor_outdoor ? weatherMap[feature.properties.indoor_outdoor] : '';
+    
+    // Check if user has enabled geolocation
+    const hasUserLocation = geolocateControl?._lastKnownPosition;
     
     const distanceText = distance < 1 
         ? `${Math.round(distance * 1000)}m away` 
@@ -125,7 +128,7 @@ function createListItem(feature, distance) {
                     ${iconUrl ? `<img src="${iconUrl}" alt="" class="location-icon" loading="lazy">` : ''}
                     <h4>${name}</h4>
                 </div>
-                <span class="list-distance">${distanceText}</span>
+                ${hasUserLocation ? `<span class="list-distance">${distanceText}</span>` : ''}
             </div>
             
             <div class="list-item-category">
@@ -203,6 +206,9 @@ function buildLocationsList() {
     if (countElement) {
         countElement.textContent = `${featuresWithDistance.length} location${featuresWithDistance.length !== 1 ? 's' : ''}`;
     }
+    
+    // Update filter indicator
+    updateFilterIndicator();
 }
 
 // Toggle list view
@@ -530,7 +536,7 @@ window.openLocationSheet = function(feature) {
             if (data.weather || data.seasonalMonths) {
                 contentHTML += `
                     <div class="info-section">
-                        <h3>Location Info</h3>
+                        <h3>Facilities</h3>
                         ${data.weather ? `<div class="info-item">${data.weather}</div>` : ''}
                         ${data.seasonalMonths ? `<div class="info-item">${data.seasonalMonths}</div>` : ''}
                     </div>
@@ -861,19 +867,24 @@ window.resetFilters = function() {
 
 // Update the filter indicator badge in list view
 function updateFilterIndicator() {
-    const indicator = document.getElementById('list-filter-indicator');
+    const activeIndicator = document.getElementById('list-filter-indicator');
+    const addFiltersBtn = document.getElementById('list-add-filters');
     const countElement = document.getElementById('active-filter-count');
     
-    if (!indicator || !countElement) return;
+    if (!activeIndicator || !addFiltersBtn || !countElement) return;
     
     // Count active filters
     const activeCount = document.querySelectorAll('.drawer-content input[type="checkbox"]:checked').length;
     
     if (activeCount > 0) {
-        indicator.style.display = 'flex';
+        // Show active filter count
+        activeIndicator.style.display = 'flex';
+        addFiltersBtn.style.display = 'none';
         countElement.textContent = activeCount;
     } else {
-        indicator.style.display = 'none';
+        // Show "Add Filters" button
+        activeIndicator.style.display = 'none';
+        addFiltersBtn.style.display = 'flex';
     }
 }
 
