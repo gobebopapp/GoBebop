@@ -893,8 +893,51 @@ window.toggleFeedbackModal = function() {
     }
 };
 
+// Welcome modal functions
+window.showWelcomeModal = function() {
+    const modal = document.getElementById('welcome-modal');
+    const backdrop = document.getElementById('welcome-backdrop');
+    
+    modal.classList.add('active');
+    backdrop.classList.add('active');
+};
+
+window.closeWelcomeModal = function() {
+    const modal = document.getElementById('welcome-modal');
+    const backdrop = document.getElementById('welcome-backdrop');
+    
+    modal.classList.remove('active');
+    backdrop.classList.remove('active');
+    
+    // Mark that user has seen the welcome modal
+    localStorage.setItem('gobebop_welcome_seen', 'true');
+};
+
+// Check if we should show welcome modal on first interaction
+function checkAndShowWelcome() {
+    const hasSeenWelcome = localStorage.getItem('gobebop_welcome_seen');
+    
+    if (!hasSeenWelcome) {
+        // Show welcome modal on first interaction
+        const showOnce = () => {
+            window.showWelcomeModal();
+            // Remove all listeners after showing once
+            document.removeEventListener('click', showOnce);
+            document.removeEventListener('touchstart', showOnce);
+            document.removeEventListener('keydown', showOnce);
+        };
+        
+        document.addEventListener('click', showOnce, { once: true });
+        document.addEventListener('touchstart', showOnce, { once: true });
+        document.addEventListener('keydown', showOnce, { once: true });
+    }
+}
+
 // Initialize
 loadLocationsData();
+
+// Initialize welcome modal check
+checkAndShowWelcome();
 
 // Add error handler for map
 if (map) {

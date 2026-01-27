@@ -1533,6 +1533,147 @@ body {
   pointer-events: auto;
 }
 
+/* WELCOME MODAL */
+.welcome-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  width: 90%;
+  max-width: 500px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  z-index: 2400;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.welcome-modal.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.welcome-modal-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.welcome-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.welcome-modal-header h3 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+}
+
+.welcome-modal-close {
+  background: #f0f0f0;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.welcome-modal-close:hover {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.welcome-modal-body {
+  padding: 32px 24px 24px 24px;
+}
+
+.welcome-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #555;
+  margin: 0 0 20px 0;
+}
+
+.beta-text {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 24px !important;
+}
+
+.welcome-close-btn {
+  display: block;
+  width: 100%;
+  padding: 14px 20px;
+  background: #4daabb;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.welcome-close-btn:hover {
+  background: #3d8a99;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(77, 170, 187, 0.3);
+}
+
+.welcome-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 2350;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.welcome-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Mobile adjustments for welcome modal */
+@media (max-width: 600px) {
+  .welcome-modal {
+    width: 95%;
+    max-width: none;
+  }
+  
+  .welcome-modal-header h3 {
+    font-size: 22px;
+  }
+  
+  .welcome-modal-body {
+    padding: 24px 20px 20px 20px;
+  }
+  
+  .welcome-text {
+    font-size: 15px;
+  }
+}
+
 /* Mobile adjustments for feedback modal */
 @media (max-width: 600px) {
   .feedback-modal {

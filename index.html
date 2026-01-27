@@ -172,6 +172,33 @@
 <!-- List Backdrop -->
 <div id="list-backdrop" class="list-backdrop" onclick="window.toggleListView()"></div>
 
+<!-- Welcome Modal -->
+<div id="welcome-modal" class="welcome-modal">
+  <div class="welcome-modal-content">
+    <div class="welcome-modal-header">
+      <h3>Welcome to GoBebop!</h3>
+      <button class="welcome-modal-close" onclick="window.closeWelcomeModal()">×</button>
+    </div>
+    
+    <div class="welcome-modal-body">
+      <p class="welcome-text">
+        GoBebop is a guide to Amsterdam's best kid spots — discover playgrounds, attractions & more, filtered by age.
+      </p>
+      
+      <p class="welcome-text beta-text">
+        This is an Amsterdam-only beta launch. We'd love to improve the app based on your feedback!
+      </p>
+      
+      <button onclick="window.closeWelcomeModal()" class="welcome-close-btn">
+        Get Started
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Welcome Modal Backdrop -->
+<div id="welcome-backdrop" class="welcome-backdrop" onclick="window.closeWelcomeModal()"></div>
+
 <!-- Feedback Modal -->
 <div id="feedback-modal" class="feedback-modal">
   <div class="feedback-modal-content">
