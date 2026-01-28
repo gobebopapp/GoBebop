@@ -699,6 +699,7 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-height: calc(1.5em * 3 + 5px); /* 3 lines + 3px buffer for browser differences */
 }
 
 .sheet-content-mobile .description-expanded {
