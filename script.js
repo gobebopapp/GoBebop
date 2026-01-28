@@ -1215,11 +1215,19 @@ if (map) {
             'location_accuracy': e.coords.accuracy
         });
         
-        // Override default zoom to match location selection zoom (13 instead of 15)
+        // Override default zoom and recenter to user's location (13 instead of 15)
+        const userLocation = [e.coords.longitude, e.coords.latitude];
+        
         if (map.getZoom() > 13) {
-            // Don't zoom out if already closer
-        } else {
+            // Already zoomed in enough, just recenter
             map.easeTo({
+                center: userLocation,
+                duration: 1000
+            });
+        } else {
+            // Zoom in and recenter
+            map.easeTo({
+                center: userLocation,
                 zoom: 13,
                 duration: 1000
             });

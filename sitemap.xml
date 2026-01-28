@@ -14,6 +14,14 @@
     </image:image>
   </url>
   
+  <!-- Privacy Policy -->
+  <url>
+    <loc>https://gobebop.app/privacy.html</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
   <!-- Luchtvaartmuseum Aviodrome -->
   <url>
     <loc>https://gobebop.app?location=Luchtvaartmuseum%20Aviodrome</loc>
