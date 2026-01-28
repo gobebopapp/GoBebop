@@ -1,0 +1,15 @@
+# robots.txt for GoBebop
+# Allow all crawlers to access all content
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://gobebop.app/sitemap.xml
+
+# Crawl-delay (optional, can be adjusted)
+# Crawl-delay: 1
+
+# Block access to specific paths if needed
+# Disallow: /admin/
+# Disallow: /private/

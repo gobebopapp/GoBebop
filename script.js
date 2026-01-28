@@ -1215,6 +1215,16 @@ if (map) {
             'location_accuracy': e.coords.accuracy
         });
         
+        // Override default zoom to match location selection zoom (13 instead of 15)
+        if (map.getZoom() > 13) {
+            // Don't zoom out if already closer
+        } else {
+            map.easeTo({
+                zoom: 13,
+                duration: 1000
+            });
+        }
+        
         // Refresh list if open to re-sort by distance
         if (document.getElementById('list-view').classList.contains('active')) {
             buildLocationsList();

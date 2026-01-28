@@ -1,0 +1,1857 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Homepage -->
+  <url>
+    <loc>https://gobebop.app</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://gobebop.app/gobebop-logo.png</image:loc>
+      <image:title>GoBebop Logo</image:title>
+    </image:image>
+  </url>
+  
+  <!-- Luchtvaartmuseum Aviodrome -->
+  <url>
+    <loc>https://gobebop.app?location=Luchtvaartmuseum%20Aviodrome</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Schipol's Panorama Terrace -->
+  <url>
+    <loc>https://gobebop.app?location=Schipol%27s%20Panorama%20Terrace</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- AquaZoo Leerdam -->
+  <url>
+    <loc>https://gobebop.app?location=AquaZoo%20Leerdam</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Rijksmuseum -->
+  <url>
+    <loc>https://gobebop.app?location=Rijksmuseum</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Wereldmuseum Amsterdam -->
+  <url>
+    <loc>https://gobebop.app?location=Wereldmuseum%20Amsterdam</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Damoves Peuter- en Kleuterdans -->
+  <url>
+    <loc>https://gobebop.app?location=Damoves%20Peuter-%20en%20Kleuterdans</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- DanceMatic -->
+  <url>
+    <loc>https://gobebop.app?location=DanceMatic</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- OBA Olympic Quarter -->
+  <url>
+    <loc>https://gobebop.app?location=OBA%20Olympic%20Quarter</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- OBA De Hallen -->
+  <url>
+    <loc>https://gobebop.app?location=OBA%20De%20Hallen</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- OBA Mercatorplein -->
+  <url>
+    <loc>https://gobebop.app?location=OBA%20Mercatorplein</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- OBA Oosterdok -->
+  <url>
+    <loc>https://gobebop.app?location=OBA%20Oosterdok</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- OBA Van der Pek -->
+  <url>
+    <loc>https://gobebop.app?location=OBA%20Van%20der%20Pek</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- The Baby Club -->
+  <url>
+    <loc>https://gobebop.app?location=The%20Baby%20Club</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- BabySpa Overtoom -->
+  <url>
+    <loc>https://gobebop.app?location=BabySpa%20Overtoom</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Rein Wellness Spa -->
+  <url>
+    <loc>https://gobebop.app?location=Rein%20Wellness%20Spa</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Royal Baby Spa -->
+  <url>
+    <loc>https://gobebop.app?location=Royal%20Baby%20Spa</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Vlindersafari -->
+  <url>
+    <loc>https://gobebop.app?location=Vlindersafari</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Vlindertuin Mot in Mokum NoordOogst -->
+  <url>
+    <loc>https://gobebop.app?location=Vlindertuin%20Mot%20in%20Mokum%20NoordOogst</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- The Little Gym Amsterdam -->
+  <url>
+    <loc>https://gobebop.app?location=The%20Little%20Gym%20Amsterdam</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Aapjeskooi Peutergym Amsterdam Oost -->
+  <url>
+    <loc>https://gobebop.app?location=Aapjeskooi%20Peutergym%20Amsterdam%20Oost</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Aapjeskooi Peutergym Amsterdam West -->
+  <url>
+    <loc>https://gobebop.app?location=Aapjeskooi%20Peutergym%20Amsterdam%20West</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Funmania Aalsmeer -->
+  <url>
+    <loc>https://gobebop.app?location=Funmania%20Aalsmeer</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Kinderspeelparadijs Het Speelkasteel -->
+  <url>
+    <loc>https://gobebop.app?location=Kinderspeelparadijs%20Het%20Speelkasteel</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- You Kids Indoor Playground -->
+  <url>
+    <loc>https://gobebop.app?location=You%20Kids%20Indoor%20Playground</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Monkey Town Amsterdam -->
+  <url>
+    <loc>https://gobebop.app?location=Monkey%20Town%20Amsterdam</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Candy Castle Speelparadijs -->
+  <url>
+    <loc>https://gobebop.app?location=Candy%20Castle%20Speelparadijs</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Jimmy's Speelparadijs -->
+  <url>
+    <loc>https://gobebop.app?location=Jimmy%27s%20Speelparadijs</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Monkey Town Amsterdam-Noord -->
+  <url>
+    <loc>https://gobebop.app?location=Monkey%20Town%20Amsterdam-Noord</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- VROG -->
+  <url>
+    <loc>https://gobebop.app?location=VROG</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Kasteel de Haar -->
+  <url>
+    <loc>https://gobebop.app?location=Kasteel%20de%20Haar</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Muiderslot Castle -->
+  <url>
+    <loc>https://gobebop.app?location=Muiderslot%20Castle</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Ruine van Brederode -->
+  <url>
+    <loc>https://gobebop.app?location=Ruine%20van%20Brederode</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Kasteel Assumburg -->
+  <url>
+    <loc>https://gobebop.app?location=Kasteel%20Assumburg</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Sterk in Eten Kinderkookschool -->
+  <url>
+    <loc>https://gobebop.app?location=Sterk%20in%20Eten%20Kinderkookschool</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Kinderkookkafé -->
+  <url>
+    <loc>https://gobebop.app?location=Kinderkookkaf%C3%A9</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Wonderpark Café -->
+  <url>
+    <loc>https://gobebop.app?location=Wonderpark%20Caf%C3%A9</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Theehuis Bos En Hei -->
+  <url>
+    <loc>https://gobebop.app?location=Theehuis%20Bos%20En%20Hei</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- lePita -->
+  <url>
+    <loc>https://gobebop.app?location=lePita</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Boerderij Meerzicht -->
+  <url>
+    <loc>https://gobebop.app?location=Boerderij%20Meerzicht</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Park Kiosk BEA -->
+  <url>
+    <loc>https://gobebop.app?location=Park%20Kiosk%20BEA</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Coffee and Kids -->
+  <url>
+    <loc>https://gobebop.app?location=Coffee%20and%20Kids</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Caffènation Amsterdam -->
+  <url>
+    <loc>https://gobebop.app?location=Caff%C3%A8nation%20Amsterdam</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Club Abbey -->
+  <url>
+    <loc>https://gobebop.app?location=Club%20Abbey</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Coffee Bru -->
+  <url>
+    <loc>https://gobebop.app?location=Coffee%20Bru</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- taal.coffee -->
+  <url>
+    <loc>https://gobebop.app?location=taal.coffee</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Mundi -->
+  <url>
+    <loc>https://gobebop.app?location=Mundi</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- NIO House Amsterdam -->
+  <url>
+    <loc>https://gobebop.app?location=NIO%20House%20Amsterdam</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Café Belcampo -->
+  <url>
+    <loc>https://gobebop.app?location=Caf%C3%A9%20Belcampo</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Papote -->
+  <url>
+    <loc>https://gobebop.app?location=Papote</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Terrasmus -->
+  <url>
+    <loc>https://gobebop.app?location=Terrasmus</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Kiem Lokaal  -->
+  <url>
+    <loc>https://gobebop.app?location=Kiem%20Lokaal%20</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Grand Café Het Paviljoen -->
+  <url>
+    <loc>https://gobebop.app?location=Grand%20Caf%C3%A9%20Het%20Paviljoen</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Bio Buurtwinkel Sans -->
+  <url>
+    <loc>https://gobebop.app?location=Bio%20Buurtwinkel%20Sans</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Kweekcafe -->
+  <url>
+    <loc>https://gobebop.app?location=Kweekcafe</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Toetie & Bo Kidscafe -->
+  <url>
+    <loc>https://gobebop.app?location=Toetie%20%26%20Bo%20Kidscafe</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Pipes & Beans -->
+  <url>
+    <loc>https://gobebop.app?location=Pipes%20%26%20Beans</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Naturalis Biodiversity Center -->
+  <url>
+    <loc>https://gobebop.app?location=Naturalis%20Biodiversity%20Center</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- CORPUS Museum -->
+  <url>
+    <loc>https://gobebop.app?location=CORPUS%20Museum</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Micropia -->
+  <url>
+    <loc>https://gobebop.app?location=Micropia</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- NEMO Science Museum -->
+  <url>
+    <loc>https://gobebop.app?location=NEMO%20Science%20Museum</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Luistergoed -->
+  <url>
+    <loc>https://gobebop.app?location=Luistergoed</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Suzuki Music for Babies & Toddlers -->
+  <url>
+    <loc>https://gobebop.app?location=Suzuki%20Music%20for%20Babies%20%26%20Toddlers</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Muziekschool Amsterdam Noord -->
+  <url>
+    <loc>https://gobebop.app?location=Muziekschool%20Amsterdam%20Noord</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Museum Speelklok -->
+  <url>
+    <loc>https://gobebop.app?location=Museum%20Speelklok</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- WOW Family Center De Rivierenbuurt -->
+  <url>
+    <loc>https://gobebop.app?location=WOW%20Family%20Center%20De%20Rivierenbuurt</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- WOW Family Center De Pijp -->
+  <url>
+    <loc>https://gobebop.app?location=WOW%20Family%20Center%20De%20Pijp</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Kids Art Club Amsterdam -->
+  <url>
+    <loc>https://gobebop.app?location=Kids%20Art%20Club%20Amsterdam</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Omniversum -->
+  <url>
+    <loc>https://gobebop.app?location=Omniversum</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Het Ketelhuis -->
+  <url>
+    <loc>https://gobebop.app?location=Het%20Ketelhuis</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Eye Filmmuseum -->
+  <url>
+    <loc>https://gobebop.app?location=Eye%20Filmmuseum</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Groot Kinderbad Amsterdamse Bos -->
+  <url>
+    <loc>https://gobebop.app?location=Groot%20Kinderbad%20Amsterdamse%20Bos</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Klein Kinderbad Amsterdamse Bos -->
+  <url>
+    <loc>https://gobebop.app?location=Klein%20Kinderbad%20Amsterdamse%20Bos</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Beatrixpark -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Beatrixpark</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Kinderbadje Vondelpark -->
+  <url>
+    <loc>https://gobebop.app?location=Kinderbadje%20Vondelpark</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Kinderbadje Oosterpark -->
+  <url>
+    <loc>https://gobebop.app?location=Kinderbadje%20Oosterpark</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Kinderbadje Bellamyplein -->
+  <url>
+    <loc>https://gobebop.app?location=Kinderbadje%20Bellamyplein</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Pierenbadje Gibraltarbad -->
+  <url>
+    <loc>https://gobebop.app?location=Pierenbadje%20Gibraltarbad</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Pierenbadje Noorderpark -->
+  <url>
+    <loc>https://gobebop.app?location=Pierenbadje%20Noorderpark</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- AeroDMP Pierenbadje -->
+  <url>
+    <loc>https://gobebop.app?location=AeroDMP%20Pierenbadje</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Minigolf Amstelpark -->
+  <url>
+    <loc>https://gobebop.app?location=Minigolf%20Amstelpark</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Fruittuin van West -->
+  <url>
+    <loc>https://gobebop.app?location=Fruittuin%20van%20West</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Ponymanege Equito -->
+  <url>
+    <loc>https://gobebop.app?location=Ponymanege%20Equito</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Hollandsche Manege -->
+  <url>
+    <loc>https://gobebop.app?location=Hollandsche%20Manege</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Kindijk Windmills -->
+  <url>
+    <loc>https://gobebop.app?location=Kindijk%20Windmills</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Archeon Museum Park -->
+  <url>
+    <loc>https://gobebop.app?location=Archeon%20Museum%20Park</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Zaanse Schans Windmills -->
+  <url>
+    <loc>https://gobebop.app?location=Zaanse%20Schans%20Windmills</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Zuiderzeemuseum -->
+  <url>
+    <loc>https://gobebop.app?location=Zuiderzeemuseum</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Reptile House Earth -->
+  <url>
+    <loc>https://gobebop.app?location=Reptile%20House%20Earth</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Rotterdam Zoo -->
+  <url>
+    <loc>https://gobebop.app?location=Rotterdam%20Zoo</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Ouwehands Zoo -->
+  <url>
+    <loc>https://gobebop.app?location=Ouwehands%20Zoo</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Vogelpark Avifauna -->
+  <url>
+    <loc>https://gobebop.app?location=Vogelpark%20Avifauna</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Dierenpark Amersfoort -->
+  <url>
+    <loc>https://gobebop.app?location=Dierenpark%20Amersfoort</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Almere Jungle -->
+  <url>
+    <loc>https://gobebop.app?location=Almere%20Jungle</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Artis Zoo -->
+  <url>
+    <loc>https://gobebop.app?location=Artis%20Zoo</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Pantropica -->
+  <url>
+    <loc>https://gobebop.app?location=Pantropica</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- The Concertgebouw -->
+  <url>
+    <loc>https://gobebop.app?location=The%20Concertgebouw</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Plaswijckpark -->
+  <url>
+    <loc>https://gobebop.app?location=Plaswijckpark</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- De Bosspeeltuin -->
+  <url>
+    <loc>https://gobebop.app?location=De%20Bosspeeltuin</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speel Eiland -->
+  <url>
+    <loc>https://gobebop.app?location=Speel%20Eiland</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Natuurspeelpark Sarphatipark -->
+  <url>
+    <loc>https://gobebop.app?location=Natuurspeelpark%20Sarphatipark</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Natuurspeeltuin Jeugdland Amsterdam -->
+  <url>
+    <loc>https://gobebop.app?location=Natuurspeeltuin%20Jeugdland%20Amsterdam</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Natuurspeeltuin West -->
+  <url>
+    <loc>https://gobebop.app?location=Natuurspeeltuin%20West</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Willem de Zwijgerlaan -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Willem%20de%20Zwijgerlaan</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Het Woeste Westen -->
+  <url>
+    <loc>https://gobebop.app?location=Het%20Woeste%20Westen</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Natuurspeeltuin Cleyndertweg -->
+  <url>
+    <loc>https://gobebop.app?location=Natuurspeeltuin%20Cleyndertweg</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Avonturenspeelplaats -->
+  <url>
+    <loc>https://gobebop.app?location=Avonturenspeelplaats</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Geitenboerderij Ridammerhoeve -->
+  <url>
+    <loc>https://gobebop.app?location=Geitenboerderij%20Ridammerhoeve</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Kinderboerderij Amstelpark -->
+  <url>
+    <loc>https://gobebop.app?location=Kinderboerderij%20Amstelpark</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Kinderboerderij De Uylenburg -->
+  <url>
+    <loc>https://gobebop.app?location=Kinderboerderij%20De%20Uylenburg</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Zimmerhoeve kinderboerderij -->
+  <url>
+    <loc>https://gobebop.app?location=Zimmerhoeve%20kinderboerderij</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Wijkboerderij Wachterlied -->
+  <url>
+    <loc>https://gobebop.app?location=Wijkboerderij%20Wachterlied</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Boerderij Westerpark -->
+  <url>
+    <loc>https://gobebop.app?location=Boerderij%20Westerpark</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Kinderboerderij De Buiktuin -->
+  <url>
+    <loc>https://gobebop.app?location=Kinderboerderij%20De%20Buiktuin</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- NoordOogst Stadslandbouwproject -->
+  <url>
+    <loc>https://gobebop.app?location=NoordOogst%20Stadslandbouwproject</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Boerderij Zorgvrij -->
+  <url>
+    <loc>https://gobebop.app?location=Boerderij%20Zorgvrij</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Robbeburg International Playgroup -->
+  <url>
+    <loc>https://gobebop.app?location=Robbeburg%20International%20Playgroup</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Monti's World Playroom -->
+  <url>
+    <loc>https://gobebop.app?location=Monti%27s%20World%20Playroom</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- KidZcity -->
+  <url>
+    <loc>https://gobebop.app?location=KidZcity</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- The Bubblejungle -->
+  <url>
+    <loc>https://gobebop.app?location=The%20Bubblejungle</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Avontuurfabriek -->
+  <url>
+    <loc>https://gobebop.app?location=Avontuurfabriek</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Fun Center Amstelveen -->
+  <url>
+    <loc>https://gobebop.app?location=Fun%20Center%20Amstelveen</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Klimpark Fun Forest -->
+  <url>
+    <loc>https://gobebop.app?location=Klimpark%20Fun%20Forest</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Belevenissenbos -->
+  <url>
+    <loc>https://gobebop.app?location=Belevenissenbos</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Adventure Farm Molenwaard -->
+  <url>
+    <loc>https://gobebop.app?location=Adventure%20Farm%20Molenwaard</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Drievliet Family Park -->
+  <url>
+    <loc>https://gobebop.app?location=Drievliet%20Family%20Park</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Madurodam -->
+  <url>
+    <loc>https://gobebop.app?location=Madurodam</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Duinrell -->
+  <url>
+    <loc>https://gobebop.app?location=Duinrell</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Treasure Island Zeumeren -->
+  <url>
+    <loc>https://gobebop.app?location=Treasure%20Island%20Zeumeren</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Walibi Holland -->
+  <url>
+    <loc>https://gobebop.app?location=Walibi%20Holland</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Sprookjeswonderland -->
+  <url>
+    <loc>https://gobebop.app?location=Sprookjeswonderland</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Mini Captain -->
+  <url>
+    <loc>https://gobebop.app?location=Mini%20Captain</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Fluffy Cafe/Restaurant -->
+  <url>
+    <loc>https://gobebop.app?location=Fluffy%20Cafe/Restaurant</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Dignita Vondelpark -->
+  <url>
+    <loc>https://gobebop.app?location=Dignita%20Vondelpark</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Patio Amsterdam -->
+  <url>
+    <loc>https://gobebop.app?location=Patio%20Amsterdam</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Dignita Hoftuin -->
+  <url>
+    <loc>https://gobebop.app?location=Dignita%20Hoftuin</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Café Restaurant Hoogendam -->
+  <url>
+    <loc>https://gobebop.app?location=Caf%C3%A9%20Restaurant%20Hoogendam</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- De VerbroederIJ -->
+  <url>
+    <loc>https://gobebop.app?location=De%20VerbroederIJ</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Lilo's cafe -->
+  <url>
+    <loc>https://gobebop.app?location=Lilo%27s%20cafe</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Brunchdale -->
+  <url>
+    <loc>https://gobebop.app?location=Brunchdale</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Hans & Grietje Pancake House -->
+  <url>
+    <loc>https://gobebop.app?location=Hans%20%26%20Grietje%20Pancake%20House</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Restaurant Pof -->
+  <url>
+    <loc>https://gobebop.app?location=Restaurant%20Pof</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Restaurant Elixer -->
+  <url>
+    <loc>https://gobebop.app?location=Restaurant%20Elixer</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- The Cottage -->
+  <url>
+    <loc>https://gobebop.app?location=The%20Cottage</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Amsterdam Roest -->
+  <url>
+    <loc>https://gobebop.app?location=Amsterdam%20Roest</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- National Maritime Museum -->
+  <url>
+    <loc>https://gobebop.app?location=National%20Maritime%20Museum</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Museum Batavialand -->
+  <url>
+    <loc>https://gobebop.app?location=Museum%20Batavialand</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Linnaeushof -->
+  <url>
+    <loc>https://gobebop.app?location=Linnaeushof</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Amstelpark -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Amstelpark</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Blijdag -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Blijdag</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Van Tuyll -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Van%20Tuyll</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Amsterdam Zuid -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Amsterdam%20Zuid</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Henrick De Keyser -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Henrick%20De%20Keyser</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Frankendael -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Frankendael</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Mariotteplein -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Mariotteplein</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Sarphatipark -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Sarphatipark</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- De Vondeltuin -->
+  <url>
+    <loc>https://gobebop.app?location=De%20Vondeltuin</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Houten Speeltuin -->
+  <url>
+    <loc>https://gobebop.app?location=Houten%20Speeltuin</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Groot Melkhuis -->
+  <url>
+    <loc>https://gobebop.app?location=Groot%20Melkhuis</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin UJ Klaren -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20UJ%20Klaren</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin J.J. Cremerplein -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20J.J.%20Cremerplein</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Kronkelpad -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Kronkelpad</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Oosterpark -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Oosterpark</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Frederiksplein -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Frederiksplein</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Oosterpark II -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Oosterpark%20II</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Flevopark -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Flevopark</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Ten Kateplein -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Ten%20Kateplein</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Rembrandtpark -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Rembrandtpark</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Funenpark -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Funenpark</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Elandsgracht -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Elandsgracht</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Balboastraat -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Balboastraat</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Zimmerterrein -->
+  <url>
+    <loc>https://gobebop.app?location=Zimmerterrein</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Johnny Jordaan Plein -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Johnny%20Jordaan%20Plein</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Mercator -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Mercator</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin De Waag -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20De%20Waag</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Wittenburg -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Wittenburg</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Lastageweg -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Lastageweg</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Erasmuspark -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Erasmuspark</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Theo Thijssen speelplaats -->
+  <url>
+    <loc>https://gobebop.app?location=Theo%20Thijssen%20speelplaats</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Kippen- en Konijnenren Slootstraat -->
+  <url>
+    <loc>https://gobebop.app?location=Kippen-%20en%20Konijnenren%20Slootstraat</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Wachterliedplantsoen -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Wachterliedplantsoen</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- De Noorderspeeltuin -->
+  <url>
+    <loc>https://gobebop.app?location=De%20Noorderspeeltuin</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Frederik Hendrikplantsoen -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Frederik%20Hendrikplantsoen</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Herenmarkt -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Herenmarkt</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Piramide Speeltuin -->
+  <url>
+    <loc>https://gobebop.app?location=Piramide%20Speeltuin</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin van Beuningenplein -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20van%20Beuningenplein</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Van Gilsestraat -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Van%20Gilsestraat</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- De Gibraltar -->
+  <url>
+    <loc>https://gobebop.app?location=De%20Gibraltar</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin SamSam Westerpark -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20SamSam%20Westerpark</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin T Rex -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20T%20Rex</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Nieuwendam -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Nieuwendam</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Middeliestraat -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Middeliestraat</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Bloemenkwartier -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Bloemenkwartier</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speeltuin Tuindorp Oostzaan -->
+  <url>
+    <loc>https://gobebop.app?location=Speeltuin%20Tuindorp%20Oostzaan</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Natuurspeelpark Het Diereneiland -->
+  <url>
+    <loc>https://gobebop.app?location=Natuurspeelpark%20Het%20Diereneiland</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Speelpark de Swaan -->
+  <url>
+    <loc>https://gobebop.app?location=Speelpark%20de%20Swaan</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Space Expo -->
+  <url>
+    <loc>https://gobebop.app?location=Space%20Expo</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Pool Aquamar -->
+  <url>
+    <loc>https://gobebop.app?location=Pool%20Aquamar</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- De Mirandabad -->
+  <url>
+    <loc>https://gobebop.app?location=De%20Mirandabad</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Flevoparkbad -->
+  <url>
+    <loc>https://gobebop.app?location=Flevoparkbad</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Het Marnix -->
+  <url>
+    <loc>https://gobebop.app?location=Het%20Marnix</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Noorderparkbad -->
+  <url>
+    <loc>https://gobebop.app?location=Noorderparkbad</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- The Science Camp -->
+  <url>
+    <loc>https://gobebop.app?location=The%20Science%20Camp</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Amsterdam Kids Drama & Dance -->
+  <url>
+    <loc>https://gobebop.app?location=Amsterdam%20Kids%20Drama%20%26%20Dance</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Young Theatre Makers -->
+  <url>
+    <loc>https://gobebop.app?location=Young%20Theatre%20Makers</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Teatro Munganga -->
+  <url>
+    <loc>https://gobebop.app?location=Teatro%20Munganga</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Koos Kneus Poppentheater -->
+  <url>
+    <loc>https://gobebop.app?location=Koos%20Kneus%20Poppentheater</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- De Toverknol Kindertheater -->
+  <url>
+    <loc>https://gobebop.app?location=De%20Toverknol%20Kindertheater</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Amsterdams Marionetten Theater -->
+  <url>
+    <loc>https://gobebop.app?location=Amsterdams%20Marionetten%20Theater</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Black Cat Theatre -->
+  <url>
+    <loc>https://gobebop.app?location=Black%20Cat%20Theatre</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Theater De Krakeling -->
+  <url>
+    <loc>https://gobebop.app?location=Theater%20De%20Krakeling</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- The Mouse Mansion -->
+  <url>
+    <loc>https://gobebop.app?location=The%20Mouse%20Mansion</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- The LEGO Store Amsterdam -->
+  <url>
+    <loc>https://gobebop.app?location=The%20LEGO%20Store%20Amsterdam</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- WONDR Experience -->
+  <url>
+    <loc>https://gobebop.app?location=WONDR%20Experience</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Fabrique des Lumières -->
+  <url>
+    <loc>https://gobebop.app?location=Fabrique%20des%20Lumi%C3%A8res</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Verkeerstuin Amersfoort -->
+  <url>
+    <loc>https://gobebop.app?location=Verkeerstuin%20Amersfoort</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- The Railway Museum -->
+  <url>
+    <loc>https://gobebop.app?location=The%20Railway%20Museum</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- De Amsteltrein -->
+  <url>
+    <loc>https://gobebop.app?location=De%20Amsteltrein</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Electric Tram Museum Amsterdam -->
+  <url>
+    <loc>https://gobebop.app?location=Electric%20Tram%20Museum%20Amsterdam</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Modelbouwvereniging het 'Y' -->
+  <url>
+    <loc>https://gobebop.app?location=Modelbouwvereniging%20het%20%27Y%27</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Museumstoomtram Hoorn-Medemblik -->
+  <url>
+    <loc>https://gobebop.app?location=Museumstoomtram%20Hoorn-Medemblik</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Keukenhof Gardens -->
+  <url>
+    <loc>https://gobebop.app?location=Keukenhof%20Gardens</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Hortus Botanicus Vrije Universiteit Amsterdam -->
+  <url>
+    <loc>https://gobebop.app?location=Hortus%20Botanicus%20Vrije%20Universiteit%20Amsterdam</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Hortus Botanicus -->
+  <url>
+    <loc>https://gobebop.app?location=Hortus%20Botanicus</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Nijntje Museum -->
+  <url>
+    <loc>https://gobebop.app?location=Nijntje%20Museum</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- WOPL! (World of Play & Learning) -->
+  <url>
+    <loc>https://gobebop.app?location=WOPL%21%20%28World%20of%20Play%20%26%20Learning%29</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Playhood -->
+  <url>
+    <loc>https://gobebop.app?location=Playhood</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Petting Farm de Werf -->
+  <url>
+    <loc>https://gobebop.app?location=Petting%20Farm%20de%20Werf</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Spottersplek Polderbaan -->
+  <url>
+    <loc>https://gobebop.app?location=Spottersplek%20Polderbaan</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Museum of Illusions -->
+  <url>
+    <loc>https://gobebop.app?location=Museum%20of%20Illusions</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+</urlset>
