@@ -1,4 +1,4 @@
-mapboxgl.accessToken = 'pk.eyJ1IjoiYW1hY2JldGgxIiwiYSI6ImNtZzB0MGd0ZjBqMDEybHIzbnU0dzFuam4ifQ.aGD0Ws8Zut0q4f1iTYUBeA';
+mapboxgl.accessToken = 'pk.eyJ1IjoiYW1hY2JldGgxIiwiYSI6ImNta3lpazl6cDA3Z2YzZXNrbml6dWJhb2gifQ.58B3YJsXj_BEOeuvs_ic4Q';
 
 // GDPR Cookie Consent Functions
 window.acceptCookies = function() {
