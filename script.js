@@ -177,6 +177,7 @@ function createListItem(feature, distance) {
         'Mixed': '☀️☔ Indoor/Outdoor'
     };
     const weather = feature.properties.indoor_outdoor ? weatherMap[feature.properties.indoor_outdoor] : '';
+    const isFree = feature.properties.entry_fee === 'FALSE';
     
     // Check if user has enabled geolocation
     const hasUserLocation = geolocateControl?._lastKnownPosition;
@@ -214,11 +215,9 @@ function createListItem(feature, distance) {
             ${shortDesc ? `<p class="list-description">${shortDesc}</p>` : ''}
             
             <div class="list-item-tags">
-                ${ages.length > 0 ? `<div class="list-tag-group">
-                    ${ages.map(age => `<span class="list-tag">${age}</span>`).join('')}
-                </div>` : ''}
-                
+                ${ages.map(age => `<span class="list-tag">${age}</span>`).join('')}
                 ${weather ? `<span class="list-tag list-tag-weather">${weather}</span>` : ''}
+                ${isFree ? `<span class="list-tag list-tag-free">🙌 Free</span>` : ''}
             </div>
         </div>
     `;
@@ -464,10 +463,11 @@ function buildSheetContent(f) {
     };
     const weather = f.properties.indoor_outdoor ? weatherMap[f.properties.indoor_outdoor] || weatherMap.Mixed : '';
 
-    const entryFee = f.properties.entry_fee === 'TRUE' ? '🎟️ Paid Entry' : (f.properties.entry_fee === 'FALSE' ? '🙌 Free Entry' : '');
-    const foodDrink = f.properties.food_drink === 'TRUE' ? '🍽️ Food/Drink for Purchase' : '';
+    // Handle entry fee: show "Free" for FALSE, "Paid Entry" for TRUE, nothing for NA
+    const entryFee = f.properties.entry_fee === 'FALSE' ? '🙌 Free' : 
+                     (f.properties.entry_fee === 'TRUE' ? '🎟️ Paid Entry' : '');
     const changingTable = f.properties.changing_table === 'TRUE' ? '🧷 Changing table' : '';
-    const toilet = f.properties.toilet === 'TRUE' ? '🚽 Toilet' : '';
+    const toilet = f.properties.toilet === 'TRUE' ? '🚽 Toilet Available' : '';
 
     const seasonalMonths = f.properties.seasonal_months?.trim();
     const seasonalInfo = seasonalMonths ? `Open seasonally from ${seasonalMonths}` : '';
@@ -483,7 +483,6 @@ function buildSheetContent(f) {
         ages,
         weather,
         entryFee,
-        foodDrink,
         changingTable,
         toilet,
         seasonalInfo,
@@ -520,7 +519,7 @@ window.openLocationSheet = function(feature) {
         const sheetHeight = totalHeight * 0.52; // Increased to match 52vh mobile sheet height
         const offsetY = -(sheetHeight / 2);
         
-        const targetZoom = Math.min(Math.max(map.getZoom(), 13), 14);
+        const targetZoom = Math.min(Math.max(map.getZoom(), 12), 13);
         
         console.log('Panning map to:', coords);
         
@@ -555,24 +554,16 @@ window.openLocationSheet = function(feature) {
         let contentHTML = `<span class="category-badge">${data.category}</span>`;
         
         if (data.desc) {
-            const wordLimit = 50;
-            const words = data.desc.split(' ');
-            const needsTruncation = words.length > wordLimit;
-            const shortDesc = needsTruncation ? words.slice(0, wordLimit).join(' ') + '...' : data.desc;
-            
-            contentHTML += `
-                <div class="description description-collapsed" id="mobile-description">
-                    ${shortDesc}
-                </div>
-                ${needsTruncation ? `
-                    <button class="see-more-btn" onclick="window.toggleDescription('mobile')">
-                        See more
-                    </button>
-                ` : ''}
-            `;
-            
             // Store full description for expansion
             window.mobileFullDescription = data.desc;
+            
+            // Create clickable description that expands on click
+            const descId = 'mobile-description-' + Date.now();
+            contentHTML += `
+                <div class="description description-collapsed" id="${descId}" onclick="window.toggleMobileDescription('${descId}')">
+                    ${data.desc}
+                </div>
+            `;
         }
         
         // Add simple text links with icons below description
@@ -606,7 +597,7 @@ window.openLocationSheet = function(feature) {
             contentHTML += '</div>';
         }
         
-        if (data.ages.length > 0 || data.weather || data.entryFee || data.foodDrink || data.changingTable || data.toilet) {
+        if (data.ages.length > 0 || data.weather || data.entryFee || data.changingTable || data.toilet) {
             contentHTML += '<div class="info-grid">';
             
             if (data.ages.length > 0) {
@@ -618,13 +609,12 @@ window.openLocationSheet = function(feature) {
                 `;
             }
             
-            if (data.weather || data.entryFee || data.foodDrink || data.changingTable || data.toilet || data.seasonalMonths) {
+            if (data.weather || data.entryFee || data.changingTable || data.toilet || data.seasonalMonths) {
                 contentHTML += `
                     <div class="info-section">
                         <h3>Location Info</h3>
                         ${data.weather && data.weather !== 'NA' ? `<div class="info-item">${data.weather}</div>` : ''}
                         ${data.entryFee && data.entryFee !== 'NA' ? `<div class="info-item">${data.entryFee}</div>` : ''}
-                        ${data.foodDrink && data.foodDrink !== 'NA' ? `<div class="info-item">${data.foodDrink}</div>` : ''}
                         ${data.changingTable && data.changingTable !== 'NA' ? `<div class="info-item">${data.changingTable}</div>` : ''}
                         ${data.toilet && data.toilet !== 'NA' ? `<div class="info-item">${data.toilet}</div>` : ''}
                         ${data.seasonalMonths ? `<div class="info-item">${data.seasonalMonths}</div>` : ''}
@@ -648,7 +638,7 @@ window.openLocationSheet = function(feature) {
         
         map.easeTo({
             center: coords,
-            zoom: Math.max(map.getZoom(), 15),
+            zoom: Math.max(map.getZoom(), 13),
             offset: [offsetX, 0],
             duration: 600
         });
@@ -670,42 +660,70 @@ window.openLocationSheet = function(feature) {
         
         console.log('Desktop sheet HTML includes icon?', data.iconUrl ? 'YES' : 'NO');
         
+        // Add links right after category badge (mirroring mobile)
+        if (data.website || data.googleMaps) {
+            contentHTML += '<div class="location-links">';
+            if (data.website) {
+                const href = data.website.match(/^https?:\/\//i) ? data.website : `https://${data.website}`;
+                contentHTML += `
+                    <a href="${href}" target="_blank" rel="noopener noreferrer" class="location-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                        <span>View Website</span>
+                    </a>
+                `;
+            }
+            if (data.googleMaps) {
+                contentHTML += `
+                    <a href="${data.googleMaps}" target="_blank" rel="noopener noreferrer" class="location-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                        <span>Get Directions</span>
+                    </a>
+                `;
+            }
+            contentHTML += '</div>';
+        }
+        
         if (data.desc) {
             contentHTML += `<div class="description">${data.desc}</div>`;
         }
         
-        if (data.ages.length > 0) {
-            contentHTML += `
-                <div class="info-section">
-                    <h3>Suitable For</h3>
-                    ${data.ages.map(age => `<div class="info-item">${age}</div>`).join('')}
-                </div>
-            `;
-        }
+        // Create side-by-side info sections
+        const hasSuitableFor = data.ages.length > 0;
+        const hasLocationInfo = data.weather || data.entryFee || data.changingTable || data.toilet || data.seasonalMonths;
         
-        if (data.weather || data.entryFee || data.foodDrink || data.changingTable || data.toilet) {
-            contentHTML += `
-                <div class="info-section">
-                    <h3>Good For</h3>
-                    ${data.weather && data.weather !== 'NA' ? `<div class="info-item">${data.weather}</div>` : ''}
-                    ${data.entryFee && data.entryFee !== 'NA' ? `<div class="info-item">${data.entryFee}</div>` : ''}
-                    ${data.foodDrink && data.foodDrink !== 'NA' ? `<div class="info-item">${data.foodDrink}</div>` : ''}
-                    ${data.changingTable && data.changingTable !== 'NA' ? `<div class="info-item">${data.changingTable}</div>` : ''}
-                    ${data.toilet && data.toilet !== 'NA' ? `<div class="info-item">${data.toilet}</div>` : ''}
-                    ${data.seasonalMonths ? `<div class="info-item">${data.seasonalMonths}</div>` : ''}                    
-                </div>
-            `;
-        }
-        
-        if (data.website || data.googleMaps) {
-            contentHTML += '<div class="links">';
-            if (data.website) {
-                const href = data.website.match(/^https?:\/\//i) ? data.website : `https://${data.website}`;
-                contentHTML += `<a href="${href}" target="_blank" rel="noopener noreferrer">View Website</a>`;
+        if (hasSuitableFor || hasLocationInfo) {
+            contentHTML += '<div class="info-grid-desktop">';
+            
+            if (hasSuitableFor) {
+                contentHTML += `
+                    <div class="info-section">
+                        <h3>Suitable For</h3>
+                        ${data.ages.map(age => `<div class="info-item">${age}</div>`).join('')}
+                    </div>
+                `;
             }
-            if (data.googleMaps) {
-                contentHTML += `<a href="${data.googleMaps}" target="_blank" rel="noopener noreferrer">Get Directions</a>`;
+            
+            if (hasLocationInfo) {
+                contentHTML += `
+                    <div class="info-section">
+                        <h3>Location Info</h3>
+                        ${data.weather && data.weather !== 'NA' ? `<div class="info-item">${data.weather}</div>` : ''}
+                        ${data.entryFee && data.entryFee !== 'NA' ? `<div class="info-item">${data.entryFee}</div>` : ''}
+                        ${data.changingTable && data.changingTable !== 'NA' ? `<div class="info-item">${data.changingTable}</div>` : ''}
+                        ${data.toilet && data.toilet !== 'NA' ? `<div class="info-item">${data.toilet}</div>` : ''}
+                        ${data.seasonalMonths ? `<div class="info-item">${data.seasonalMonths}</div>` : ''}                    
+                    </div>
+                `;
             }
+            
             contentHTML += '</div>';
         }
         
@@ -789,7 +807,7 @@ function checkSharedLocation() {
         // Fly to location
         map.flyTo({
             center: coords,
-            zoom: 15,
+            zoom: 13,
             duration: 1500
         });
         
@@ -802,25 +820,48 @@ function checkSharedLocation() {
     }
 }
 
-// Toggle description expansion
-window.toggleDescription = function(platform) {
-    if (platform === 'mobile') {
-        const desc = document.getElementById('mobile-description');
-        const btn = event.target;
-        
-        if (desc.classList.contains('description-collapsed')) {
-            desc.textContent = window.mobileFullDescription;
-            desc.classList.remove('description-collapsed');
-            desc.classList.add('description-expanded');
-            btn.textContent = 'See less';
-        } else {
-            const words = window.mobileFullDescription.split(' ');
-            desc.textContent = words.slice(0, 50).join(' ') + '...';
-            desc.classList.remove('description-expanded');
-            desc.classList.add('description-collapsed');
-            btn.textContent = 'See more';
-        }
+// Toggle mobile description expansion - simple click to expand/collapse
+window.toggleMobileDescription = function(descId) {
+    const desc = document.getElementById(descId);
+    if (!desc) return;
+    
+    if (desc.classList.contains('description-collapsed')) {
+        desc.classList.remove('description-collapsed');
+        desc.classList.add('description-expanded');
+    } else {
+        desc.classList.remove('description-expanded');
+        desc.classList.add('description-collapsed');
     }
+};
+
+// Debug helper function - call from console with: debugMobileSheet()
+window.debugMobileSheet = function() {
+    console.log('=== MOBILE SHEET DEBUG INFO ===');
+    const sheet = document.getElementById('mobile-sheet');
+    const content = document.getElementById('mobile-sheet-content');
+    const description = document.getElementById('mobile-description');
+    const button = document.querySelector('.sheet-content-mobile .see-more-inline');
+    
+    console.log('Mobile sheet element:', sheet);
+    console.log('Mobile sheet active:', sheet?.classList.contains('active'));
+    console.log('Mobile sheet content element:', content);
+    console.log('Mobile sheet content HTML:', content?.innerHTML.substring(0, 500));
+    console.log('Description element:', description);
+    console.log('Description text:', description?.textContent);
+    console.log('Description classes:', description?.className);
+    console.log('See more inline:', button);
+    console.log('Button text:', button?.textContent);
+    console.log('Button visible:', button ? window.getComputedStyle(button).display : 'N/A');
+    console.log('Stored full description:', window.mobileFullDescription);
+    console.log('=== END MOBILE SHEET DEBUG INFO ===');
+    
+    return {
+        sheet,
+        content,
+        description,
+        button,
+        fullDescription: window.mobileFullDescription
+    };
 };
 
 // FIXED: Close location sheet - now properly returns to list
