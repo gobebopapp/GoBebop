@@ -519,7 +519,8 @@ window.openLocationSheet = function(feature) {
         const sheetHeight = totalHeight * 0.52; // Increased to match 52vh mobile sheet height
         const offsetY = -(sheetHeight / 2);
         
-        const targetZoom = Math.min(Math.max(map.getZoom(), 12), 13);
+        // Increased zoom by ~20% (from 12-13 range to 14-15 range)
+        const targetZoom = Math.min(Math.max(map.getZoom(), 14), 15);
         
         console.log('Panning map to:', coords);
         
@@ -636,9 +637,10 @@ window.openLocationSheet = function(feature) {
         const sidebarWidth = 440;
         const offsetX = -(sidebarWidth / 2);
         
+        // Increased zoom by ~20% (from 13 to 15)
         map.easeTo({
             center: coords,
-            zoom: Math.max(map.getZoom(), 13),
+            zoom: Math.max(map.getZoom(), 15),
             offset: [offsetX, 0],
             duration: 600
         });
@@ -1113,7 +1115,7 @@ if (map) {
         positionOptions: {
             enableHighAccuracy: true
         },
-        trackUserLocation: true,
+        trackUserLocation: false,  // Changed to false to prevent auto-recentering
         showUserHeading: true,
         showAccuracyCircle: true
     });
@@ -1189,105 +1191,110 @@ if (map) {
             customGeoBtn.classList.add('pulse-stopped');
         }
         
-        // Always trigger - Mapbox control handles toggling internally
-        // First click: starts tracking
-        // Second click: stops tracking
-        geolocateControl.trigger();
-    });
-    
-    // Track geolocation events
-    // Note: trackuserlocationstart fires before permission is granted
-    // We only set active state on successful geolocate
-    geolocateControl.on('trackuserlocationstart', () => {
-        console.log('Tracking started (waiting for permission...)');
-        // Don't set active state yet - wait for permission and location
-    });
-    
-    geolocateControl.on('geolocate', (e) => {
-        console.log('Location found');
-        isTracking = true;
-        customGeoBtn.classList.add('active');
-        customGeoBtn.classList.remove('error');
-        
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-            'event': 'user_location_found',
-            'location_accuracy': e.coords.accuracy
-        });
-        
-        // Override default zoom and recenter to user's location (13 instead of 15)
-        const userLocation = [e.coords.longitude, e.coords.latitude];
-        
-        if (map.getZoom() > 13) {
-            // Already zoomed in enough, just recenter
-            map.easeTo({
-                center: userLocation,
-                duration: 1000
-            });
-        } else {
-            // Zoom in and recenter
-            map.easeTo({
-                center: userLocation,
-                zoom: 13,
-                duration: 1000
-            });
-        }
-        
-        // Refresh list if open to re-sort by distance
-        if (document.getElementById('list-view').classList.contains('active')) {
-            buildLocationsList();
-        }
-    });
-    
-    geolocateControl.on('trackuserlocationend', () => {
-        console.log('Tracking ended');
-        isTracking = false;
-        customGeoBtn.classList.remove('active');
-    });
-    
-    geolocateControl.on('error', (e) => {
-        console.log('Geolocation error:', e.message, e.code);
-        isTracking = false;
-        customGeoBtn.classList.remove('active');
-        
-        // Error codes:
-        // 1 = PERMISSION_DENIED
-        // 2 = POSITION_UNAVAILABLE
-        // 3 = TIMEOUT
-        
-        if (e.code === 1) {
-            // Permission explicitly denied - disable permanently
-            customGeoBtn.classList.add('disabled');
-            customGeoBtn.setAttribute('aria-label', 'Geolocation permission denied');
-            geolocationAvailable = false;
-            permissionState = 'denied';
+        // Toggle tracking state manually
+        if (!isTracking) {
+            // Start tracking
+            console.log('Starting geolocation...');
+            isTracking = true;
             
-            // Show error state briefly before going to disabled
-            customGeoBtn.classList.add('error');
-            setTimeout(() => {
-                customGeoBtn.classList.remove('error');
-            }, 2000);
-        } else if (e.code === 2) {
-            // Position unavailable - might be temporary
-            customGeoBtn.classList.add('error');
-            setTimeout(() => {
-                customGeoBtn.classList.remove('error');
-            }, 3000);
+            // Use browser's geolocation API directly for single location request
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    console.log('Location found');
+                    customGeoBtn.classList.add('active');
+                    customGeoBtn.classList.remove('error');
+                    
+                    const userLocation = [position.coords.longitude, position.coords.latitude];
+                    
+                    // GTM tracking
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                        'event': 'user_location_found',
+                        'location_accuracy': position.coords.accuracy
+                    });
+                    
+                    // Zoom and recenter to user's location
+                    if (map.getZoom() > 13) {
+                        // Already zoomed in enough, just recenter
+                        map.easeTo({
+                            center: userLocation,
+                            duration: 1000
+                        });
+                    } else {
+                        // Zoom in and recenter
+                        map.easeTo({
+                            center: userLocation,
+                            zoom: 13,
+                            duration: 1000
+                        });
+                    }
+                    
+                    // Trigger the Mapbox control to show the blue dot
+                    geolocateControl.trigger();
+                    
+                    // Refresh list if open to re-sort by distance
+                    if (document.getElementById('list-view').classList.contains('active')) {
+                        buildLocationsList();
+                    }
+                },
+                (error) => {
+                    console.log('Geolocation error:', error.message, error.code);
+                    isTracking = false;
+                    customGeoBtn.classList.remove('active');
+                    
+                    if (error.code === 1) {
+                        // Permission explicitly denied - disable permanently
+                        customGeoBtn.classList.add('disabled');
+                        customGeoBtn.classList.add('error');
+                        customGeoBtn.setAttribute('aria-label', 'Location permission denied');
+                        geolocationAvailable = false;
+                        
+                        setTimeout(() => {
+                            customGeoBtn.classList.remove('error');
+                        }, 2000);
+                        
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({
+                            'event': 'geolocation_error',
+                            'error_code': 'permission_denied'
+                        });
+                    } else {
+                        // Other errors (unavailable or timeout)
+                        customGeoBtn.classList.add('error');
+                        setTimeout(() => {
+                            customGeoBtn.classList.remove('error');
+                        }, 3000);
+                        
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({
+                            'event': 'geolocation_error',
+                            'error_code': error.code === 2 ? 'position_unavailable' : 'timeout'
+                        });
+                    }
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                }
+            );
         } else {
-            // Timeout or other temporary error
-            customGeoBtn.classList.add('error');
-            setTimeout(() => {
-                customGeoBtn.classList.remove('error');
-            }, 3000);
+            // Stop tracking
+            console.log('Stopping geolocation...');
+            isTracking = false;
+            customGeoBtn.classList.remove('active');
+            
+            // Turn off the Mapbox blue dot by triggering it if it's active
+            if (geolocateControl._watchState === 'ACTIVE_LOCK' || 
+                geolocateControl._watchState === 'ACTIVE_ERROR' ||
+                geolocateControl._watchState === 'WAITING_ACTIVE') {
+                geolocateControl.trigger(); // This will turn it off
+            }
         }
-        
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-            'event': 'user_location_error',
-            'error_message': e.message,
-            'error_code': e.code
-        });
     });
+    
+    // Note: We no longer need these event listeners since we're manually managing geolocation
+    // The browser's getCurrentPosition handles success/error cases directly in the click handler
     
     // Click handlers
     map.on('click', 'Icons', (e) => {
